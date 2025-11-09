@@ -1,39 +1,44 @@
 import { navigationItems as defaultNavigationItems, type NavigationItem } from '../data/navigation'
 import { cn } from '../lib/cn'
 
-interface HeaderProps {
+interface HeaderSecondaryProps {
     className?: string
     logoSrc?: string
     navigationItems?: NavigationItem[]
     activeUrl?: string
 }
 
-export function Header({
+export function HeaderSecondary({
     className,
     logoSrc = '/logo.png',
     navigationItems = defaultNavigationItems,
     activeUrl
-}: HeaderProps) {
-    // Determinar el URL activo basado en la URL actual o el prop
+}: HeaderSecondaryProps) {
     const currentPath = typeof window !== 'undefined' ? window.location.pathname : ''
     const activePath = activeUrl || currentPath
 
     return (
-        <header className={cn('w-full', className)}>
-            <div className="w-full">
-                {/* Logo */}
-                <div className="w-full">
+        <header
+            className={cn(
+                'w-full border-b border-white/10 bg-black/60 backdrop-blur',
+                className
+            )}
+        >
+            <div className="mx-auto flex max-w-6xl items-center gap-6 px-4 py-3 sm:px-6">
+                <a
+                    href="/"
+                    className="shrink-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80"
+                >
                     <img
                         src={logoSrc}
                         alt="Authentic Web Design"
-                        className="w-full h-auto object-contain opacity-80 hover:opacity-100 transition-opacity duration-300"
+                        className="h-10 w-auto object-contain"
                         loading="eager"
                         decoding="async"
                     />
-                </div>
+                </a>
 
-                {/* Navigation Menu */}
-                <nav className="flex gap-6 md:gap-8 lg:gap-8 justify-center items-center">
+                <nav className="flex flex-1 justify-center gap-4 sm:gap-6 md:gap-8">
                     {navigationItems.map((item) => {
                         const isActive =
                             item.url === '/'
@@ -44,11 +49,10 @@ export function Header({
                                 key={item.url}
                                 href={item.url}
                                 className={cn(
-                                    'text-white/95 hover:text-white transition-colors duration-200',
-                                    'text-xs sm:text-sm md:text-base lg:text-lg',
-                                    'font-light tracking-[0.15em] uppercase',
-                                    'drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]',
-                                    isActive && 'underline underline-offset-4 decoration-white/90'
+                                    'text-white/90 hover:text-white transition-colors duration-200',
+                                    'text-xs sm:text-sm md:text-base',
+                                    'uppercase tracking-[0.18em]',
+                                    isActive && 'border-b border-white/80 pb-1'
                                 )}
                             >
                                 {item.label}
@@ -56,7 +60,11 @@ export function Header({
                         )
                     })}
                 </nav>
+
+                <div aria-hidden className="hidden flex-1 sm:flex" />
             </div>
         </header>
     )
 }
+
+

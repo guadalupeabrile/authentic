@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { contactLinks } from '../data/contactInfo'
 import { cn } from '../lib/cn'
 
 interface FooterProps {
@@ -49,26 +50,17 @@ export function Footer({ className }: FooterProps) {
                 style={{ transitionDelay: '160ms' }}
             >
                 <div className="mb-2 flex w-[95%] items-center justify-between gap-3 text-xs sm:text-sm md:text-base lg:text-lg md:gap-4 mix-blend-difference text-white text-center mx-auto font-light uppercase tracking-[0.15em]">
-                    <a
-                        href="tel:+59899705004"
-                        className="hover:opacity-70 transition-opacity"
-                    >
-                        (+598) 99 705 004
-                    </a>
-                    <a
-                        href="mailto:HOLA@NARCISOESTUDIO.COM"
-                        className="hover:opacity-70 transition-opacity uppercase tracking-wider"
-                    >
-                        HOLA@NARCISOESTUDIO.COM
-                    </a>
-                    <a
-                        href="https://instagram.com"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="hover:opacity-70 transition-opacity uppercase tracking-wider"
-                    >
-                        Instagram
-                    </a>
+                    {contactLinks.map((link) => (
+                        <a
+                            key={link.id}
+                            href={link.href}
+                            target={link.external ? '_blank' : undefined}
+                            rel={link.external ? 'noopener noreferrer' : undefined}
+                            className="hover:opacity-70 transition-opacity uppercase tracking-wider"
+                        >
+                            {link.label}
+                        </a>
+                    ))}
                 </div>
             </div>
         </footer>
