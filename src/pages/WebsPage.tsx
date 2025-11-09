@@ -16,12 +16,7 @@ function WebsPage() {
                 </div>
 
                 <main className="pt-32 pb-24 pr-[10px] pl-[30px] space-y-16">
-                    <section className="max-w-4xl space-y-6">
-                        <h1 className="text-left text-3xl md:text-5xl uppercase">Web Developments</h1>
-                        <p className="text-base md:text-lg text-black/80 leading-relaxed">
-                            We love to bring your brand alive online.
-                        </p>
-                    </section>
+
 
                     <WebProjectsList />
                 </main>

@@ -19,21 +19,18 @@ export function HeaderSecondary({
 
     return (
         <header
-            className={cn(
-                'w-full border-b border-white/10 bg-white',
-                className
-            )}
+            className={cn('w-full border-b border-black/10 bg-white', className)}
         >
             <div className="relative flex w-full flex-col items-center gap-3 px-4 py-3 sm:flex-row sm:gap-6 sm:px-6">
                 <div className="shrink-0 self-center sm:ml-[10px] sm:self-auto">
                     <a
                         href="/"
-                        className="focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80"
+                        className="focus:outline-none focus-visible:ring-2 focus-visible:ring-black/60"
                     >
                         <img
                             src={logoSrc}
                             alt="Authentic Web Design"
-                            className="h-12 w-auto object-contain sm:h-14"
+                            className="h-14 w-auto object-contain"
                             loading="eager"
                             decoding="async"
                         />
@@ -54,7 +51,7 @@ export function HeaderSecondary({
                                     'text-black/80 hover:text-black transition-colors duration-200',
                                     'text-xs sm:text-sm md:text-base',
                                     'uppercase tracking-[0.18em]',
-                                    isActive && 'border-b border-white/80 pb-1'
+                                    isActive && 'border-b border-black/80 pb-1'
                                 )}
                             >
                                 {item.label}

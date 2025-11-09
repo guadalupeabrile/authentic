@@ -12,9 +12,12 @@ const WebProjectsList: React.FC = () => {
                 const duracion = item.velocidad ?? 36
 
                 return (
-                    <div
+                    <a
                         key={item.nombre + index}
-                        className="overflow-hidden border-b border-black/10 last:border-b-0 bg-white"
+                        href={item.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block overflow-hidden border-b border-black/10 last:border-b-0 bg-white transition hover:bg-black/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black"
                     >
                         <div
                             className="relative flex uppercase tracking-[0.2em] text-xl sm:text-2xl md:text-4xl font-light text-black"
@@ -50,7 +53,7 @@ const WebProjectsList: React.FC = () => {
                                 ))}
                             </div>
                         </div>
-                    </div>
+                    </a>
                 )
             })}
 

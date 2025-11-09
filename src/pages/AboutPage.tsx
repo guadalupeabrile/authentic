@@ -2,7 +2,6 @@ import { Helmet } from 'react-helmet-async'
 import { HeaderSecondary } from '../components/HeaderSecondary'
 import { Footer } from '../components/Footer'
 
-
 function AboutPage() {
     return (
         <>
