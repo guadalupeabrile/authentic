@@ -13,9 +13,10 @@ interface HeaderProps {
 }
 
 const defaultNavigationItems: NavigationItem[] = [
-    { label: 'HOME', url: '/' },
-    { label: 'WORK', url: '/work' },
-    { label: 'STUDIO', url: '/studio' },
+    { label: 'Home', url: '/' },
+    { label: 'Websites', url: '/websites' },
+    { label: 'Photography', url: '/photography' },
+    { label: 'About', url: '/about' },
 ]
 
 export function Header({
@@ -45,7 +46,10 @@ export function Header({
                 {/* Navigation Menu */}
                 <nav className="flex gap-6 md:gap-8 lg:gap-8 justify-center items-center ">
                     {navigationItems.map((item) => {
-                        const isActive = activePath === item.url
+                        const isActive =
+                            item.url === '/'
+                                ? activePath === '/'
+                                : activePath.startsWith(item.url)
                         return (
                             <a
                                 key={item.url}
