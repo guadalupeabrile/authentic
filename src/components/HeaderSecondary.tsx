@@ -24,21 +24,23 @@ export function HeaderSecondary({
                 className
             )}
         >
-            <div className="mx-auto flex max-w-6xl items-center gap-6 px-4 py-3 sm:px-6">
-                <a
-                    href="/"
-                    className="shrink-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80"
-                >
-                    <img
-                        src={logoSrc}
-                        alt="Authentic Web Design"
-                        className="h-10 w-auto object-contain"
-                        loading="eager"
-                        decoding="async"
-                    />
-                </a>
+            <div className="relative flex w-full flex-col items-center gap-3 px-4 py-3 sm:flex-row sm:gap-6 sm:px-6">
+                <div className="shrink-0 self-center sm:ml-[10px] sm:self-auto">
+                    <a
+                        href="/"
+                        className="focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80"
+                    >
+                        <img
+                            src={logoSrc}
+                            alt="Authentic Web Design"
+                            className="h-10 w-auto object-contain"
+                            loading="eager"
+                            decoding="async"
+                        />
+                    </a>
+                </div>
 
-                <nav className="flex flex-1 justify-center gap-4 sm:gap-6 md:gap-8">
+                <nav className="flex w-full justify-center gap-4 sm:absolute sm:left-1/2 sm:w-auto sm:-translate-x-1/2 sm:gap-6 md:gap-8">
                     {navigationItems.map((item) => {
                         const isActive =
                             item.url === '/'
@@ -60,8 +62,6 @@ export function HeaderSecondary({
                         )
                     })}
                 </nav>
-
-                <div aria-hidden className="hidden flex-1 sm:flex" />
             </div>
         </header>
     )
