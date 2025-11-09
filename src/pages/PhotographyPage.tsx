@@ -1,6 +1,8 @@
 import { Helmet } from 'react-helmet-async'
 import { HeaderSecondary } from '../components/HeaderSecondary'
 import { Footer } from '../components/Footer'
+import TickerList from '../../components/TickerList'
+import { tickerRows } from '../../data/tickerRows'
 
 function PhotographyPage() {
     return (
@@ -24,6 +26,10 @@ function PhotographyPage() {
                         </p>
                     </section>
                 </main>
+
+                <div className="px-6 sm:px-12 md:px-24 lg:px-32 pb-12">
+                    <TickerList rows={tickerRows} />
+                </div>
 
                 <Footer />
             </div>
