@@ -6,34 +6,29 @@ export type ProyectoItem = {
 
 export const proyecto: ProyectoItem[] = [
     {
-        nombre: "BIOOPTICAL POP-UP",
+        nombre: "THE ENERGY BOOSTER",
         icono: "🪐",
         velocidad: 38
     },
     {
-        nombre: "MILGENIAL STORE",
+        nombre: "UNAMUNO ARQUITECTURA",
         icono: "⌘",
         velocidad: 30
     },
     {
-        nombre: "VOU CLUB (PERREITO)",
+        nombre: "IKA JEWELLERY",
         icono: "♪",
         velocidad: 34
     },
     {
-        nombre: "CASA CAVOUR",
+        nombre: "ASH KENT PSYCHOLOGY",
         icono: "♡",
         velocidad: 36
     },
     {
-        nombre: "SANGUCHE LAB",
+        nombre: "STUDIOTUBARCA",
         icono: ":P",
         velocidad: 32
-    },
-    {
-        nombre: "CASA EQUIS",
-        icono: "(X)",
-        velocidad: 35
     }
 ]
 

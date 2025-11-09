@@ -20,7 +20,7 @@ export function HeaderSecondary({
     return (
         <header
             className={cn(
-                'w-full border-b border-white/10 bg-black/60 backdrop-blur',
+                'w-full border-b border-white/10 bg-white',
                 className
             )}
         >
@@ -33,7 +33,7 @@ export function HeaderSecondary({
                         <img
                             src={logoSrc}
                             alt="Authentic Web Design"
-                            className="h-10 w-auto object-contain"
+                            className="h-12 w-auto object-contain sm:h-14"
                             loading="eager"
                             decoding="async"
                         />
@@ -51,7 +51,7 @@ export function HeaderSecondary({
                                 key={item.url}
                                 href={item.url}
                                 className={cn(
-                                    'text-white/90 hover:text-white transition-colors duration-200',
+                                    'text-black/80 hover:text-black transition-colors duration-200',
                                     'text-xs sm:text-sm md:text-base',
                                     'uppercase tracking-[0.18em]',
                                     isActive && 'border-b border-white/80 pb-1'

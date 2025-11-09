@@ -15,13 +15,11 @@ function WebsPage() {
                     <HeaderSecondary activeUrl="/websites" logoSrc="/img/logo.png" />
                 </div>
 
-                <main className="pt-32 pb-24 px-[10px] space-y-16">
-                    <section className="max-w-4xl mx-auto space-y-6">
-                        <h1 className="text-3xl md:text-5xl font-light tracking-[0.15em] uppercase">Webs</h1>
+                <main className="pt-32 pb-24 pr-[10px] pl-[30px] space-y-16">
+                    <section className="max-w-4xl space-y-6">
+                        <h1 className="text-left text-3xl md:text-5xl uppercase">Web Developments</h1>
                         <p className="text-base md:text-lg text-black/80 leading-relaxed">
-                            Aquí puedes destacar tus proyectos web, los servicios que ofreces o cualquier información
-                            relevante sobre tus soluciones digitales. Personaliza esta sección con contenido y recursos
-                            que representen tu trabajo.
+                            We love to bring your brand alive online.
                         </p>
                     </section>
 

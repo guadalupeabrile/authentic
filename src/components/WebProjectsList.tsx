@@ -54,22 +54,6 @@ const WebProjectsList: React.FC = () => {
                 )
             })}
 
-            <style jsx>{`
-                @keyframes desplazamiento-marquee {
-                    from {
-                        transform: translateX(0);
-                    }
-                    to {
-                        transform: translateX(-100%);
-                    }
-                }
-
-                .marquee {
-                    animation-name: desplazamiento-marquee;
-                    animation-timing-function: linear;
-                    animation-iteration-count: infinite;
-                }
-            `}</style>
         </section>
     )
 }
