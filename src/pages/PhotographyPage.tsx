@@ -3,54 +3,95 @@ import { HeaderSecondary } from '../components/HeaderSecondary'
 import { Footer } from '../components/Footer'
 import { MasonryGrid, type MasonrySection } from '../components/MasonryGrid'
 
+interface PhotographyCategory {
+    title: string
+    description: string
+    sections: MasonrySection[]
+}
+
 function PhotographyPage() {
-    // Configuración de secciones del masonry grid
-    // NUEVO MÉTODO: Especificar imágenes agrupadas por columna con control flex
-    // Usa 'flex' para controlar el ancho proporcional de cada columna
-    const masonrySections: MasonrySection[] = [
+    // Configuración de categorías de fotografías
+    // Cada categoría tiene su título, descripción y configuración de masonry grid
+    const categories: PhotographyCategory[] = [
         {
-            gap: 48,
-            columnImages: [
+            title: 'Naturaleza',
+            description: 'Exploración visual de paisajes naturales, flora y fauna capturados en su estado más puro.',
+            sections: [
                 {
-                    // Columna 1
-                    images: [
-                        '/img/hero-sliders/1.jpg',
-                        '/img/hero-sliders/3.jpg',
-                        '/img/hero-sliders/5.jpg',
+                    gap: 48,
+                    columnImages: [
+                        {
+                            // Columna 1
+                            images: [
+                                '/img/hero-sliders/1.jpg',
+                                '/img/hero-sliders/3.jpg',
+                                '/img/hero-sliders/5.jpg',
+                            ],
+                            flex: 1,
+                            marginTop: [0, 20, 10],
+                            marginBottom: [200, 40, 35],
+                            flexPerImage: [0.9, 0.8, 1],
+                            justifyContent: ['flex-start', 'center', 'flex-end'],
+                            alignItems: ['flex-start', 'center', 'flex-end'],
+                        },
+                        {
+                            // Columna 2
+                            images: [
+                                '/img/hero-sliders/2.jpg',
+                                '/img/hero-sliders/4.jpg',
+                            ],
+                            flex: 1.5,
+                            marginTop: [200, 15],
+                            marginBottom: [50, 60],
+                            flexPerImage: [1, 1],
+                            justifyContent: ['center', 'flex-start'],
+                            alignItems: ['center', 'flex-start'],
+                        },
                     ],
-                    flex: 1, // Ancho proporcional de la columna: 1 (ocupa 1 parte del espacio disponible)
-                    marginTop: [0, 20, 10], // Márgenes superiores para cada imagen: 0px, 20px, 10px
-                    marginBottom: [200, 40, 35], // Márgenes inferiores para cada imagen: 200px, 40px, 35px
-                    flexPerImage: [1, 0.8, 1], // Ancho proporcional de cada imagen (fila): 1, 0.8, 1
-                    justifyContent: ['flex-start', 'center', 'flex-end'], // Alineación horizontal: izquierda, centro, derecha
-                    alignItems: ['flex-start', 'center', 'flex-end'], // Alineación vertical: arriba, centro, abajo
-                },
-                {
-                    // Columna 2
-                    images: [
-                        '/img/hero-sliders/2.jpg',
-                        '/img/hero-sliders/4.jpg',
-                    ],
-                    flex: 1.5, // Ancho proporcional de la columna: 1.5 (ocupa 1.5 partes, más ancha que la columna 1)
-                    marginTop: [150, 15], // Márgenes superiores para cada imagen: 10px, 15px
-                    marginBottom: [50, 60], // Márgenes inferiores para cada imagen: 50px, 60px
-                    flexPerImage: [0.8, 1], // Ancho proporcional de cada imagen (fila): 0.5, 1
-                    justifyContent: ['center', 'flex-start'], // Alineación horizontal: derecha, izquierda
-                    alignItems: ['center', 'flex-start'], // Alineación vertical: centro, arriba
                 },
             ],
         },
-        // MÉTODO ANTIGUO (compatibilidad): También puedes usar el método anterior
+        {
+            title: 'Retratos',
+            description: 'Colección de retratos que capturan la esencia y personalidad de cada sujeto.',
+            sections: [
+                {
+                    gap: 48,
+                    columnImages: [
+                        {
+                            images: [
+                                '/img/hero-sliders/1.jpg',
+                                '/img/hero-sliders/2.jpg',
+                            ],
+                            flex: 1,
+                            marginTop: [0, 30],
+                            marginBottom: [40, 50],
+                            flexPerImage: [1, 0.9],
+                            justifyContent: ['center', 'flex-start'],
+                            alignItems: ['center', 'center'],
+                        },
+                        {
+                            images: [
+                                '/img/hero-sliders/3.jpg',
+                                '/img/hero-sliders/4.jpg',
+                                '/img/hero-sliders/5.jpg',
+                            ],
+                            flex: 1,
+                            marginTop: [20, 10, 0],
+                            marginBottom: [50, 40, 60],
+                            flexPerImage: [0.8, 1, 0.9],
+                            justifyContent: ['flex-end', 'center', 'flex-start'],
+                            alignItems: ['flex-start', 'center', 'flex-end'],
+                        },
+                    ],
+                },
+            ],
+        },
+        // Puedes agregar más categorías aquí
         // {
-        //     images: [
-        //         '/img/hero-sliders/1.jpg',
-        //         '/img/hero-sliders/2.jpg',
-        //     ],
-        //     columns: { mobile: 1, tablet: 2, desktop: 2 },
-        //     gap: 48,
-        //     margins: [30, 50],
-        //     marginLeft: [0, 10],
-        //     marginRight: [90, 40]
+        //     title: 'Arquitectura',
+        //     description: 'Fotografía arquitectónica que muestra la belleza de estructuras y espacios.',
+        //     sections: [...]
         // }
     ]
 
@@ -66,25 +107,27 @@ function PhotographyPage() {
                 </div>
 
                 <main className="pt-32 pb-24">
-                    <section className="space-y-8">
-                        <div className="px-6 sm:px-12 md:px-24 lg:px-32">
-                            <div className="max-w-7xl mx-auto space-y-6">
-                                <h1 className="text-3xl md:text-4xl font-light ">Photography</h1>
-                                <p className="text-base md:text-lg text-black/80 leading-relaxed max-w-4xl">
-                                    Usa este espacio para mostrar tus galerías fotográficas, detallar tus servicios de producción
-                                    o compartir historias visuales destacadas. Puedes incorporar sliders, mosaicos de imágenes u
-                                    otros componentes personalizados.
-                                </p>
-                            </div>
-                        </div>
+                    <div className="space-y-24">
+                        {categories.map((category, categoryIndex) => (
+                            <section key={categoryIndex} className="space-y-8">
+                                <div className="px-6 sm:px-12 md:px-24 lg:px-32">
+                                    <div className="max-w-7xl mx-auto space-y-6">
+                                        <h1 className="text-3xl md:text-4xl font-light">{category.title}</h1>
+                                        <p className="text-base md:text-lg text-black/80 leading-relaxed max-w-4xl">
+                                            {category.description}
+                                        </p>
+                                    </div>
+                                </div>
 
-                        <div className="mt-12 w-full">
-                            <MasonryGrid
-                                sections={masonrySections}
-                                horizontalMargin={10}
-                            />
-                        </div>
-                    </section>
+                                <div className="mt-12 w-full">
+                                    <MasonryGrid
+                                        sections={category.sections}
+                                        horizontalMargin={10}
+                                    />
+                                </div>
+                            </section>
+                        ))}
+                    </div>
                 </main>
 
                 <Footer />
