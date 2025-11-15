@@ -11,59 +11,23 @@
             {
               "images": [
                 "/uploads/photography/naturaleza/1763182583802-a7d7da0e-1826-4438-8083-3cdf7b0a96a2.jpg",
-                "/uploads/photography/naturaleza/1763182692968-c08c1454-dc6a-46c1-a8ad-2ea6b192086b.JPG",
-                "/uploads/photography/naturaleza/1763184278356-e26cd41a-ea88-454b-9899-73ca4d7dbdb2.JPG"
+                "/uploads/photography/naturaleza/1763182692968-c08c1454-dc6a-46c1-a8ad-2ea6b192086b.JPG"
               ],
-              "flex": 1,
-              "flexPerImage": [
-                1,
-                1
-              ],
-              "justifyContent": [
-                "flex-start",
-                "flex-start"
-              ],
-              "alignItems": [
-                "flex-start",
-                "flex-start"
-              ]
+              "flex": 1
             },
             {
               "images": [
                 "/uploads/photography/naturaleza/1763182577798-1a50241a-f02f-4b58-bcf5-f25d4c02de09.JPG",
-                "/uploads/photography/naturaleza/1763184174259-ca09bc03-6633-4f94-b3d9-d859a42ea53a.JPG",
-                "/uploads/photography/naturaleza/1763184285323-cc7cff75-f15f-4791-9382-2273b8898e77.JPG"
+                "/uploads/photography/naturaleza/1763202766406-65c710f9-91b3-44cb-938e-6e6ae58cda08.JPG"
               ],
-              "flex": 1,
-              "flexPerImage": [
-                1,
-                1
-              ],
-              "justifyContent": [
-                "center",
-                "center"
-              ],
-              "alignItems": [
-                "center",
-                "center"
-              ]
+              "flex": 1
             },
             {
               "images": [
                 "/uploads/photography/naturaleza/1763182564132-9f2b70f5-e220-4cb2-90e1-e34e3ad2adda.JPG",
-                "/uploads/photography/naturaleza/1763183387401-0893c3e2-d0fd-446b-a5f5-4145a601c34b.JPG",
-                "/uploads/photography/naturaleza/1763184261614-24df265b-d37b-44c4-8835-31cd2f06bc33.JPG"
+                "/uploads/photography/naturaleza/1763205060368-1973534f-0b1a-4586-9c46-fccb933278ae.JPG"
               ],
-              "flex": 1,
-              "flexPerImage": [
-                1
-              ],
-              "justifyContent": [
-                "center"
-              ],
-              "alignItems": [
-                "center"
-              ]
+              "flex": 1
             }
           ]
         },
@@ -113,8 +77,14 @@
           "columnImages": [
             {
               "images": [
-                "/img/hero-sliders/1.jpg",
-                "/img/hero-sliders/2.jpg"
+                "/uploads/photography/retratos/1763205272999-39c398e9-d09b-4a56-aa14-25b49ad5c443.JPG",
+                "/uploads/photography/retratos/1763206592442-b1b5619c-e6bd-4683-b557-8a56fdb42620.JPG",
+                "/uploads/photography/retratos/1763206482780-a234db55-8279-4c19-9013-d32a4e0c9dd7.JPG",
+                "/uploads/photography/retratos/1763206491474-13a3186b-c0ae-45ef-877f-a572aae13ebd.JPG",
+                "/uploads/photography/retratos/1763205533645-7cdca3ae-89b1-4581-854e-c003dbadc8b4.JPG",
+                "/uploads/photography/retratos/1763206358860-8fbd1bc7-a328-4cf7-a846-ed1ed3398e5d.JPG",
+                "/uploads/photography/retratos/1763206665551-fb6c0857-002f-4ca9-b7a8-15098a7c3b66.JPG",
+                "/uploads/photography/retratos/1763206787580-79678baf-dce6-43d9-acd9-75cf8f3cdba7.JPG"
               ],
               "flex": 1,
               "flexPerImage": [
@@ -132,7 +102,11 @@
             },
             {
               "images": [
-                "/img/hero-sliders/3.jpg"
+                "/uploads/photography/retratos/1763206505378-92509002-ddb2-4a49-8bd1-8970846da4c1.JPG",
+                "/uploads/photography/retratos/1763205299970-1dd513c7-735e-434c-be7f-b86fb1b92e61.JPG",
+                "/uploads/photography/retratos/1763206635743-d9ff3bf9-795d-49de-9bce-2b4b02562f6e.JPG",
+                "/uploads/photography/retratos/1763206368146-e13c2bd3-7b55-49f5-9aa9-2a6e9c3743bc.jpg",
+                "/uploads/photography/retratos/1763206659269-4c08055c-16c7-4baf-896d-7d17fd3da641.JPG"
               ],
               "flex": 1,
               "flexPerImage": [
@@ -147,9 +121,12 @@
             },
             {
               "images": [
-                "/img/hero-sliders/4.jpg",
-                "/img/hero-sliders/5.jpg",
-                "/uploads/photography/retratos/1763181367224-05e9c894-2c1b-4026-a680-046f2c77ff06.png"
+                "/uploads/photography/retratos/1763205341535-71fdda1f-4851-4f79-b10f-abf6137389ee.JPG",
+                "/uploads/photography/retratos/1763205505816-d603d792-7d8f-482f-a6a3-732c598a754a.JPG",
+                "/uploads/photography/retratos/1763205382445-036a7c9d-a81f-47f0-8083-15079298ec07.JPG",
+                "/uploads/photography/retratos/1763205522830-884109be-c789-4979-a1bd-bfb1dbbe1978.JPG",
+                "/uploads/photography/retratos/1763206379988-afb95efa-e9d7-4374-a051-d6a1a9f80fbb.JPG",
+                "/uploads/photography/retratos/1763206414482-b2b9754a-b077-4d2e-b7b2-9f568eb20d65.JPG"
               ],
               "flex": 1,
               "flexPerImage": [

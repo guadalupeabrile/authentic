@@ -39,6 +39,7 @@ interface MasonryGridProps {
     onAddImage?: (sectionIndex: number, columnIndex: number) => void
     onReplaceImage?: (sectionIndex: number, columnIndex: number, imageIndex: number) => void
     onRemoveImage?: (sectionIndex: number, columnIndex: number, imageIndex: number) => void
+    onMoveImage?: (sectionIndex: number, columnIndex: number, imageIndex: number, direction: 'up' | 'down') => void
 }
 
 /**
@@ -56,7 +57,8 @@ export function MasonryGrid({
     editable = false,
     onAddImage,
     onReplaceImage,
-    onRemoveImage
+    onRemoveImage,
+    onMoveImage
 }: MasonryGridProps) {
     const [loadedImages, setLoadedImages] = useState<Set<string>>(new Set())
 
@@ -141,10 +143,18 @@ export function MasonryGrid({
         )
     }
 
-    const renderInlineActions = (sectionIndex: number, columnIndex: number, imageIndex: number) => {
+    const renderInlineActions = (sectionIndex: number, columnIndex: number, imageIndex: number, totalImages: number) => {
         if (!editable) return null
         return (
             <div className="mt-2 flex flex-wrap gap-2 text-[10px] font-semibold uppercase tracking-widest text-black/70">
+                <button
+                    type="button"
+                    onClick={() => onMoveImage?.(sectionIndex, columnIndex, imageIndex, 'up')}
+                    className="rounded border border-black/20 px-2 py-1 hover:border-black hover:text-black"
+                    disabled={imageIndex === 0 || !onMoveImage}
+                >
+                    Subir
+                </button>
                 <button
                     type="button"
                     onClick={() => onReplaceImage?.(sectionIndex, columnIndex, imageIndex)}
@@ -158,6 +168,14 @@ export function MasonryGrid({
                     className="rounded border border-red-400 px-2 py-1 text-red-500 hover:border-red-600 hover:text-red-600"
                 >
                     Eliminar
+                </button>
+                <button
+                    type="button"
+                    onClick={() => onMoveImage?.(sectionIndex, columnIndex, imageIndex, 'down')}
+                    className="rounded border border-black/20 px-2 py-1 hover:border-black hover:text-black"
+                    disabled={imageIndex === totalImages - 1 || !onMoveImage}
+                >
+                    Bajar
                 </button>
             </div>
         )
@@ -205,29 +223,6 @@ export function MasonryGrid({
                                     const marginRight = getMarginRight(column.images, column.marginRight)
 
                                     // Función para obtener el flex de cada imagen
-                                    const getImageFlex = (imageIndex: number): number => {
-                                        if (column.flexPerImage && column.flexPerImage.length > imageIndex) {
-                                            return column.flexPerImage[imageIndex]
-                                        }
-                                        return 1 // Por defecto, cada imagen ocupa el 100% del ancho de la columna
-                                    }
-
-                                    // Función para obtener justify-content de cada imagen
-                                    const getJustifyContent = (imageIndex: number): string => {
-                                        if (column.justifyContent && column.justifyContent.length > imageIndex) {
-                                            return column.justifyContent[imageIndex]
-                                        }
-                                        return 'flex-start' // Por defecto
-                                    }
-
-                                    // Función para obtener align-items de cada imagen
-                                    const getAlignItems = (imageIndex: number): string => {
-                                        if (column.alignItems && column.alignItems.length > imageIndex) {
-                                            return column.alignItems[imageIndex]
-                                        }
-                                        return 'flex-start' // Por defecto
-                                    }
-
                                     return (
                                         <div
                                             key={columnIndex}
@@ -237,14 +232,6 @@ export function MasonryGrid({
                                             {column.images.map((image, imageIndex) => {
                                                 const imageKey = `${sectionIndex}-${columnIndex}-${imageIndex}`
                                                 const isLoaded = loadedImages.has(imageKey)
-                                                const imageFlex = getImageFlex(imageIndex)
-                                                const justifyContent = getJustifyContent(imageIndex)
-                                                const alignItems = getAlignItems(imageIndex)
-
-                                                // Calcular el ancho basado en el flex (1 = 100%, 0.8 = 80%, etc.)
-                                                const widthPercent = column.flexPerImage
-                                                    ? `${Math.min(imageFlex, 1) * 100}%`
-                                                    : '100%'
 
                                                 return (
                                                     <div
@@ -256,12 +243,12 @@ export function MasonryGrid({
                                                             marginLeft: `${marginLeft[imageIndex]}px`,
                                                             marginRight: `${marginRight[imageIndex]}px`,
                                                             width: '100%',
-                                                            justifyContent: justifyContent,
-                                                            alignItems: alignItems
+                                                            justifyContent: 'flex-start',
+                                                            alignItems: 'flex-start'
                                                         }}
                                                     >
                                                         <div className="relative overflow-hidden" style={{
-                                                            width: column.flexPerImage ? widthPercent : '100%',
+                                                            width: '100%',
                                                             maxWidth: '100%'
                                                         }}>
                                                             {!isLoaded && (
@@ -285,7 +272,7 @@ export function MasonryGrid({
                                                             />
                                                             {renderEditableOverlay(sectionIndex, columnIndex, imageIndex)}
                                                         </div>
-                                                        {renderInlineActions(sectionIndex, columnIndex, imageIndex)}
+                                                        {renderInlineActions(sectionIndex, columnIndex, imageIndex, column.images.length)}
                                                     </div>
                                                 )
                                             })}
@@ -373,7 +360,7 @@ export function MasonryGrid({
                                             />
                                             {renderEditableOverlay(sectionIndex, 0, imageIndex)}
                                         </div>
-                                        {renderInlineActions(sectionIndex, 0, imageIndex)}
+                                        {renderInlineActions(sectionIndex, 0, imageIndex, images.length)}
                                     </div>
                                 )
                             })}

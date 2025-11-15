@@ -10,13 +10,13 @@ import { slugify } from '../lib/slugify'
 const FALLBACK_CATEGORIES: PhotographyCategory[] = [
     {
         id: 'naturaleza',
-            title: 'Naturaleza',
-            description: 'Exploración visual de paisajes naturales, flora y fauna capturados en su estado más puro.',
-            sections: [
-                {
-                    gap: 48,
-                    columnImages: [
-                        {
+        title: 'Naturaleza',
+        description: 'Exploración visual de paisajes naturales, flora y fauna capturados en su estado más puro.',
+        sections: [
+            {
+                gap: 48,
+                columnImages: [
+                    {
                         images: ['/img/hero-sliders/1.jpg', '/img/hero-sliders/5.jpg'],
                         flex: 1
                     },
@@ -34,13 +34,13 @@ const FALLBACK_CATEGORIES: PhotographyCategory[] = [
     },
     {
         id: 'retratos',
-            title: 'Retratos',
-            description: 'Colección de retratos que capturan la esencia y personalidad de cada sujeto.',
-            sections: [
-                {
-                    gap: 48,
-                    columnImages: [
-                        {
+        title: 'Retratos',
+        description: 'Colección de retratos que capturan la esencia y personalidad de cada sujeto.',
+        sections: [
+            {
+                gap: 48,
+                columnImages: [
+                    {
                         images: ['/img/hero-sliders/1.jpg', '/img/hero-sliders/2.jpg'],
                         flex: 1
                     },
@@ -335,6 +335,33 @@ function PhotographyPage() {
         }
     }
 
+    async function handleMoveImage(categoryId: string, sectionIndex: number, columnIndex: number, imageIndex: number, direction: 'up' | 'down') {
+        const token = getAdminToken()
+        if (!token) {
+            setStatusMessage('Debes iniciar sesión en /admin primero')
+            return
+        }
+        try {
+            const nextConfig = cloneConfig(config)
+            const category = nextConfig.categories.find(cat => cat.id === categoryId)
+            const column = category?.sections?.[sectionIndex]?.columnImages?.[columnIndex]
+            if (!category || !column) {
+                throw new Error('No se encontró la columna')
+            }
+            const targetIndex = direction === 'up' ? imageIndex - 1 : imageIndex + 1
+            if (targetIndex < 0 || targetIndex >= column.images.length) {
+                return
+            }
+            ;[column.images[imageIndex], column.images[targetIndex]] = [column.images[targetIndex], column.images[imageIndex]]
+            setConfig(ensureThreeColumns(nextConfig))
+            await persistConfig(nextConfig)
+            setStatusMessage('Imagen reordenada')
+        } catch (error) {
+            console.error(error)
+            setStatusMessage('No se pudo reordenar la imagen')
+        }
+    }
+
     async function handleAddGrid(categoryId: string) {
         const token = getAdminToken()
         if (!token) {
@@ -418,10 +445,10 @@ function PhotographyPage() {
                                 </div>
 
                                 {category.sections.length > 0 && (
-                                <div className="mt-12 w-full">
-                                    <MasonryGrid
-                                        sections={category.sections}
-                                        horizontalMargin={10}
+                                    <div className="mt-12 w-full">
+                                        <MasonryGrid
+                                            sections={category.sections}
+                                            horizontalMargin={10}
                                             editable={Boolean(showEditorControls && editMode)}
                                             onAddImage={(sectionIndex, columnIndex) => {
                                                 if (!category.id) return
@@ -435,8 +462,12 @@ function PhotographyPage() {
                                                 if (!category.id) return
                                                 handleRemoveImage(category.id, sectionIndex, columnIndex, imageIndex)
                                             }}
-                                    />
-                                </div>
+                                            onMoveImage={(sectionIndex, columnIndex, imageIndex, direction) => {
+                                                if (!category.id) return
+                                                handleMoveImage(category.id, sectionIndex, columnIndex, imageIndex, direction)
+                                            }}
+                                        />
+                                    </div>
                                 )}
                             </section>
                         ))}
