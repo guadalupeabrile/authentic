@@ -45,8 +45,8 @@ export function Header({
                                 href={item.url}
                                 className={cn(
                                     'text-white/95 hover:text-white transition-colors duration-200',
-                                    'text-xs sm:text-sm md:text-base lg:text-base',
-                                    'font-light tracking-[0.1em] uppercase',
+                                    'text-[10px] sm:text-xs md:text-sm lg:text-sm',
+                                    'font-light tracking-[0.1em] lowercase',
                                     'drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]',
                                     isActive && 'underline underline-offset-4 decoration-white/90'
                                 )}

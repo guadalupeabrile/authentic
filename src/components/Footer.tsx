@@ -49,14 +49,14 @@ export function Footer({ className }: FooterProps) {
                 )}
                 style={{ transitionDelay: '160ms' }}
             >
-                <div className="mb-2 flex w-[95%] items-center justify-between gap-3 text-xs sm:text-sm md:text-base lg:text-lg md:gap-4 mix-blend-difference text-white text-center mx-auto font-light uppercase tracking-[0.15em]">
+                <div className="mb-2 flex w-[95%] items-center justify-between gap-3 text-[10px] sm:text-xs md:text-sm lg:text-base md:gap-4 mix-blend-difference text-white text-center mx-auto font-light lowercase tracking-[0.15em]">
                     {contactLinks.map((link) => (
                         <a
                             key={link.id}
                             href={link.href}
                             target={link.external ? '_blank' : undefined}
                             rel={link.external ? 'noopener noreferrer' : undefined}
-                            className="hover:opacity-70 transition-opacity uppercase tracking-wider"
+                            className="hover:opacity-70 transition-opacity lowercase tracking-wider"
                         >
                             {link.label}
                         </a>

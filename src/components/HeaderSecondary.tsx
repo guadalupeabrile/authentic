@@ -49,8 +49,8 @@ export function HeaderSecondary({
                                 href={item.url}
                                 className={cn(
                                     'text-black/80 hover:text-black transition-colors duration-200',
-                                    'text-xs sm:text-sm md:text-base lg:text-md',
-                                    'uppercase tracking-[0.1em]',
+                                    'text-[10px] sm:text-xs md:text-sm lg:text-sm',
+                                    'lowercase tracking-[0.1em]',
                                     isActive && 'border-b border-black/80 pb-1'
                                 )}
                             >

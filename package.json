@@ -7,14 +7,29 @@
         "dev": "vite",
         "build": "tsc && vite build",
         "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-        "preview": "vite preview"
+        "preview": "vite preview",
+        "server": "tsx watch server/index.ts"
     },
     "dependencies": {
+        "bcryptjs": "^3.0.3",
+        "cors": "^2.8.5",
+        "dotenv": "^17.2.3",
+        "express": "^5.1.0",
+        "fs-extra": "^11.3.2",
+        "jsonwebtoken": "^9.0.2",
+        "multer": "^2.0.2",
         "react": "^18.3.1",
         "react-dom": "^18.3.1",
-        "react-helmet-async": "^2.0.5"
+        "react-helmet-async": "^2.0.5",
+        "uuid": "^13.0.0"
     },
     "devDependencies": {
+        "@types/bcryptjs": "^3.0.0",
+        "@types/cors": "^2.8.19",
+        "@types/express": "^5.0.5",
+        "@types/jsonwebtoken": "^9.0.10",
+        "@types/multer": "^2.0.0",
+        "@types/node": "^24.10.1",
         "@types/react": "^18.3.3",
         "@types/react-dom": "^18.3.0",
         "@typescript-eslint/eslint-plugin": "^7.15.0",
@@ -29,6 +44,7 @@
         "prettier": "^3.3.3",
         "prettier-plugin-tailwindcss": "^0.6.9",
         "tailwindcss": "^3.4.13",
+        "tsx": "^4.20.6",
         "typescript": "^5.5.3",
         "vite": "^5.4.0"
     }

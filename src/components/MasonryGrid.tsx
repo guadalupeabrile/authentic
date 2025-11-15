@@ -35,6 +35,10 @@ interface MasonryGridProps {
     sections: MasonrySection[]
     className?: string
     horizontalMargin?: number // Margen horizontal del contenedor
+    editable?: boolean
+    onAddImage?: (sectionIndex: number, columnIndex: number) => void
+    onReplaceImage?: (sectionIndex: number, columnIndex: number, imageIndex: number) => void
+    onRemoveImage?: (sectionIndex: number, columnIndex: number, imageIndex: number) => void
 }
 
 /**
@@ -48,7 +52,11 @@ interface MasonryGridProps {
 export function MasonryGrid({
     sections,
     className,
-    horizontalMargin = 10
+    horizontalMargin = 10,
+    editable = false,
+    onAddImage,
+    onReplaceImage,
+    onRemoveImage
 }: MasonryGridProps) {
     const [loadedImages, setLoadedImages] = useState<Set<string>>(new Set())
 
@@ -107,16 +115,53 @@ export function MasonryGrid({
         if (margins && margins.length === images.length) {
             return margins
         }
-        // Generar márgenes variables automáticamente
-        return images.map((_, index) => {
-            const seed = index * 7 + 13
-            const variation = (seed % 9) / 10
-            const minMargin = gap * 0.6
-            const maxMargin = gap * 1.4
-            return Math.round(minMargin + (maxMargin - minMargin) * variation)
-        })
+        // Por defecto, usar el gap como margen inferior
+        return images.map(() => gap)
     }
 
+    const renderEditableOverlay = (sectionIndex: number, columnIndex: number, imageIndex: number) => {
+        if (!editable) return null
+        return (
+            <div className="pointer-events-none absolute inset-0 hidden items-end justify-between gap-2 bg-gradient-to-t from-black/70 via-black/30 to-transparent p-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-white sm:flex sm:opacity-0 sm:transition-opacity sm:hover:opacity-100">
+                <button
+                    type="button"
+                    className="pointer-events-auto rounded bg-white/90 px-2 py-1 text-xs font-semibold text-black hover:bg-white"
+                    onClick={() => onReplaceImage?.(sectionIndex, columnIndex, imageIndex)}
+                >
+                    Cambiar
+                </button>
+                <button
+                    type="button"
+                    className="pointer-events-auto rounded bg-red-600/90 px-2 py-1 text-xs font-semibold text-white hover:bg-red-600"
+                    onClick={() => onRemoveImage?.(sectionIndex, columnIndex, imageIndex)}
+                >
+                    Eliminar
+                </button>
+            </div>
+        )
+    }
+
+    const renderInlineActions = (sectionIndex: number, columnIndex: number, imageIndex: number) => {
+        if (!editable) return null
+        return (
+            <div className="mt-2 flex flex-wrap gap-2 text-[10px] font-semibold uppercase tracking-widest text-black/70">
+                <button
+                    type="button"
+                    onClick={() => onReplaceImage?.(sectionIndex, columnIndex, imageIndex)}
+                    className="rounded border border-black/30 px-2 py-1 hover:border-black hover:text-black"
+                >
+                    Cambiar
+                </button>
+                <button
+                    type="button"
+                    onClick={() => onRemoveImage?.(sectionIndex, columnIndex, imageIndex)}
+                    className="rounded border border-red-400 px-2 py-1 text-red-500 hover:border-red-600 hover:text-red-600"
+                >
+                    Eliminar
+                </button>
+            </div>
+        )
+    }
 
     return (
         <div className={cn('w-full space-y-12', className)} style={{ marginLeft: `${horizontalMargin}px`, marginRight: `${horizontalMargin}px` }}>
@@ -238,10 +283,22 @@ export function MasonryGrid({
                                                                     height: 'auto'
                                                                 }}
                                                             />
+                                                            {renderEditableOverlay(sectionIndex, columnIndex, imageIndex)}
                                                         </div>
+                                                        {renderInlineActions(sectionIndex, columnIndex, imageIndex)}
                                                     </div>
                                                 )
                                             })}
+                                            {editable && onAddImage && (
+                                                <button
+                                                    type="button"
+                                                    onClick={() => onAddImage(sectionIndex, columnIndex)}
+                                                    className="mt-4 flex items-center justify-center gap-2 rounded border border-dashed border-black/40 px-3 py-2 text-sm text-black/70 hover:border-black hover:text-black"
+                                                >
+                                                    <span className="text-lg leading-none">+</span>
+                                                    Añadir imagen
+                                                </button>
+                                            )}
                                         </div>
                                     )
                                 })}
@@ -314,11 +371,23 @@ export function MasonryGrid({
                                                     height: 'auto'
                                                 }}
                                             />
+                                            {renderEditableOverlay(sectionIndex, 0, imageIndex)}
                                         </div>
+                                        {renderInlineActions(sectionIndex, 0, imageIndex)}
                                     </div>
                                 )
                             })}
                         </div>
+                        {editable && onAddImage && (
+                            <button
+                                type="button"
+                                onClick={() => onAddImage(sectionIndex, 0)}
+                                className="mt-4 flex items-center justify-center gap-2 rounded border border-dashed border-black/40 px-3 py-2 text-sm text-black/70 hover:border-black hover:text-black"
+                            >
+                                <span className="text-lg leading-none">+</span>
+                                Añadir imagen
+                            </button>
+                        )}
                     </div>
                 )
             })}

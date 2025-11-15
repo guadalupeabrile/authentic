@@ -1,0 +1,236 @@
+{
+  "categories": [
+    {
+      "id": "naturaleza",
+      "title": "Naturaleza",
+      "description": "Exploración visual de paisajes naturales, flora y fauna capturados en su estado más puro.",
+      "sections": [
+        {
+          "gap": 40,
+          "columnImages": [
+            {
+              "images": [
+                "/uploads/photography/naturaleza/1763182583802-a7d7da0e-1826-4438-8083-3cdf7b0a96a2.jpg",
+                "/uploads/photography/naturaleza/1763182692968-c08c1454-dc6a-46c1-a8ad-2ea6b192086b.JPG",
+                "/uploads/photography/naturaleza/1763184278356-e26cd41a-ea88-454b-9899-73ca4d7dbdb2.JPG"
+              ],
+              "flex": 1,
+              "flexPerImage": [
+                1,
+                1
+              ],
+              "justifyContent": [
+                "flex-start",
+                "flex-start"
+              ],
+              "alignItems": [
+                "flex-start",
+                "flex-start"
+              ]
+            },
+            {
+              "images": [
+                "/uploads/photography/naturaleza/1763182577798-1a50241a-f02f-4b58-bcf5-f25d4c02de09.JPG",
+                "/uploads/photography/naturaleza/1763184174259-ca09bc03-6633-4f94-b3d9-d859a42ea53a.JPG",
+                "/uploads/photography/naturaleza/1763184285323-cc7cff75-f15f-4791-9382-2273b8898e77.JPG"
+              ],
+              "flex": 1,
+              "flexPerImage": [
+                1,
+                1
+              ],
+              "justifyContent": [
+                "center",
+                "center"
+              ],
+              "alignItems": [
+                "center",
+                "center"
+              ]
+            },
+            {
+              "images": [
+                "/uploads/photography/naturaleza/1763182564132-9f2b70f5-e220-4cb2-90e1-e34e3ad2adda.JPG",
+                "/uploads/photography/naturaleza/1763183387401-0893c3e2-d0fd-446b-a5f5-4145a601c34b.JPG",
+                "/uploads/photography/naturaleza/1763184261614-24df265b-d37b-44c4-8835-31cd2f06bc33.JPG"
+              ],
+              "flex": 1,
+              "flexPerImage": [
+                1
+              ],
+              "justifyContent": [
+                "center"
+              ],
+              "alignItems": [
+                "center"
+              ]
+            }
+          ]
+        },
+        {
+          "gap": 40,
+          "columnImages": [
+            {
+              "images": [],
+              "flex": 1
+            },
+            {
+              "images": [],
+              "flex": 1
+            },
+            {
+              "images": [],
+              "flex": 1
+            }
+          ]
+        },
+        {
+          "gap": 40,
+          "columnImages": [
+            {
+              "images": [],
+              "flex": 1
+            },
+            {
+              "images": [],
+              "flex": 1
+            },
+            {
+              "images": [],
+              "flex": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "retratos",
+      "title": "Retratos",
+      "description": "Colección de retratos que capturan la esencia y personalidad de cada sujeto.",
+      "sections": [
+        {
+          "gap": 40,
+          "columnImages": [
+            {
+              "images": [
+                "/img/hero-sliders/1.jpg",
+                "/img/hero-sliders/2.jpg"
+              ],
+              "flex": 1,
+              "flexPerImage": [
+                1,
+                0.9
+              ],
+              "justifyContent": [
+                "center",
+                "flex-start"
+              ],
+              "alignItems": [
+                "center",
+                "center"
+              ]
+            },
+            {
+              "images": [
+                "/img/hero-sliders/3.jpg"
+              ],
+              "flex": 1,
+              "flexPerImage": [
+                1
+              ],
+              "justifyContent": [
+                "center"
+              ],
+              "alignItems": [
+                "center"
+              ]
+            },
+            {
+              "images": [
+                "/img/hero-sliders/4.jpg",
+                "/img/hero-sliders/5.jpg",
+                "/uploads/photography/retratos/1763181367224-05e9c894-2c1b-4026-a680-046f2c77ff06.png"
+              ],
+              "flex": 1,
+              "flexPerImage": [
+                0.8,
+                1,
+                0.9
+              ],
+              "justifyContent": [
+                "flex-start",
+                "center",
+                "flex-end"
+              ],
+              "alignItems": [
+                "flex-start",
+                "center",
+                "flex-end"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hola",
+      "title": "Hola",
+      "description": "hola hola",
+      "sections": [
+        {
+          "gap": 40,
+          "columnImages": [
+            {
+              "images": [
+                "/uploads/photography/hola/1763181398237-48922acb-1308-4d66-a47d-66819c01691e.JPG"
+              ],
+              "flex": 1
+            },
+            {
+              "images": [],
+              "flex": 1
+            },
+            {
+              "images": [],
+              "flex": 1
+            }
+          ]
+        },
+        {
+          "gap": 40,
+          "columnImages": [
+            {
+              "images": [],
+              "flex": 1
+            },
+            {
+              "images": [],
+              "flex": 1
+            },
+            {
+              "images": [],
+              "flex": 1
+            }
+          ]
+        },
+        {
+          "gap": 40,
+          "columnImages": [
+            {
+              "images": [],
+              "flex": 1
+            },
+            {
+              "images": [],
+              "flex": 1
+            },
+            {
+              "images": [],
+              "flex": 1
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
