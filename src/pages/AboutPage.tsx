@@ -291,7 +291,7 @@ function AboutPage() {
                         {/* Texto principal (derecha) */}
                         <div className="space-y-6 md:pl-4">
                             <h1 className="text-2xl md:text-4xl font-light tracking-[0.15em] uppercase">
-                                About
+                                About Authentic
                             </h1>
                             <p className="max-w-3xl text-base text-black/80 leading-relaxed md:ml-auto">
                                 I am a multidisciplinary creator who brings together project management, photography, web development, and a personal path rooted in yoga and reiki. I'm passionate about water sports, meditation, and the quiet observation of the natural world we're part of.
@@ -308,6 +308,7 @@ function AboutPage() {
                             <p className="max-w-3xl text-base text-black/80 leading-relaxed">
                                 My goal is to create digital experiences that are honest, useful, and beautiful—while making every client <strong>feel supported, guided, and empowered</strong>.
                             </p>
+                            <p className="max-w-3xl text-base text-black/80 leading-relaxed"> With love, Guadalupe.</p>
                         </div>
                     </section>
 

@@ -8,18 +8,18 @@ export interface ContactLink {
 export const contactLinks: ContactLink[] = [
     {
         id: 'phone',
-        label: '(+598) 99 705 004',
-        href: 'tel:+59899705004'
+        label: '(+614) 93 557 397',
+        href: 'tel:+61493557397'
     },
     {
         id: 'email',
-        label: 'HOLA@NARCISOESTUDIO.COM',
-        href: 'mailto:HOLA@NARCISOESTUDIO.COM'
+        label: 'wonder@authenticwebstudio.com',
+        href: 'mailto:wonder@authenticwebstudio.com'
     },
     {
         id: 'instagram',
         label: 'Instagram',
-        href: 'https://instagram.com/narcisoestudio',
+        href: 'https://instagram.com/authenticwebstudio',
         external: true
     }
 ]
