@@ -23,9 +23,11 @@ const ROOT_DIR = path.resolve(__dirname, '..')
 const IS_VERCEL = !!process.env.VERCEL
 const USE_BLOB_STORAGE = IS_VERCEL && !!process.env.BLOB_READ_WRITE_TOKEN
 
-const STORAGE_BASE = IS_VERCEL ? '/tmp' : ROOT_DIR
-const STORAGE_DIR = path.join(STORAGE_BASE, 'server', 'storage')
+// En Vercel, intentar leer desde el repositorio primero, luego /tmp como fallback
+// El archivo photography.json del repositorio se puede leer directamente
+const STORAGE_DIR = path.join(ROOT_DIR, 'server', 'storage')
 const CONFIG_PATH = path.join(STORAGE_DIR, 'photography.json')
+const TEMP_CONFIG_PATH = IS_VERCEL ? path.join('/tmp', 'server', 'storage', 'photography.json') : null
 
 // En desarrollo: usa public/uploads
 // En Vercel con Blob: las imágenes se sirven desde Vercel Blob
@@ -145,13 +147,43 @@ function slugify(value: string): string {
 }
 
 async function readConfig(): Promise<PhotographyConfig> {
-    const exists = await fs.pathExists(CONFIG_PATH)
-    if (!exists) {
+    try {
+        // Intentar leer desde el repositorio primero
+        let configPath = CONFIG_PATH
+        let exists = await fs.pathExists(CONFIG_PATH)
+
+        // Si no existe y estamos en Vercel, intentar desde /tmp
+        if (!exists && IS_VERCEL && TEMP_CONFIG_PATH) {
+            configPath = TEMP_CONFIG_PATH
+            exists = await fs.pathExists(TEMP_CONFIG_PATH)
+        }
+
+        if (exists) {
+            return await fs.readJSON(configPath)
+        }
+
+        // Si no existe en ningún lugar, crear configuración por defecto
         const defaultConfig = getDefaultConfig()
-        await writeConfig(defaultConfig)
+
+        // Intentar escribir en /tmp si estamos en Vercel, o en el repositorio si estamos en desarrollo
+        try {
+            if (IS_VERCEL && TEMP_CONFIG_PATH) {
+                await fs.ensureDir(path.dirname(TEMP_CONFIG_PATH))
+                await fs.writeJSON(TEMP_CONFIG_PATH, defaultConfig, { spaces: 2 })
+            } else {
+                await writeConfig(defaultConfig)
+            }
+        } catch (writeError) {
+            // Si no podemos escribir, solo devolver el default
+            console.warn('No se pudo escribir la configuración, usando valores por defecto:', writeError)
+        }
+
         return defaultConfig
+    } catch (error) {
+        console.error('Error reading config, using default:', error)
+        // Si hay error leyendo, devolver configuración por defecto
+        return getDefaultConfig()
     }
-    return fs.readJSON(CONFIG_PATH)
 }
 
 function getDefaultConfig(): PhotographyConfig {
@@ -222,8 +254,15 @@ function getDefaultConfig(): PhotographyConfig {
 }
 
 async function writeConfig(config: PhotographyConfig) {
-    await fs.ensureDir(STORAGE_DIR)
-    await fs.writeJSON(CONFIG_PATH, config, { spaces: 2 })
+    // En Vercel, escribir en /tmp; en desarrollo, escribir en el repositorio
+    let targetPath = CONFIG_PATH
+    if (IS_VERCEL && TEMP_CONFIG_PATH) {
+        targetPath = TEMP_CONFIG_PATH
+        await fs.ensureDir(path.dirname(TEMP_CONFIG_PATH))
+    } else {
+        await fs.ensureDir(STORAGE_DIR)
+    }
+    await fs.writeJSON(targetPath, config, { spaces: 2 })
 }
 
 function createToken(username: string) {
@@ -280,10 +319,23 @@ app.get('/api/auth/validate', authenticateToken, (_req, res) => {
 app.get('/api/photography', async (_req, res) => {
     try {
         const config = await readConfig()
+        // Asegurarse de que siempre devolvemos una configuración válida
+        if (!config || !Array.isArray(config.categories)) {
+            const defaultConfig = getDefaultConfig()
+            res.json(defaultConfig)
+            return
+        }
         res.json(config)
     } catch (error) {
         console.error('Error reading photography config', error)
-        res.status(500).json({ message: 'No se pudo obtener la configuración' })
+        // Si hay error, devolver configuración por defecto en lugar de error 500
+        try {
+            const defaultConfig = getDefaultConfig()
+            res.json(defaultConfig)
+        } catch (fallbackError) {
+            console.error('Error creating default config', fallbackError)
+            res.status(500).json({ message: 'No se pudo obtener la configuración' })
+        }
     }
 })
 

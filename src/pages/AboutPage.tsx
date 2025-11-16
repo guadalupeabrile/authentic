@@ -308,7 +308,7 @@ function AboutPage() {
                             <p className="max-w-3xl text-base text-black/80 leading-relaxed">
                                 My goal is to create digital experiences that are honest, useful, and beautiful—while making every client <strong>feel supported, guided, and empowered</strong>.
                             </p>
-                            <p className="max-w-3xl text-base text-black/80 leading-relaxed"> With love, Guadalupe.</p>
+                            <p className="max-w-3xl text-base text-black/80 leading-relaxed"> With kindness, Guadalupe.</p>
                         </div>
                     </section>
 
