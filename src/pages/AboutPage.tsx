@@ -292,13 +292,13 @@ function AboutPage() {
                                 I am a multidisciplinary creator who brings together project management, photography, web development, and a personal path rooted in yoga and reiki. I'm passionate about water sports, meditation, and the quiet observation of the natural world we're part of.
                             </p>
                             <p className="max-w-3xl text-base text-black/80 leading-relaxed">
-                                I'm at a point where I'm <strong>integrating</strong> both sides of my path: the analytical mind of project management and engineering with the intuitive world of yoga, reiki.and meditation. This results in <strong>projects that flow, solve problems, and still have soul</strong>.
+                                I'm at a point where I'm <strong>integrating</strong> both sides of my path: the analytical mind of project management and engineering with the intuitive world of yoga, reiki and meditation. This results in <strong>projects that flow, solve problems, and still have soul</strong>.
                             </p>
                             <p className="max-w-3xl text-base text-black/80 leading-relaxed">
                                 I focus on building functional, aesthetic, and intuitive websites for entrepreneurs, artists, therapists, and businesses that need an online presence with purpose. My approach blends strategy, visual sensitivity, and simple, honest communication.
                             </p>
                             <p className="max-w-3xl text-base text-black/80 leading-relaxed">
-                                Photography is another core part of my work: I document spaces, nature—especially Australian native plants, a field I'm learning with real curiosity and respect—and visual stories that help brands express who they are.
+                                Photography is another core part of my work: I document spaces, nature and visual stories that help brands express who they are.
                             </p>
                             <p className="max-w-3xl text-base text-black/80 leading-relaxed">
                                 My goal is to create digital experiences that are honest, useful, and beautiful—while making every client <strong>feel supported, guided, and empowered</strong>.
@@ -313,7 +313,7 @@ function AboutPage() {
                                 <img
                                     src={bottomImage}
                                     alt="About bottom"
-                                    className="w-full h-auto md:h-[480px] object-cover"
+                                    className="w-full h-auto object-contain"
                                 />
                                 {isAdmin && editMode && (
                                     <div className="flex flex-wrap items-center gap-3 text-[11px] text-black/60 mt-3 px-6">
