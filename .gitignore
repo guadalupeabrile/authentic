@@ -23,3 +23,8 @@ dist-ssr
 *.sln
 *.sw?
 
+# Excluir imágenes grandes de uploads (en producción se usarán desde Blob Storage)
+# Esto reduce el tamaño del repositorio y del deployment
+public/uploads/photography/**
+!public/uploads/photography/.gitkeep
+
