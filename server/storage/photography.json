@@ -1,4 +1,8 @@
 {
+  "aboutImages": [
+    "/uploads/photography/about/1763290302700-203f17c7-3fc6-4790-8a70-353b01b61182.JPG"
+  ],
+  "aboutBottomImage": "/uploads/photography/about-bottom/1763288405565-5e24898a-94cd-444a-8776-cb709048efa4.jpg",
   "categories": [
     {
       "id": "naturaleza",
@@ -187,9 +191,9 @@
                 "/uploads/photography/hola/1763277413222-1c178f4f-83db-44cc-8c0f-7b23a46172b7.JPG",
                 "/uploads/photography/hola/1763277430499-32b81b78-6c14-4676-8033-45d034adabc1.JPG",
                 "/uploads/photography/hola/1763277837846-2e7cf5bd-831b-46e3-9de9-b1b5917d0397.JPG",
-                "/uploads/photography/hola/1763277543808-77a26c45-a368-4a55-bcd0-d8bc4c6348c9.JPG",
                 "/uploads/photography/hola/1763277590358-6299c08e-dbb9-42ea-b7da-c8a0c0a04508.JPG",
-                "/uploads/photography/hola/1763277850188-d8cb842e-d967-44c3-8fe7-2d6638c0ef04.JPG"
+                "/uploads/photography/hola/1763277850188-d8cb842e-d967-44c3-8fe7-2d6638c0ef04.JPG",
+                "/uploads/photography/hola/1763277543808-77a26c45-a368-4a55-bcd0-d8bc4c6348c9.JPG"
               ],
               "flex": 1
             }
@@ -231,9 +235,5 @@
         }
       ]
     }
-  ],
-  "aboutImages": [
-    "/uploads/photography/about/1763288448786-ab193161-f3b3-4d6f-8616-c7f8b78efe4b.JPG"
-  ],
-  "aboutBottomImage": "/uploads/photography/about-bottom/1763288405565-5e24898a-94cd-444a-8776-cb709048efa4.jpg"
+  ]
 }

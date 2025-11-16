@@ -50,10 +50,15 @@ function AboutPage() {
                         Authorization: `Bearer ${token}`
                     }
                 })
-                if (response.ok && isMounted) {
+                if (!isMounted) return
+
+                if (response.ok) {
                     setIsAdmin(true)
                 } else {
-                    clearAdminToken()
+                    // Si el token ya no es válido, marcamos que no es admin,
+                    // pero no borramos el token de localStorage automáticamente
+                    // para evitar “deslogueos” inesperados en otras pestañas.
+                    setIsAdmin(false)
                 }
             } catch {
                 // ignore
@@ -237,7 +242,7 @@ function AboutPage() {
                         {/* Columna de imágenes (izquierda) */}
                         <aside className="mt-10 md:mt-0 md:border-r md:border-black/10 flex flex-col h-full">
                             {aboutImages.length > 0 ? (
-                                <div className="relative w-full h-full min-h-[280px]">
+                                <div className="group relative w-full h-full min-h-[280px]">
                                     <img
                                         src={aboutImages[0]}
                                         alt="About image"
