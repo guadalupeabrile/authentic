@@ -21,7 +21,7 @@ function WebsPage() {
                     <WebProjectsList />
                 </main>
 
-                <Footer />
+                <Footer darkText />
             </div>
         </>
     )

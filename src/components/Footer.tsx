@@ -4,9 +4,10 @@ import { cn } from '../lib/cn'
 
 interface FooterProps {
     className?: string
+    darkText?: boolean
 }
 
-export function Footer({ className }: FooterProps) {
+export function Footer({ className, darkText }: FooterProps) {
     const [isVisible, setIsVisible] = useState(false)
 
     useEffect(() => {
@@ -49,14 +50,19 @@ export function Footer({ className }: FooterProps) {
                 )}
                 style={{ transitionDelay: '160ms' }}
             >
-                <div className="mb-2 flex w-[95%] items-center justify-between gap-3 text-[10px] sm:text-xs md:text-sm lg:text-base md:gap-4 mix-blend-difference text-white text-center mx-auto font-light lowercase tracking-[0.15em]">
+                <div
+                    className={cn(
+                        'mb-2 flex w-[95%] items-center justify-between gap-3 text-[10px] sm:text-xs md:text-sm lg:text-base md:gap-4 text-center mx-auto font-light uppercase tracking-[0.15em]',
+                        darkText ? 'text-black' : 'mix-blend-difference text-white'
+                    )}
+                >
                     {contactLinks.map((link) => (
                         <a
                             key={link.id}
                             href={link.href}
                             target={link.external ? '_blank' : undefined}
                             rel={link.external ? 'noopener noreferrer' : undefined}
-                            className="hover:opacity-70 transition-opacity lowercase tracking-wider"
+                            className="hover:opacity-70 transition-opacity tracking-wider"
                         >
                             {link.label}
                         </a>

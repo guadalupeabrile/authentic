@@ -50,7 +50,7 @@ export function HeaderSecondary({
                                 className={cn(
                                     'text-black/80 hover:text-black transition-colors duration-200',
                                     'text-[10px] sm:text-xs md:text-sm lg:text-sm',
-                                    'lowercase tracking-[0.1em]',
+                                    'uppercase tracking-[0.1em]',
                                     isActive && 'border-b border-black/80 pb-1'
                                 )}
                             >

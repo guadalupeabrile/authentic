@@ -17,10 +17,10 @@ function AboutPage() {
                     <HeaderSecondary activeUrl="/about" logoSrc="/img/logo_white.png" />
                 </div>
 
-                <main className="pt-32 pb-24 px-6 sm:px-12 md:px-24 lg:px-32">
-                    <section className="max-w-4xl mx-auto space-y-6">
-                        <h1 className="text-3xl md:text-5xl font-light tracking-[0.15em] uppercase">About</h1>
-                        <p className="text-base md:text-lg text-white/80 leading-relaxed">
+                <main className="pt-32 pb-24 px-6">
+                    <section className=" space-y-6">
+                        <h1 className="text-2xl md:text-4xl font-light tracking-[0.15em] uppercase">About</h1>
+                        <p className="text-base text-white/80 leading-relaxed">
                             Comparte la historia de tu estudio, tu filosofía de diseño y presenta a tu equipo. Aprovecha
                             esta sección para generar confianza mostrando testimonios, reconocimientos y la forma en que
                             trabajas con tus clientes.
@@ -28,7 +28,7 @@ function AboutPage() {
                     </section>
                 </main>
 
-                <Footer />
+                <Footer darkText />
             </div>
         </>
     )

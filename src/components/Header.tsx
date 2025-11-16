@@ -46,7 +46,7 @@ export function Header({
                                 className={cn(
                                     'text-white/95 hover:text-white transition-colors duration-200',
                                     'text-[10px] sm:text-xs md:text-sm lg:text-sm',
-                                    'font-light tracking-[0.1em] lowercase',
+                                    'font-light tracking-[0.1em] uppercase',
                                     'drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]',
                                     isActive && 'underline underline-offset-4 decoration-white/90'
                                 )}
