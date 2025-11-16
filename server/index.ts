@@ -60,6 +60,8 @@ type PhotographyCategory = {
 
 type PhotographyConfig = {
     categories: PhotographyCategory[]
+    // Rutas de imágenes que se usan específicamente en la página About
+    aboutImages?: string[]
 }
 
 const app = express()

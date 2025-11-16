@@ -13,6 +13,7 @@ function AdminPage() {
     const [uploadResult, setUploadResult] = useState<string | null>(null)
     const [loadingConfig, setLoadingConfig] = useState(true)
     const [parsedConfig, setParsedConfig] = useState<PhotographyConfig | null>(null)
+    const [aboutImageInput, setAboutImageInput] = useState('')
 
     const isAuthenticated = Boolean(token)
 
@@ -109,6 +110,15 @@ function AdminPage() {
             return
         }
         setStatusMessage('Configuración guardada')
+    }
+
+    function updateConfig(updater: (current: PhotographyConfig) => PhotographyConfig) {
+        setParsedConfig(prev => {
+            if (!prev) return prev
+            const next = updater(prev)
+            setConfigText(JSON.stringify(next, null, 2))
+            return next
+        })
     }
 
     async function handleUpload(event: React.FormEvent<HTMLFormElement>) {
@@ -251,9 +261,74 @@ function AdminPage() {
                             </button>
                         </form>
                         {uploadResult && <p className="text-xs text-emerald-300">{uploadResult}</p>}
+                        <p className="text-xs text-white/60">Copia la ruta devuelta y úsala en tus layouts o en About.</p>
+                    </div>
+
+                    <div className="space-y-3 border border-white/15 rounded-lg p-4 bg-white/5">
+                        <h2 className="text-lg font-light">Imágenes de About</h2>
                         <p className="text-xs text-white/60">
-                            Copia la ruta devuelta y úsala en tu JSON dentro de la sección o columna que corresponda.
+                            Administra las imágenes que aparecen en la columna derecha de la página About.
                         </p>
+                        <form
+                            className="space-y-3"
+                            onSubmit={event => {
+                                event.preventDefault()
+                                if (!aboutImageInput.trim() || !parsedConfig) return
+                                const value = aboutImageInput.trim()
+                                updateConfig(current => ({
+                                    ...current,
+                                    aboutImages: [...(current.aboutImages ?? []), value]
+                                }))
+                                setAboutImageInput('')
+                            }}
+                        >
+                            <label className="block">
+                                <span className="text-xs uppercase tracking-widest text-white/60">Nueva ruta de imagen</span>
+                                <input
+                                    type="text"
+                                    value={aboutImageInput}
+                                    onChange={event => setAboutImageInput(event.target.value)}
+                                    className="mt-1 w-full bg-black/40 border border-white/20 rounded px-3 py-2 text-xs"
+                                    placeholder="/uploads/photography/..."
+                                />
+                            </label>
+                            <button
+                                type="submit"
+                                className="w-full bg-white text-black py-2 rounded hover:bg-gray-200 transition disabled:opacity-50"
+                                disabled={!aboutImageInput.trim() || !parsedConfig}
+                            >
+                                Agregar a About
+                            </button>
+                        </form>
+                        <div className="space-y-2 max-h-64 overflow-auto border-t border-white/10 pt-3">
+                            {(parsedConfig?.aboutImages ?? []).length === 0 ? (
+                                <p className="text-xs text-white/50">Todavía no hay imágenes configuradas para About.</p>
+                            ) : (
+                                (parsedConfig?.aboutImages ?? []).map((image, index) => (
+                                    <div
+                                        key={image + index}
+                                        className="flex items-center justify-between gap-2 text-xs bg-black/40 border border-white/15 rounded px-2 py-1"
+                                    >
+                                        <span className="truncate" title={image}>
+                                            {image}
+                                        </span>
+                                        <button
+                                            type="button"
+                                            className="text-red-300 hover:text-red-200 shrink-0"
+                                            onClick={() => {
+                                                if (!parsedConfig) return
+                                                updateConfig(current => ({
+                                                    ...current,
+                                                    aboutImages: (current.aboutImages ?? []).filter((_, i) => i !== index)
+                                                }))
+                                            }}
+                                        >
+                                            Quitar
+                                        </button>
+                                    </div>
+                                ))
+                            )}
+                        </div>
                     </div>
 
                     <div className="space-y-3 border border-white/15 rounded-lg p-4 bg-white/5">
