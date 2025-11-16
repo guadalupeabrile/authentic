@@ -233,29 +233,25 @@ function AboutPage() {
                 </div>
 
                 <main className="pt-32 pb-24 px-6">
-                    <section className="max-w-6xl mx-auto md:grid md:grid-cols-[minmax(0,1.2fr)_minmax(0,1.8fr)] md:gap-12">
+                    <section className="max-w-6xl mx-auto md:grid md:grid-cols-[minmax(0,1.2fr)_minmax(0,1.8fr)] md:gap-12 md:items-stretch">
                         {/* Columna de imágenes (izquierda) */}
-                        <aside className="mt-10 md:mt-0 md:border-r md:border-black/10  flex flex-col gap-4">
+                        <aside className="mt-10 md:mt-0 md:border-r md:border-black/10 flex flex-col h-full">
                             {aboutImages.length > 0 ? (
-                                <div className="flex flex-col gap-4">
-                                    {aboutImages.map((src, index) => (
-                                        <div key={src + index} className="relative group">
-                                            <img
-                                                src={src}
-                                                alt={`About image ${index + 1}`}
-                                                className="w-full h-auto object-contain"
-                                            />
-                                            {isAdmin && editMode && (
-                                                <button
-                                                    type="button"
-                                                    onClick={() => handleRemoveAboutImage(index)}
-                                                    className="absolute top-2 right-2 rounded bg-black/70 px-2 py-1 text-xs text-white opacity-0 group-hover:opacity-100 transition"
-                                                >
-                                                    Quitar
-                                                </button>
-                                            )}
-                                        </div>
-                                    ))}
+                                <div className="relative w-full h-full min-h-[280px]">
+                                    <img
+                                        src={aboutImages[0]}
+                                        alt="About image"
+                                        className="w-full h-full object-cover"
+                                    />
+                                    {isAdmin && editMode && (
+                                        <button
+                                            type="button"
+                                            onClick={() => handleRemoveAboutImage(0)}
+                                            className="absolute top-2 right-2 rounded bg-black/70 px-2 py-1 text-xs text-white opacity-0 group-hover:opacity-100 transition"
+                                        >
+                                            Quitar
+                                        </button>
+                                    )}
                                 </div>
                             ) : (
                                 <p className="text-xs text-black/50 max-w-xs">
@@ -307,47 +303,55 @@ function AboutPage() {
                             <p className="max-w-3xl text-base text-black/80 leading-relaxed">
                                 My goal is to create digital experiences that are honest, useful, and beautiful—while making every client <strong>feel supported, guided, and empowered</strong>.
                             </p>
-
-                            {/* Imagen inferior, alineada al ancho del texto */}
-                            {bottomImage && (
-                                <div className="max-w-3xl space-y-2 mt-6">
-                                    <img src={bottomImage} alt="About bottom" className="w-full h-auto object-contain" />
-                                    {isAdmin && editMode && (
-                                        <div className="flex flex-wrap items-center gap-3 text-[11px] text-black/60">
-                                            <button
-                                                type="button"
-                                                onClick={handleClearBottomImage}
-                                                className="rounded border border-black/30 px-3 py-1 uppercase tracking-[0.18em] hover:bg-black hover:text-white"
-                                            >
-                                                Quitar imagen inferior
-                                            </button>
-                                        </div>
-                                    )}
-                                </div>
-                            )}
-
-                            {isAdmin && editMode && (
-                                <form onSubmit={handleUploadBottomImage} className="max-w-3xl mt-4 space-y-2 text-xs">
-                                    <label className="block">
-                                        <span className="uppercase tracking-[0.2em] text-black/60">Nueva imagen inferior</span>
-                                        <input
-                                            type="file"
-                                            accept="image/*"
-                                            onChange={event => setBottomFile(event.target.files?.[0] ?? null)}
-                                            className="mt-2 w-full text-xs"
-                                        />
-                                    </label>
-                                    <button
-                                        type="submit"
-                                        disabled={!bottomFile || bottomUploading}
-                                        className="rounded border border-black/40 px-3 py-1 text-xs uppercase tracking-[0.2em] hover:bg-black hover:text-white disabled:opacity-50"
-                                    >
-                                        {bottomUploading ? 'Subiendo…' : bottomImage ? 'Reemplazar imagen inferior' : 'Agregar imagen inferior'}
-                                    </button>
-                                </form>
-                            )}
                         </div>
                     </section>
+
+                    {/* Imagen inferior con mismos márgenes que la sección superior */}
+                    {bottomImage && (
+                        <section className="mt-16">
+                            <div className="max-w-6xl mx-auto">
+                                <img
+                                    src={bottomImage}
+                                    alt="About bottom"
+                                    className="w-full h-auto md:h-[480px] object-cover"
+                                />
+                                {isAdmin && editMode && (
+                                    <div className="flex flex-wrap items-center gap-3 text-[11px] text-black/60 mt-3 px-6">
+                                        <button
+                                            type="button"
+                                            onClick={handleClearBottomImage}
+                                            className="rounded border border-black/30 px-3 py-1 uppercase tracking-[0.18em] hover:bg-black hover:text-white"
+                                        >
+                                            Quitar imagen inferior
+                                        </button>
+                                    </div>
+                                )}
+                            </div>
+                        </section>
+                    )}
+
+                    {isAdmin && editMode && (
+                        <section className="max-w-6xl mx-auto mt-6">
+                            <form onSubmit={handleUploadBottomImage} className="max-w-3xl space-y-2 text-xs">
+                                <label className="block">
+                                    <span className="uppercase tracking-[0.2em] text-black/60">Nueva imagen inferior</span>
+                                    <input
+                                        type="file"
+                                        accept="image/*"
+                                        onChange={event => setBottomFile(event.target.files?.[0] ?? null)}
+                                        className="mt-2 w-full text-xs"
+                                    />
+                                </label>
+                                <button
+                                    type="submit"
+                                    disabled={!bottomFile || bottomUploading}
+                                    className="rounded border border-black/40 px-3 py-1 text-xs uppercase tracking-[0.2em] hover:bg-black hover:text-white disabled:opacity-50"
+                                >
+                                    {bottomUploading ? 'Subiendo…' : bottomImage ? 'Reemplazar imagen inferior' : 'Agregar imagen inferior'}
+                                </button>
+                            </form>
+                        </section>
+                    )}
                 </main>
 
                 <Footer darkText />
