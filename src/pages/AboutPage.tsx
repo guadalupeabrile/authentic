@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet-async'
 import { HeaderSecondary } from '../components/HeaderSecondary'
 import { Footer } from '../components/Footer'
 import type { PhotographyConfig } from '../types/photography'
-import { clearAdminToken, getAdminToken } from '../lib/auth'
+import { getAdminToken } from '../lib/auth'
 
 function AboutPage() {
     const [config, setConfig] = useState<PhotographyConfig | null>(null)
