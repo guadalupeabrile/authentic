@@ -1,235 +1,235 @@
 {
-  "categories": [
-    {
-      "id": "naturaleza",
-      "title": "Naturaleza",
-      "description": "Exploración visual de paisajes naturales, flora y fauna capturados en su estado más puro.",
-      "sections": [
+    "categories": [
         {
-          "gap": 40,
-          "columnImages": [
-            {
-              "images": [
-                "/uploads/photography/naturaleza/1763182583802-a7d7da0e-1826-4438-8083-3cdf7b0a96a2.jpg",
-                "/uploads/photography/naturaleza/1763182692968-c08c1454-dc6a-46c1-a8ad-2ea6b192086b.JPG"
-              ],
-              "flex": 1
-            },
-            {
-              "images": [
-                "/uploads/photography/naturaleza/1763182577798-1a50241a-f02f-4b58-bcf5-f25d4c02de09.JPG",
-                "/uploads/photography/naturaleza/1763202766406-65c710f9-91b3-44cb-938e-6e6ae58cda08.JPG"
-              ],
-              "flex": 1
-            },
-            {
-              "images": [
-                "/uploads/photography/naturaleza/1763182564132-9f2b70f5-e220-4cb2-90e1-e34e3ad2adda.JPG",
-                "/uploads/photography/naturaleza/1763205060368-1973534f-0b1a-4586-9c46-fccb933278ae.JPG"
-              ],
-              "flex": 1
-            }
-          ]
+            "id": "naturaleza",
+            "title": "Naturaleza",
+            "description": "Exploración visual de paisajes naturales, flora y fauna capturados en su estado más puro.",
+            "sections": [
+                {
+                    "gap": 40,
+                    "columnImages": [
+                        {
+                            "images": [
+                                "/uploads/photography/naturaleza/1763182583802-a7d7da0e-1826-4438-8083-3cdf7b0a96a2.jpg",
+                                "/uploads/photography/naturaleza/1763182692968-c08c1454-dc6a-46c1-a8ad-2ea6b192086b.JPG"
+                            ],
+                            "flex": 1
+                        },
+                        {
+                            "images": [
+                                "/uploads/photography/naturaleza/1763182577798-1a50241a-f02f-4b58-bcf5-f25d4c02de09.JPG",
+                                "/uploads/photography/naturaleza/1763202766406-65c710f9-91b3-44cb-938e-6e6ae58cda08.JPG"
+                            ],
+                            "flex": 1
+                        },
+                        {
+                            "images": [
+                                "/uploads/photography/naturaleza/1763182564132-9f2b70f5-e220-4cb2-90e1-e34e3ad2adda.JPG",
+                                "/uploads/photography/naturaleza/1763205060368-1973534f-0b1a-4586-9c46-fccb933278ae.JPG"
+                            ],
+                            "flex": 1
+                        }
+                    ]
+                },
+                {
+                    "gap": 40,
+                    "columnImages": [
+                        {
+                            "images": [],
+                            "flex": 1
+                        },
+                        {
+                            "images": [],
+                            "flex": 1
+                        },
+                        {
+                            "images": [],
+                            "flex": 1
+                        }
+                    ]
+                },
+                {
+                    "gap": 40,
+                    "columnImages": [
+                        {
+                            "images": [],
+                            "flex": 1
+                        },
+                        {
+                            "images": [],
+                            "flex": 1
+                        },
+                        {
+                            "images": [],
+                            "flex": 1
+                        }
+                    ]
+                }
+            ]
         },
         {
-          "gap": 40,
-          "columnImages": [
-            {
-              "images": [],
-              "flex": 1
-            },
-            {
-              "images": [],
-              "flex": 1
-            },
-            {
-              "images": [],
-              "flex": 1
-            }
-          ]
+            "id": "retratos",
+            "title": "Retratos",
+            "description": "Colección de retratos que capturan la esencia y personalidad de cada sujeto.",
+            "sections": [
+                {
+                    "gap": 40,
+                    "columnImages": [
+                        {
+                            "images": [
+                                "/uploads/photography/retratos/1763205272999-39c398e9-d09b-4a56-aa14-25b49ad5c443.JPG",
+                                "/uploads/photography/retratos/1763206592442-b1b5619c-e6bd-4683-b557-8a56fdb42620.JPG",
+                                "/uploads/photography/retratos/1763206482780-a234db55-8279-4c19-9013-d32a4e0c9dd7.JPG",
+                                "/uploads/photography/retratos/1763206491474-13a3186b-c0ae-45ef-877f-a572aae13ebd.JPG",
+                                "/uploads/photography/retratos/1763205533645-7cdca3ae-89b1-4581-854e-c003dbadc8b4.JPG",
+                                "/uploads/photography/retratos/1763206358860-8fbd1bc7-a328-4cf7-a846-ed1ed3398e5d.JPG",
+                                "/uploads/photography/retratos/1763206665551-fb6c0857-002f-4ca9-b7a8-15098a7c3b66.JPG",
+                                "/uploads/photography/retratos/1763206787580-79678baf-dce6-43d9-acd9-75cf8f3cdba7.JPG"
+                            ],
+                            "flex": 1,
+                            "flexPerImage": [
+                                1,
+                                0.9
+                            ],
+                            "justifyContent": [
+                                "center",
+                                "flex-start"
+                            ],
+                            "alignItems": [
+                                "center",
+                                "center"
+                            ]
+                        },
+                        {
+                            "images": [
+                                "/uploads/photography/retratos/1763206505378-92509002-ddb2-4a49-8bd1-8970846da4c1.JPG",
+                                "/uploads/photography/retratos/1763205299970-1dd513c7-735e-434c-be7f-b86fb1b92e61.JPG",
+                                "/uploads/photography/retratos/1763206635743-d9ff3bf9-795d-49de-9bce-2b4b02562f6e.JPG",
+                                "/uploads/photography/retratos/1763206368146-e13c2bd3-7b55-49f5-9aa9-2a6e9c3743bc.jpg",
+                                "/uploads/photography/retratos/1763206659269-4c08055c-16c7-4baf-896d-7d17fd3da641.JPG"
+                            ],
+                            "flex": 1,
+                            "flexPerImage": [
+                                1
+                            ],
+                            "justifyContent": [
+                                "center"
+                            ],
+                            "alignItems": [
+                                "center"
+                            ]
+                        },
+                        {
+                            "images": [
+                                "/uploads/photography/retratos/1763205341535-71fdda1f-4851-4f79-b10f-abf6137389ee.JPG",
+                                "/uploads/photography/retratos/1763205505816-d603d792-7d8f-482f-a6a3-732c598a754a.JPG",
+                                "/uploads/photography/retratos/1763205382445-036a7c9d-a81f-47f0-8083-15079298ec07.JPG",
+                                "/uploads/photography/retratos/1763205522830-884109be-c789-4979-a1bd-bfb1dbbe1978.JPG",
+                                "/uploads/photography/retratos/1763206379988-afb95efa-e9d7-4374-a051-d6a1a9f80fbb.JPG",
+                                "/uploads/photography/retratos/1763206414482-b2b9754a-b077-4d2e-b7b2-9f568eb20d65.JPG"
+                            ],
+                            "flex": 1,
+                            "flexPerImage": [
+                                0.8,
+                                1,
+                                0.9
+                            ],
+                            "justifyContent": [
+                                "flex-start",
+                                "center",
+                                "flex-end"
+                            ],
+                            "alignItems": [
+                                "flex-start",
+                                "center",
+                                "flex-end"
+                            ]
+                        }
+                    ]
+                }
+            ]
         },
         {
-          "gap": 40,
-          "columnImages": [
-            {
-              "images": [],
-              "flex": 1
-            },
-            {
-              "images": [],
-              "flex": 1
-            },
-            {
-              "images": [],
-              "flex": 1
-            }
-          ]
+            "id": "hola",
+            "title": "Hola",
+            "description": "hola hola",
+            "sections": [
+                {
+                    "gap": 40,
+                    "columnImages": [
+                        {
+                            "images": [
+                                "/uploads/photography/hola/1763277486987-06e64fe3-0ee5-4103-9054-5f719d6a0eda.JPG",
+                                "/uploads/photography/hola/1763277398026-afc82cfa-2ccb-4149-8033-40160d023763.JPG",
+                                "/uploads/photography/hola/1763277446270-e835819d-47ca-4c31-853b-e834062f9f7b.JPG",
+                                "/uploads/photography/hola/1763277548399-c1ff86af-d342-43a7-b6c7-75d1a0f78c27.JPG",
+                                "/uploads/photography/hola/1763277601751-3edef45a-3876-44bf-b38e-91658ba177c0.JPG",
+                                "/uploads/photography/hola/1763278018755-382e0cba-e01a-454a-bf45-5271b750bdd4.JPG",
+                                "/uploads/photography/hola/1763277758010-379677f0-2774-463f-b06a-94ce2088eb02.JPG",
+                                "/uploads/photography/hola/1763277897334-2c2cc3e3-ecd1-4860-8ea4-43ba803e28c2.JPG"
+                            ],
+                            "flex": 1
+                        },
+                        {
+                            "images": [
+                                "/uploads/photography/hola/1763277481007-c823bf7b-513f-4b7d-b23e-0bfffb5e3add.JPG",
+                                "/uploads/photography/hola/1763277404339-70d08b23-da8a-4fb9-80e4-0a95bedeca34.JPG",
+                                "/uploads/photography/hola/1763277522599-3ca37f3b-8005-44df-8873-a4b61c0c23e2.JPG",
+                                "/uploads/photography/hola/1763277585172-c9504362-cc21-4874-a2ef-0d6d22a65251.JPG",
+                                "/uploads/photography/hola/1763277669613-a24a10e5-5847-4c3a-98a0-5a7a1c5421be.JPG",
+                                "/uploads/photography/hola/1763277729334-6bb65ee3-7748-4c33-9a79-eb63bc5ca177.JPG"
+                            ],
+                            "flex": 1
+                        },
+                        {
+                            "images": [
+                                "/uploads/photography/hola/1763277497757-844db10a-3fdf-4694-8631-2d96d929b57c.JPG",
+                                "/uploads/photography/hola/1763277413222-1c178f4f-83db-44cc-8c0f-7b23a46172b7.JPG",
+                                "/uploads/photography/hola/1763277430499-32b81b78-6c14-4676-8033-45d034adabc1.JPG",
+                                "/uploads/photography/hola/1763277837846-2e7cf5bd-831b-46e3-9de9-b1b5917d0397.JPG",
+                                "/uploads/photography/hola/1763277543808-77a26c45-a368-4a55-bcd0-d8bc4c6348c9.JPG",
+                                "/uploads/photography/hola/1763277590358-6299c08e-dbb9-42ea-b7da-c8a0c0a04508.JPG",
+                                "/uploads/photography/hola/1763277850188-d8cb842e-d967-44c3-8fe7-2d6638c0ef04.JPG"
+                            ],
+                            "flex": 1
+                        }
+                    ]
+                },
+                {
+                    "gap": 40,
+                    "columnImages": [
+                        {
+                            "images": [],
+                            "flex": 1
+                        },
+                        {
+                            "images": [],
+                            "flex": 1
+                        },
+                        {
+                            "images": [],
+                            "flex": 1
+                        }
+                    ]
+                },
+                {
+                    "gap": 40,
+                    "columnImages": [
+                        {
+                            "images": [],
+                            "flex": 1
+                        },
+                        {
+                            "images": [],
+                            "flex": 1
+                        },
+                        {
+                            "images": [],
+                            "flex": 1
+                        }
+                    ]
+                }
+            ]
         }
-      ]
-    },
-    {
-      "id": "retratos",
-      "title": "Retratos",
-      "description": "Colección de retratos que capturan la esencia y personalidad de cada sujeto.",
-      "sections": [
-        {
-          "gap": 40,
-          "columnImages": [
-            {
-              "images": [
-                "/uploads/photography/retratos/1763205272999-39c398e9-d09b-4a56-aa14-25b49ad5c443.JPG",
-                "/uploads/photography/retratos/1763206592442-b1b5619c-e6bd-4683-b557-8a56fdb42620.JPG",
-                "/uploads/photography/retratos/1763206482780-a234db55-8279-4c19-9013-d32a4e0c9dd7.JPG",
-                "/uploads/photography/retratos/1763206491474-13a3186b-c0ae-45ef-877f-a572aae13ebd.JPG",
-                "/uploads/photography/retratos/1763205533645-7cdca3ae-89b1-4581-854e-c003dbadc8b4.JPG",
-                "/uploads/photography/retratos/1763206358860-8fbd1bc7-a328-4cf7-a846-ed1ed3398e5d.JPG",
-                "/uploads/photography/retratos/1763206665551-fb6c0857-002f-4ca9-b7a8-15098a7c3b66.JPG",
-                "/uploads/photography/retratos/1763206787580-79678baf-dce6-43d9-acd9-75cf8f3cdba7.JPG"
-              ],
-              "flex": 1,
-              "flexPerImage": [
-                1,
-                0.9
-              ],
-              "justifyContent": [
-                "center",
-                "flex-start"
-              ],
-              "alignItems": [
-                "center",
-                "center"
-              ]
-            },
-            {
-              "images": [
-                "/uploads/photography/retratos/1763206505378-92509002-ddb2-4a49-8bd1-8970846da4c1.JPG",
-                "/uploads/photography/retratos/1763205299970-1dd513c7-735e-434c-be7f-b86fb1b92e61.JPG",
-                "/uploads/photography/retratos/1763206635743-d9ff3bf9-795d-49de-9bce-2b4b02562f6e.JPG",
-                "/uploads/photography/retratos/1763206368146-e13c2bd3-7b55-49f5-9aa9-2a6e9c3743bc.jpg",
-                "/uploads/photography/retratos/1763206659269-4c08055c-16c7-4baf-896d-7d17fd3da641.JPG"
-              ],
-              "flex": 1,
-              "flexPerImage": [
-                1
-              ],
-              "justifyContent": [
-                "center"
-              ],
-              "alignItems": [
-                "center"
-              ]
-            },
-            {
-              "images": [
-                "/uploads/photography/retratos/1763205341535-71fdda1f-4851-4f79-b10f-abf6137389ee.JPG",
-                "/uploads/photography/retratos/1763205505816-d603d792-7d8f-482f-a6a3-732c598a754a.JPG",
-                "/uploads/photography/retratos/1763205382445-036a7c9d-a81f-47f0-8083-15079298ec07.JPG",
-                "/uploads/photography/retratos/1763205522830-884109be-c789-4979-a1bd-bfb1dbbe1978.JPG",
-                "/uploads/photography/retratos/1763206379988-afb95efa-e9d7-4374-a051-d6a1a9f80fbb.JPG",
-                "/uploads/photography/retratos/1763206414482-b2b9754a-b077-4d2e-b7b2-9f568eb20d65.JPG"
-              ],
-              "flex": 1,
-              "flexPerImage": [
-                0.8,
-                1,
-                0.9
-              ],
-              "justifyContent": [
-                "flex-start",
-                "center",
-                "flex-end"
-              ],
-              "alignItems": [
-                "flex-start",
-                "center",
-                "flex-end"
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "hola",
-      "title": "Hola",
-      "description": "hola hola",
-      "sections": [
-        {
-          "gap": 40,
-          "columnImages": [
-            {
-              "images": [
-                "/uploads/photography/hola/1763277486987-06e64fe3-0ee5-4103-9054-5f719d6a0eda.JPG",
-                "/uploads/photography/hola/1763277398026-afc82cfa-2ccb-4149-8033-40160d023763.JPG",
-                "/uploads/photography/hola/1763277446270-e835819d-47ca-4c31-853b-e834062f9f7b.JPG",
-                "/uploads/photography/hola/1763277548399-c1ff86af-d342-43a7-b6c7-75d1a0f78c27.JPG",
-                "/uploads/photography/hola/1763277601751-3edef45a-3876-44bf-b38e-91658ba177c0.JPG",
-                "/uploads/photography/hola/1763278018755-382e0cba-e01a-454a-bf45-5271b750bdd4.JPG",
-                "/uploads/photography/hola/1763277758010-379677f0-2774-463f-b06a-94ce2088eb02.JPG",
-                "/uploads/photography/hola/1763277897334-2c2cc3e3-ecd1-4860-8ea4-43ba803e28c2.JPG"
-              ],
-              "flex": 1
-            },
-            {
-              "images": [
-                "/uploads/photography/hola/1763277481007-c823bf7b-513f-4b7d-b23e-0bfffb5e3add.JPG",
-                "/uploads/photography/hola/1763277404339-70d08b23-da8a-4fb9-80e4-0a95bedeca34.JPG",
-                "/uploads/photography/hola/1763277522599-3ca37f3b-8005-44df-8873-a4b61c0c23e2.JPG",
-                "/uploads/photography/hola/1763277585172-c9504362-cc21-4874-a2ef-0d6d22a65251.JPG",
-                "/uploads/photography/hola/1763277669613-a24a10e5-5847-4c3a-98a0-5a7a1c5421be.JPG",
-                "/uploads/photography/hola/1763277729334-6bb65ee3-7748-4c33-9a79-eb63bc5ca177.JPG"
-              ],
-              "flex": 1
-            },
-            {
-              "images": [
-                "/uploads/photography/hola/1763277497757-844db10a-3fdf-4694-8631-2d96d929b57c.JPG",
-                "/uploads/photography/hola/1763277413222-1c178f4f-83db-44cc-8c0f-7b23a46172b7.JPG",
-                "/uploads/photography/hola/1763277430499-32b81b78-6c14-4676-8033-45d034adabc1.JPG",
-                "/uploads/photography/hola/1763277837846-2e7cf5bd-831b-46e3-9de9-b1b5917d0397.JPG",
-                "/uploads/photography/hola/1763277543808-77a26c45-a368-4a55-bcd0-d8bc4c6348c9.JPG",
-                "/uploads/photography/hola/1763277590358-6299c08e-dbb9-42ea-b7da-c8a0c0a04508.JPG",
-                "/uploads/photography/hola/1763277850188-d8cb842e-d967-44c3-8fe7-2d6638c0ef04.JPG"
-              ],
-              "flex": 1
-            }
-          ]
-        },
-        {
-          "gap": 40,
-          "columnImages": [
-            {
-              "images": [],
-              "flex": 1
-            },
-            {
-              "images": [],
-              "flex": 1
-            },
-            {
-              "images": [],
-              "flex": 1
-            }
-          ]
-        },
-        {
-          "gap": 40,
-          "columnImages": [
-            {
-              "images": [],
-              "flex": 1
-            },
-            {
-              "images": [],
-              "flex": 1
-            },
-            {
-              "images": [],
-              "flex": 1
-            }
-          ]
-        }
-      ]
-    }
-  ]
+    ]
 }
