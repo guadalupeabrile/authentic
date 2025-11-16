@@ -62,7 +62,10 @@ export function Footer({ className, darkText }: FooterProps) {
                             href={link.href}
                             target={link.external ? '_blank' : undefined}
                             rel={link.external ? 'noopener noreferrer' : undefined}
-                            className="hover:opacity-70 transition-opacity tracking-wider"
+                            className={cn(
+                                "hover:opacity-70 transition-opacity tracking-wider",
+                                link.id === 'email' ? 'lowercase' : ''
+                            )}
                         >
                             {link.label}
                         </a>
