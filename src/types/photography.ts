@@ -9,7 +9,9 @@ export interface PhotographyCategory {
 
 export interface PhotographyConfig {
     categories: PhotographyCategory[]
-    // Imágenes que se mostrarán en la columna derecha de la página About
+    // Imágenes que se mostrarán en la página About
     aboutImages?: string[]
+    // Imagen destacada debajo del texto en About
+    aboutBottomImage?: string
 }
 

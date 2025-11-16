@@ -62,6 +62,8 @@ type PhotographyConfig = {
     categories: PhotographyCategory[]
     // Rutas de imágenes que se usan específicamente en la página About
     aboutImages?: string[]
+    // Imagen destacada que se muestra debajo del texto en About
+    aboutBottomImage?: string
 }
 
 const app = express()

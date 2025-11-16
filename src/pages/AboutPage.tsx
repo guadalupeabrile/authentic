@@ -13,8 +13,11 @@ function AboutPage() {
     const [statusMessage, setStatusMessage] = useState<string | null>(null)
     const [pendingFile, setPendingFile] = useState<File | null>(null)
     const [uploading, setUploading] = useState(false)
+    const [bottomFile, setBottomFile] = useState<File | null>(null)
+    const [bottomUploading, setBottomUploading] = useState(false)
 
     const aboutImages = config?.aboutImages ?? []
+    const bottomImage = config?.aboutBottomImage ?? null
 
     useEffect(() => {
         let isMounted = true
@@ -157,6 +160,64 @@ function AboutPage() {
         await persistConfig(nextConfig)
     }
 
+    async function handleClearBottomImage() {
+        if (!config) return
+        const token = getAdminToken()
+        if (!token) {
+            setStatusMessage('Debes iniciar sesión en /admin primero')
+            return
+        }
+        const nextConfig: PhotographyConfig = {
+            ...config,
+            aboutBottomImage: undefined
+        }
+        await persistConfig(nextConfig)
+    }
+
+    async function handleUploadBottomImage(event: React.FormEvent<HTMLFormElement>) {
+        event.preventDefault()
+        if (!bottomFile || !config) return
+
+        const token = getAdminToken()
+        if (!token) {
+            setStatusMessage('Debes iniciar sesión en /admin primero')
+            return
+        }
+
+        setBottomUploading(true)
+        setStatusMessage('Subiendo imagen inferior...')
+        try {
+            const formData = new FormData()
+            formData.append('file', bottomFile)
+            formData.append('category', 'about-bottom')
+
+            const response = await fetch('/api/upload', {
+                method: 'POST',
+                headers: {
+                    Authorization: `Bearer ${token}`
+                },
+                body: formData
+            })
+
+            if (!response.ok) {
+                throw new Error('No se pudo subir la imagen')
+            }
+
+            const data = (await response.json()) as { path: string }
+            const nextConfig: PhotographyConfig = {
+                ...config,
+                aboutBottomImage: data.path
+            }
+            await persistConfig(nextConfig)
+            setBottomFile(null)
+        } catch (error) {
+            console.error(error)
+            setStatusMessage('Error al subir la imagen inferior')
+        } finally {
+            setBottomUploading(false)
+        }
+    }
+
     return (
         <>
             <Helmet>
@@ -172,32 +233,9 @@ function AboutPage() {
                 </div>
 
                 <main className="pt-32 pb-24 px-6">
-                    <section className="max-w-6xl mx-auto md:grid md:grid-cols-[minmax(0,2fr)_minmax(0,1fr)] md:gap-12">
-                        {/* Texto principal */}
-                        <div className="space-y-6">
-                            <h1 className="text-2xl md:text-4xl font-light tracking-[0.15em] uppercase">
-                                About
-                            </h1>
-                            <p className="max-w-3xl text-base text-black/80 leading-relaxed">
-                                I am a multidisciplinary creator who brings together project management, photography, web development, and a personal path rooted in yoga and reiki. I'm passionate about water sports, meditation, and the quiet observation of the natural world we're part of.
-                            </p>
-                            <p className="max-w-3xl text-base text-black/80 leading-relaxed">
-                                I'm at a point where I'm <strong>integrating</strong> both sides of my path: the analytical mind of project management and engineering with the intuitive world of yoga, reiki.and meditation. This results in <strong>projects that flow, solve problems, and still have soul</strong>.
-                            </p>
-                            <p className="max-w-3xl text-base text-black/80 leading-relaxed">
-                                I focus on building functional, aesthetic, and intuitive websites for entrepreneurs, artists, therapists, and businesses that need an online presence with purpose. My approach blends strategy, visual sensitivity, and simple, honest communication.
-                            </p>
-                            <p className="max-w-3xl text-base text-black/80 leading-relaxed">
-                                Photography is another core part of my work: I document spaces, nature—especially Australian native plants, a field I'm learning with real curiosity and respect—and visual stories that help brands express who they are.
-                            </p>
-                            <p className="max-w-3xl text-base text-black/80 leading-relaxed">
-                                My goal is to create digital experiences that are honest, useful, and beautiful—while making every client <strong>feel supported, guided, and empowered</strong>.
-                            </p>
-                        </div>
-
-                        {/* Columna de imágenes */}
-                        <aside className="mt-10 md:mt-0 md:border-l md:border-black/10 md:pl-8 flex flex-col gap-4">
-
+                    <section className="max-w-6xl mx-auto md:grid md:grid-cols-[minmax(0,1.2fr)_minmax(0,1.8fr)] md:gap-12">
+                        {/* Columna de imágenes (izquierda) */}
+                        <aside className="mt-10 md:mt-0 md:border-r md:border-black/10  flex flex-col gap-4">
                             {aboutImages.length > 0 ? (
                                 <div className="flex flex-col gap-4">
                                     {aboutImages.map((src, index) => (
@@ -248,6 +286,67 @@ function AboutPage() {
                                 </form>
                             )}
                         </aside>
+
+                        {/* Texto principal (derecha) */}
+                        <div className="space-y-6 md:pl-4">
+                            <h1 className="text-2xl md:text-4xl font-light tracking-[0.15em] uppercase">
+                                About
+                            </h1>
+                            <p className="max-w-3xl text-base text-black/80 leading-relaxed md:ml-auto">
+                                I am a multidisciplinary creator who brings together project management, photography, web development, and a personal path rooted in yoga and reiki. I'm passionate about water sports, meditation, and the quiet observation of the natural world we're part of.
+                            </p>
+                            <p className="max-w-3xl text-base text-black/80 leading-relaxed">
+                                I'm at a point where I'm <strong>integrating</strong> both sides of my path: the analytical mind of project management and engineering with the intuitive world of yoga, reiki.and meditation. This results in <strong>projects that flow, solve problems, and still have soul</strong>.
+                            </p>
+                            <p className="max-w-3xl text-base text-black/80 leading-relaxed">
+                                I focus on building functional, aesthetic, and intuitive websites for entrepreneurs, artists, therapists, and businesses that need an online presence with purpose. My approach blends strategy, visual sensitivity, and simple, honest communication.
+                            </p>
+                            <p className="max-w-3xl text-base text-black/80 leading-relaxed">
+                                Photography is another core part of my work: I document spaces, nature—especially Australian native plants, a field I'm learning with real curiosity and respect—and visual stories that help brands express who they are.
+                            </p>
+                            <p className="max-w-3xl text-base text-black/80 leading-relaxed">
+                                My goal is to create digital experiences that are honest, useful, and beautiful—while making every client <strong>feel supported, guided, and empowered</strong>.
+                            </p>
+
+                            {/* Imagen inferior, alineada al ancho del texto */}
+                            {bottomImage && (
+                                <div className="max-w-3xl space-y-2 mt-6">
+                                    <img src={bottomImage} alt="About bottom" className="w-full h-auto object-contain" />
+                                    {isAdmin && editMode && (
+                                        <div className="flex flex-wrap items-center gap-3 text-[11px] text-black/60">
+                                            <button
+                                                type="button"
+                                                onClick={handleClearBottomImage}
+                                                className="rounded border border-black/30 px-3 py-1 uppercase tracking-[0.18em] hover:bg-black hover:text-white"
+                                            >
+                                                Quitar imagen inferior
+                                            </button>
+                                        </div>
+                                    )}
+                                </div>
+                            )}
+
+                            {isAdmin && editMode && (
+                                <form onSubmit={handleUploadBottomImage} className="max-w-3xl mt-4 space-y-2 text-xs">
+                                    <label className="block">
+                                        <span className="uppercase tracking-[0.2em] text-black/60">Nueva imagen inferior</span>
+                                        <input
+                                            type="file"
+                                            accept="image/*"
+                                            onChange={event => setBottomFile(event.target.files?.[0] ?? null)}
+                                            className="mt-2 w-full text-xs"
+                                        />
+                                    </label>
+                                    <button
+                                        type="submit"
+                                        disabled={!bottomFile || bottomUploading}
+                                        className="rounded border border-black/40 px-3 py-1 text-xs uppercase tracking-[0.2em] hover:bg-black hover:text-white disabled:opacity-50"
+                                    >
+                                        {bottomUploading ? 'Subiendo…' : bottomImage ? 'Reemplazar imagen inferior' : 'Agregar imagen inferior'}
+                                    </button>
+                                </form>
+                            )}
+                        </div>
                     </section>
                 </main>
 

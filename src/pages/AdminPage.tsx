@@ -312,19 +312,41 @@ function AdminPage() {
                                         <span className="truncate" title={image}>
                                             {image}
                                         </span>
-                                        <button
-                                            type="button"
-                                            className="text-red-300 hover:text-red-200 shrink-0"
-                                            onClick={() => {
-                                                if (!parsedConfig) return
-                                                updateConfig(current => ({
-                                                    ...current,
-                                                    aboutImages: (current.aboutImages ?? []).filter((_, i) => i !== index)
-                                                }))
-                                            }}
-                                        >
-                                            Quitar
-                                        </button>
+                                        <div className="flex items-center gap-2 shrink-0">
+                                            {parsedConfig?.aboutBottomImage === image && (
+                                                <span className="rounded bg-emerald-400/20 px-2 py-0.5 text-[10px] uppercase tracking-widest text-emerald-200">
+                                                    Inferior
+                                                </span>
+                                            )}
+                                            <button
+                                                type="button"
+                                                className="text-xs text-white/80 hover:text-white"
+                                                onClick={() => {
+                                                    if (!parsedConfig) return
+                                                    updateConfig(current => ({
+                                                        ...current,
+                                                        aboutBottomImage: image
+                                                    }))
+                                                }}
+                                            >
+                                                Usar abajo
+                                            </button>
+                                            <button
+                                                type="button"
+                                                className="text-red-300 hover:text-red-200"
+                                                onClick={() => {
+                                                    if (!parsedConfig) return
+                                                    updateConfig(current => ({
+                                                        ...current,
+                                                        aboutImages: (current.aboutImages ?? []).filter((_, i) => i !== index),
+                                                        aboutBottomImage:
+                                                            current.aboutBottomImage === image ? undefined : current.aboutBottomImage
+                                                    }))
+                                                }}
+                                            >
+                                                Quitar
+                                            </button>
+                                        </div>
                                     </div>
                                 ))
                             )}
