@@ -376,10 +376,10 @@ function PhotographyPage() {
                     <div className="space-y-24">
                         {content.map((category, categoryIndex) => (
                             <section key={category.id ?? categoryIndex} className="space-y-8">
-                                <div className="px-6 sm:px-12 md:px-24 lg:px-32">
-                                    <div className="max-w-7xl mx-auto space-y-6">
-                                        <h1 className="text-3xl md:text-4xl font-light">{category.title}</h1>
-                                        <p className="text-base md:text-lg text-black/80 leading-relaxed max-w-4xl">{category.description}</p>
+                                <div className="px-6">
+                                    <div className="space-y-6">
+                                        <h1 className="text-2xl md:text-4xl font-light">{category.title}</h1>
+                                        <p className="text-base text-black/80 leading-relaxed max-w-4xl">{category.description}</p>
                                         {error && categoryIndex === 0 && <p className="text-sm text-red-500">{error}</p>}
                                         {showEditorControls && editMode && category.id && (
                                             <div className="flex flex-wrap gap-3 text-sm">
@@ -396,8 +396,8 @@ function PhotographyPage() {
                                 </div>
 
                                 {category.sections.length > 0 && (
-                                    <div className="mt-12 w-full px-1 sm:px-3 md:px-2 lg:px-3">
-                                        <div className="max-w-7xl mx-auto">
+                                    <div className="mt-12 w-full px-6">
+                                        <div className="">
                                             <MasonryGrid
                                                 sections={category.sections}
                                                 horizontalMargin={0}
