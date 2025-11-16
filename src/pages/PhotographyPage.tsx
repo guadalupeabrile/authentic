@@ -7,57 +7,6 @@ import type { PhotographyCategory, PhotographyConfig } from '../types/photograph
 import { getAdminToken, clearAdminToken } from '../lib/auth'
 import { slugify } from '../lib/slugify'
 
-const FALLBACK_CATEGORIES: PhotographyCategory[] = [
-    {
-        id: 'naturaleza',
-        title: 'Naturaleza',
-        description: 'Exploración visual de paisajes naturales, flora y fauna capturados en su estado más puro.',
-        sections: [
-            {
-                gap: 48,
-                columnImages: [
-                    {
-                        images: ['/img/hero-sliders/1.jpg', '/img/hero-sliders/5.jpg'],
-                        flex: 1
-                    },
-                    {
-                        images: ['/img/hero-sliders/2.jpg', '/img/hero-sliders/4.jpg'],
-                        flex: 1
-                    },
-                    {
-                        images: ['/img/hero-sliders/3.jpg'],
-                        flex: 1
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        id: 'retratos',
-        title: 'Retratos',
-        description: 'Colección de retratos que capturan la esencia y personalidad de cada sujeto.',
-        sections: [
-            {
-                gap: 48,
-                columnImages: [
-                    {
-                        images: ['/img/hero-sliders/1.jpg', '/img/hero-sliders/2.jpg'],
-                        flex: 1
-                    },
-                    {
-                        images: ['/img/hero-sliders/3.jpg'],
-                        flex: 1
-                    },
-                    {
-                        images: ['/img/hero-sliders/4.jpg', '/img/hero-sliders/5.jpg'],
-                        flex: 1
-                    }
-                ]
-            }
-        ]
-    }
-]
-
 const createEmptySection = (): MasonrySection => ({
     gap: 48,
     columnImages: [
@@ -89,7 +38,9 @@ function cloneConfig(config: PhotographyConfig): PhotographyConfig {
 }
 
 function ensureThreeColumns(config: PhotographyConfig): PhotographyConfig {
-    const sanitizeColumn = (column: MasonrySection['columnImages'][number]): MasonrySection['columnImages'][number] => {
+    const sanitizeColumn = (
+        column: NonNullable<MasonrySection['columnImages']>[number]
+    ): NonNullable<MasonrySection['columnImages']>[number] => {
         return {
             ...column,
             images: column.images ?? [],
@@ -106,7 +57,7 @@ function ensureThreeColumns(config: PhotographyConfig): PhotographyConfig {
         categories: config.categories.map(category => ({
             ...category,
             sections: category.sections.map(section => {
-                if (section.columnImages) {
+                if (Array.isArray(section.columnImages)) {
                     const columnImages = section.columnImages.map(sanitizeColumn)
                     while (columnImages.length < 3) {
                         columnImages.push({
@@ -134,7 +85,7 @@ function ensureThreeColumns(config: PhotographyConfig): PhotographyConfig {
 }
 
 function PhotographyPage() {
-    const [config, setConfig] = useState<PhotographyConfig>(ensureThreeColumns({ categories: FALLBACK_CATEGORIES }))
+    const [config, setConfig] = useState<PhotographyConfig>(ensureThreeColumns({ categories: [] }))
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState<string | null>(null)
     const [isAdmin, setIsAdmin] = useState(false)
@@ -161,7 +112,7 @@ function PhotographyPage() {
             } catch (err) {
                 console.error(err)
                 if (isMounted) {
-                    setError('Mostrando la configuración local por un problema con el servidor.')
+                    setError('No se pudo cargar la galería desde el servidor.')
                 }
             } finally {
                 if (isMounted) {
@@ -445,28 +396,30 @@ function PhotographyPage() {
                                 </div>
 
                                 {category.sections.length > 0 && (
-                                    <div className="mt-12 w-full">
-                                        <MasonryGrid
-                                            sections={category.sections}
-                                            horizontalMargin={10}
-                                            editable={Boolean(showEditorControls && editMode)}
-                                            onAddImage={(sectionIndex, columnIndex) => {
-                                                if (!category.id) return
-                                                openAddImageModal(category.id, sectionIndex, columnIndex)
-                                            }}
-                                            onReplaceImage={(sectionIndex, columnIndex, imageIndex) => {
-                                                if (!category.id) return
-                                                openReplaceModal(category.id, sectionIndex, columnIndex, imageIndex)
-                                            }}
-                                            onRemoveImage={(sectionIndex, columnIndex, imageIndex) => {
-                                                if (!category.id) return
-                                                handleRemoveImage(category.id, sectionIndex, columnIndex, imageIndex)
-                                            }}
-                                            onMoveImage={(sectionIndex, columnIndex, imageIndex, direction) => {
-                                                if (!category.id) return
-                                                handleMoveImage(category.id, sectionIndex, columnIndex, imageIndex, direction)
-                                            }}
-                                        />
+                                    <div className="mt-12 w-full px-1 sm:px-3 md:px-2 lg:px-3">
+                                        <div className="max-w-7xl mx-auto">
+                                            <MasonryGrid
+                                                sections={category.sections}
+                                                horizontalMargin={0}
+                                                editable={Boolean(showEditorControls && editMode)}
+                                                onAddImage={(sectionIndex, columnIndex) => {
+                                                    if (!category.id) return
+                                                    openAddImageModal(category.id, sectionIndex, columnIndex)
+                                                }}
+                                                onReplaceImage={(sectionIndex, columnIndex, imageIndex) => {
+                                                    if (!category.id) return
+                                                    openReplaceModal(category.id, sectionIndex, columnIndex, imageIndex)
+                                                }}
+                                                onRemoveImage={(sectionIndex, columnIndex, imageIndex) => {
+                                                    if (!category.id) return
+                                                    handleRemoveImage(category.id, sectionIndex, columnIndex, imageIndex)
+                                                }}
+                                                onMoveImage={(sectionIndex, columnIndex, imageIndex, direction) => {
+                                                    if (!category.id) return
+                                                    handleMoveImage(category.id, sectionIndex, columnIndex, imageIndex, direction)
+                                                }}
+                                            />
+                                        </div>
                                     </div>
                                 )}
                             </section>
