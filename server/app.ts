@@ -314,16 +314,27 @@ app.get('/api/auth/validate', authenticateToken, (_req, res) => {
 })
 
 app.get('/api/photography', async (_req, res) => {
+    // Timeout de seguridad: si tarda más de 10 segundos, devolver default
+    const timeout = setTimeout(() => {
+        if (!res.headersSent) {
+            console.warn('Timeout reading config, returning default')
+            const defaultConfig = getDefaultConfig()
+            res.json(defaultConfig)
+        }
+    }, 10000)
+    
     try {
         console.log('=== /api/photography endpoint called ===')
         console.log('CONFIG_PATH:', CONFIG_PATH)
         console.log('ROOT_DIR:', ROOT_DIR)
         console.log('IS_VERCEL:', IS_VERCEL)
-
+        
         const config = await readConfig()
+        clearTimeout(timeout)
+        
         console.log('Config read successfully')
         console.log('Categories count:', config?.categories?.length || 0)
-
+        
         // Asegurarse de que siempre devolvemos una configuración válida
         if (!config || !Array.isArray(config.categories)) {
             console.warn('Invalid config structure, using default')
@@ -331,28 +342,31 @@ app.get('/api/photography', async (_req, res) => {
             console.log('Returning default config with', defaultConfig.categories.length, 'categories')
             return res.json(defaultConfig)
         }
-
+        
         // Log para debug
         console.log('Returning config with', config.categories.length, 'categories')
         console.log('First category:', config.categories[0]?.title || 'none')
         return res.json(config)
     } catch (error) {
+        clearTimeout(timeout)
         console.error('=== ERROR in /api/photography ===')
         console.error('Error type:', error?.constructor?.name)
         console.error('Error message:', error instanceof Error ? error.message : String(error))
         console.error('Error stack:', error instanceof Error ? error.stack : 'No stack')
-
+        
         // Si hay error, devolver configuración por defecto en lugar de error 500
-        try {
-            const defaultConfig = getDefaultConfig()
-            console.log('Returning default config due to error')
-            return res.json(defaultConfig)
-        } catch (fallbackError) {
-            console.error('FATAL: Error creating default config', fallbackError)
-            return res.status(500).json({
-                message: 'No se pudo obtener la configuración',
-                error: error instanceof Error ? error.message : 'Unknown error'
-            })
+        if (!res.headersSent) {
+            try {
+                const defaultConfig = getDefaultConfig()
+                console.log('Returning default config due to error')
+                return res.json(defaultConfig)
+            } catch (fallbackError) {
+                console.error('FATAL: Error creating default config', fallbackError)
+                return res.status(500).json({
+                    message: 'No se pudo obtener la configuración',
+                    error: error instanceof Error ? error.message : 'Unknown error'
+                })
+            }
         }
     }
 })
@@ -432,13 +446,13 @@ app.use((err: unknown, _req: express.Request, res: express.Response, _next: expr
             // Si res no es válido, no podemos enviar respuesta, solo loguear
             return
         }
-        
+
         // Verificar si los headers ya fueron enviados
         if (res.headersSent) {
             console.error('Error handler: headers already sent, cannot send error response', err)
             return
         }
-        
+
         if (err instanceof multer.MulterError) {
             return res.status(400).json({ message: err.message })
         }
