@@ -23,7 +23,6 @@ dist-ssr
 *.sln
 *.sw?
 
-# Las imágenes están en formato WebP localmente
-public/uploads/photography/**
-!public/uploads/photography/.gitkeep
+# Las imágenes WebP están incluidas en el repositorio para deployment estático
+# public/uploads/photography/**
 
