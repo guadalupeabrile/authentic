@@ -319,11 +319,11 @@ app.get('/api/photography', async (_req, res) => {
         console.log('CONFIG_PATH:', CONFIG_PATH)
         console.log('ROOT_DIR:', ROOT_DIR)
         console.log('IS_VERCEL:', IS_VERCEL)
-        
+
         const config = await readConfig()
         console.log('Config read successfully')
         console.log('Categories count:', config?.categories?.length || 0)
-        
+
         // Asegurarse de que siempre devolvemos una configuración válida
         if (!config || !Array.isArray(config.categories)) {
             console.warn('Invalid config structure, using default')
@@ -331,7 +331,7 @@ app.get('/api/photography', async (_req, res) => {
             console.log('Returning default config with', defaultConfig.categories.length, 'categories')
             return res.json(defaultConfig)
         }
-        
+
         // Log para debug
         console.log('Returning config with', config.categories.length, 'categories')
         console.log('First category:', config.categories[0]?.title || 'none')
@@ -341,7 +341,7 @@ app.get('/api/photography', async (_req, res) => {
         console.error('Error type:', error?.constructor?.name)
         console.error('Error message:', error instanceof Error ? error.message : String(error))
         console.error('Error stack:', error instanceof Error ? error.stack : 'No stack')
-        
+
         // Si hay error, devolver configuración por defecto en lugar de error 500
         try {
             const defaultConfig = getDefaultConfig()
@@ -349,7 +349,7 @@ app.get('/api/photography', async (_req, res) => {
             return res.json(defaultConfig)
         } catch (fallbackError) {
             console.error('FATAL: Error creating default config', fallbackError)
-            return res.status(500).json({ 
+            return res.status(500).json({
                 message: 'No se pudo obtener la configuración',
                 error: error instanceof Error ? error.message : 'Unknown error'
             })
@@ -423,12 +423,18 @@ app.post('/api/upload', authenticateToken, upload.single('file'), async (req, re
 })
 
 // Error handler para multer / errores inesperados
-app.use((err: unknown, _req: express.Request, res: express.Response) => {
+app.use((err: unknown, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
+    // Verificar que res tenga los métodos necesarios (para compatibilidad con serverless-http)
+    if (!res || typeof res.status !== 'function' || typeof res.json !== 'function') {
+        console.error('Error handler: res object is not a valid Express response', err)
+        return
+    }
+    
     if (err instanceof multer.MulterError) {
         return res.status(400).json({ message: err.message })
     }
     if (err instanceof Error) {
-        console.error(err)
+        console.error('Error handler caught:', err)
         return res.status(500).json({ message: err.message })
     }
     return res.status(500).json({ message: 'Error inesperado' })
