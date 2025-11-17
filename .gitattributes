@@ -1,9 +1,4 @@
-public/uploads/photography/**/*.{jpg,JPG,png,PNG,jpeg,JPEG} filter=lfs diff=lfs merge=lfs -text
-*.webp filter=lfs diff=lfs merge=lfs -text
-*.webp !text !filter !merge !diff
-*.jpg !text !filter !merge !diff
-*.JPG !text !filter !merge !diff
-*.png !text !filter !merge !diff
-*.PNG !text !filter !merge !diff
-*.jpeg !text !filter !merge !diff
-*.JPEG !text !filter !merge !diff
+# Git LFS removido - los archivos ahora se commitean normalmente
+# Si necesitas Git LFS en el futuro, descomenta las líneas siguientes:
+# public/uploads/photography/**/*.{jpg,JPG,png,PNG,jpeg,JPEG} filter=lfs diff=lfs merge=lfs -text
+# *.webp filter=lfs diff=lfs merge=lfs -text
