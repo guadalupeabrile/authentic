@@ -1,6 +1,8 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node'
 import serverless from 'serverless-http'
-import app from '../server/app'
+// En Vercel, después de compilar TypeScript, necesitamos usar .js
+// @ts-expect-error - Vercel compila .ts a .js, pero TypeScript no lo sabe
+import app from '../server/app.js'
 
 // Crear el handler serverless una sola vez
 const handler = serverless(app, {
@@ -25,7 +27,7 @@ export default async function (req: VercelRequest, res: VercelResponse) {
 
         console.log('Path string:', pathString)
         console.log('Full path:', fullPath)
-        
+
         // Crear request modificado con la URL correcta
         const modifiedReq = {
             ...req,
@@ -33,7 +35,7 @@ export default async function (req: VercelRequest, res: VercelResponse) {
             path: fullPath,
             originalUrl: fullPath
         } as VercelRequest
-        
+
         console.log('Calling serverless handler...')
         return handler(modifiedReq, res)
     } catch (error) {
