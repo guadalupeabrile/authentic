@@ -37,7 +37,11 @@ export default async function (req: VercelRequest, res: VercelResponse) {
         } as VercelRequest
 
         console.log('Calling serverless handler...')
-        return handler(modifiedReq, res)
+        
+        // serverless-http devuelve una Promise, esperarla directamente
+        const result = await handler(modifiedReq, res)
+        console.log('Serverless handler completed, result:', result)
+        return result
     } catch (error) {
         console.error('=== ERROR in API handler ===')
         console.error('Error type:', error?.constructor?.name)
@@ -45,7 +49,7 @@ export default async function (req: VercelRequest, res: VercelResponse) {
         console.error('Error stack:', error instanceof Error ? error.stack : 'No stack')
 
         if (!res.headersSent) {
-            res.status(500).json({
+            return res.status(500).json({
                 message: 'Internal server error',
                 error: error instanceof Error ? error.message : 'Unknown error',
                 details: process.env.NODE_ENV === 'development' ? (error instanceof Error ? error.stack : String(error)) : undefined
