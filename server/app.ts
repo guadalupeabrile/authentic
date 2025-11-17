@@ -148,40 +148,37 @@ function slugify(value: string): string {
 
 async function readConfig(): Promise<PhotographyConfig> {
     try {
+        // En Vercel, el archivo del repositorio está disponible directamente
         // Intentar leer desde el repositorio primero
         let configPath = CONFIG_PATH
-        let exists = await fs.pathExists(CONFIG_PATH)
-
-        // Si no existe y estamos en Vercel, intentar desde /tmp
-        if (!exists && IS_VERCEL && TEMP_CONFIG_PATH) {
-            configPath = TEMP_CONFIG_PATH
-            exists = await fs.pathExists(TEMP_CONFIG_PATH)
-        }
-
-        if (exists) {
-            return await fs.readJSON(configPath)
-        }
-
-        // Si no existe en ningún lugar, crear configuración por defecto
-        const defaultConfig = getDefaultConfig()
-
-        // Intentar escribir en /tmp si estamos en Vercel, o en el repositorio si estamos en desarrollo
+        let exists = false
+        
         try {
-            if (IS_VERCEL && TEMP_CONFIG_PATH) {
-                await fs.ensureDir(path.dirname(TEMP_CONFIG_PATH))
-                await fs.writeJSON(TEMP_CONFIG_PATH, defaultConfig, { spaces: 2 })
-            } else {
-                await writeConfig(defaultConfig)
-            }
-        } catch (writeError) {
-            // Si no podemos escribir, solo devolver el default
-            console.warn('No se pudo escribir la configuración, usando valores por defecto:', writeError)
+            exists = await fs.pathExists(CONFIG_PATH)
+        } catch (err) {
+            console.warn('Error checking CONFIG_PATH:', err)
         }
-
+        
+        if (exists) {
+            try {
+                const config = await fs.readJSON(configPath)
+                console.log('Config read from:', configPath, 'Categories:', config?.categories?.length || 0)
+                return config
+            } catch (readError) {
+                console.error('Error reading config file:', readError)
+                // Continuar para usar default
+            }
+        }
+        
+        // Si no existe o hubo error, usar configuración por defecto
+        console.log('Using default config (file not found or error reading)')
+        const defaultConfig = getDefaultConfig()
+        
+        // No intentar escribir en Vercel, solo devolver el default
         return defaultConfig
     } catch (error) {
-        console.error('Error reading config, using default:', error)
-        // Si hay error leyendo, devolver configuración por defecto
+        console.error('Error in readConfig, using default:', error)
+        // Si hay error, devolver configuración por defecto
         return getDefaultConfig()
     }
 }
