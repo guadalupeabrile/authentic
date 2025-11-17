@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react'
+import { motion } from 'framer-motion'
 import { Helmet } from 'react-helmet-async'
 import { HeaderSecondary } from '../components/HeaderSecondary'
 import { Footer } from '../components/Footer'
+import { OptimizedImage } from '../components/OptimizedImage'
 import type { PhotographyConfig } from '../types/photography'
 import photographyData from '../data/photography.json'
 
@@ -36,13 +38,21 @@ function AboutPage() {
                 <main className="pt-32 pb-24 px-6">
                     <section className="max-w-6xl mx-auto md:grid md:grid-cols-[minmax(0,1.2fr)_minmax(0,1.8fr)] md:gap-12 md:items-stretch">
                         {/* Columna de imágenes (izquierda) */}
-                        <aside className="mt-10 md:mt-0 md:border-r md:border-black/10 flex flex-col h-full">
+                        <motion.aside
+                            className="mt-10 md:mt-0 md:border-r md:border-black/10 flex flex-col h-full"
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.5 }}
+                        >
                             {aboutImages.length > 0 ? (
                                 <div className="group relative w-full h-full min-h-[280px]">
-                                    <img
+                                    <OptimizedImage
                                         src={aboutImages[0]}
                                         alt="About image"
                                         className="w-full h-full object-cover"
+                                        sizes="(max-width: 768px) 100vw, 40vw"
+                                        priority={true}
                                     />
                                 </div>
                             ) : (
@@ -50,10 +60,16 @@ function AboutPage() {
                                     No hay imágenes configuradas para mostrar aquí.
                                 </p>
                             )}
-                        </aside>
+                        </motion.aside>
 
                         {/* Texto principal (derecha) */}
-                        <div className="space-y-6 md:pl-4">
+                        <motion.div
+                            className="space-y-6 md:pl-4"
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.5, delay: 0.1 }}
+                        >
                             <h1 className="text-2xl md:text-4xl font-light tracking-[0.15em] uppercase">
                                 About Authentic
                             </h1>
@@ -74,20 +90,27 @@ function AboutPage() {
                                 My goal is to create digital experiences that are honest, useful, and beautiful—while making every client <strong>feel supported, guided, and empowered</strong>.
                             </p>
                             <p className="max-w-3xl text-base text-black/80 leading-relaxed"> With kindness, Guadalupe.</p>
-                        </div>
+                        </motion.div>
                     </section>
 
                     {/* Imagen inferior con mismos márgenes que la sección superior */}
                     {bottomImage && (
-                        <section className="mt-16">
+                        <motion.section
+                            className="mt-16"
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.5 }}
+                        >
                             <div className="max-w-6xl mx-auto">
-                                <img
+                                <OptimizedImage
                                     src={bottomImage}
                                     alt="About bottom"
                                     className="w-full h-auto object-contain"
+                                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1152px"
                                 />
                             </div>
-                        </section>
+                        </motion.section>
                     )}
                 </main>
 

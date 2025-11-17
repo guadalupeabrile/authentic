@@ -1,5 +1,6 @@
-import { useState } from 'react'
+import { motion } from 'framer-motion'
 import { cn } from '../lib/cn'
+import { OptimizedImage } from './OptimizedImage'
 
 export interface MasonryColumn {
     images: string[]
@@ -60,13 +61,6 @@ export function MasonryGrid({
     onRemoveImage,
     onMoveImage
 }: MasonryGridProps) {
-    const [loadedImages, setLoadedImages] = useState<Set<string>>(new Set())
-
-    // Manejar la carga de imágenes
-    const handleImageLoad = (sectionIndex: number, imageIndex: number | string) => {
-        const key = `${sectionIndex}-${imageIndex}`
-        setLoadedImages(prev => new Set(prev).add(key))
-    }
 
     // Función para generar márgenes verticales variables si no se proporcionan
     const getMargins = (images: string[], margins?: number[], gap: number = 16): number[] => {
@@ -230,11 +224,13 @@ export function MasonryGrid({
                                             style={{ flex: flexValue }}
                                         >
                                             {column.images.map((image, imageIndex) => {
-                                                const imageKey = `${sectionIndex}-${columnIndex}-${imageIndex}`
-                                                const isLoaded = loadedImages.has(imageKey)
+                                                const isPriority = sectionIndex === 0 && columnIndex === 0 && imageIndex < 2
+
+                                                // Calculate sizes based on desktop columns (typically 3 columns)
+                                                const sizes = '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
 
                                                 return (
-                                                    <div
+                                                    <motion.div
                                                         key={imageIndex}
                                                         className="masonry-item"
                                                         style={{
@@ -246,24 +242,20 @@ export function MasonryGrid({
                                                             justifyContent: 'flex-start',
                                                             alignItems: 'flex-start'
                                                         }}
+                                                        initial={{ opacity: 0, y: 20 }}
+                                                        whileInView={{ opacity: 1, y: 0 }}
+                                                        viewport={{ once: true }}
+                                                        transition={{ duration: 0.5 }}
                                                     >
                                                         <div className="relative overflow-hidden" style={{
                                                             width: '100%',
                                                             maxWidth: '100%'
                                                         }}>
-                                                            {!isLoaded && (
-                                                                <div className="absolute inset-0 bg-gray-200 animate-pulse rounded-sm" />
-                                                            )}
-                                                            <img
+                                                            <OptimizedImage
                                                                 src={image}
                                                                 alt={`Photography section ${sectionIndex + 1}, column ${columnIndex + 1}, image ${imageIndex + 1}`}
-                                                                className={cn(
-                                                                    'w-full h-auto transition-opacity duration-300',
-                                                                    isLoaded ? 'opacity-100' : 'opacity-0'
-                                                                )}
-                                                                loading={sectionIndex === 0 && columnIndex === 0 && imageIndex < 2 ? 'eager' : 'lazy'}
-                                                                decoding="async"
-                                                                onLoad={() => handleImageLoad(sectionIndex, `${columnIndex}-${imageIndex}`)}
+                                                                sizes={sizes}
+                                                                priority={isPriority}
                                                                 style={{
                                                                     display: 'block',
                                                                     width: '100%',
@@ -273,7 +265,7 @@ export function MasonryGrid({
                                                             {renderEditableOverlay(sectionIndex, columnIndex, imageIndex)}
                                                         </div>
                                                         {renderInlineActions(sectionIndex, columnIndex, imageIndex, column.images.length)}
-                                                    </div>
+                                                    </motion.div>
                                                 )
                                             })}
                                             {editable && onAddImage && (
@@ -325,11 +317,13 @@ export function MasonryGrid({
                         `}</style>
                         <div className={sectionId}>
                             {images.map((image, imageIndex) => {
-                                const imageKey = `${sectionIndex}-${imageIndex}`
-                                const isLoaded = loadedImages.has(imageKey)
+                                const isPriority = sectionIndex === 0 && imageIndex < 3
+
+                                // Calculate sizes based on desktop columns (typically 3 columns)
+                                const sizes = '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
 
                                 return (
-                                    <div
+                                    <motion.div
                                         key={imageIndex}
                                         className="masonry-item"
                                         style={{
@@ -337,21 +331,17 @@ export function MasonryGrid({
                                             paddingLeft: `${marginLeft[imageIndex]}px`,
                                             paddingRight: `${marginRight[imageIndex]}px`
                                         }}
+                                        initial={{ opacity: 0, y: 20 }}
+                                        whileInView={{ opacity: 1, y: 0 }}
+                                        viewport={{ once: true }}
+                                        transition={{ duration: 0.5 }}
                                     >
                                         <div className="relative w-full overflow-hidden">
-                                            {!isLoaded && (
-                                                <div className="absolute inset-0 bg-gray-200 animate-pulse rounded-sm" />
-                                            )}
-                                            <img
+                                            <OptimizedImage
                                                 src={image}
                                                 alt={`Photography section ${sectionIndex + 1}, image ${imageIndex + 1}`}
-                                                className={cn(
-                                                    'w-full h-auto transition-opacity duration-300',
-                                                    isLoaded ? 'opacity-100' : 'opacity-0'
-                                                )}
-                                                loading={sectionIndex === 0 && imageIndex < 3 ? 'eager' : 'lazy'}
-                                                decoding="async"
-                                                onLoad={() => handleImageLoad(sectionIndex, imageIndex)}
+                                                sizes={sizes}
+                                                priority={isPriority}
                                                 style={{
                                                     display: 'block',
                                                     width: '100%',
@@ -361,7 +351,7 @@ export function MasonryGrid({
                                             {renderEditableOverlay(sectionIndex, 0, imageIndex)}
                                         </div>
                                         {renderInlineActions(sectionIndex, 0, imageIndex, images.length)}
-                                    </div>
+                                    </motion.div>
                                 )
                             })}
                         </div>

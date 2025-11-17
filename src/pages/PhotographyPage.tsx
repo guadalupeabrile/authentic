@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { motion } from 'framer-motion'
 import { Helmet } from 'react-helmet-async'
 import { HeaderSecondary } from '../components/HeaderSecondary'
 import { Footer } from '../components/Footer'
@@ -105,13 +106,26 @@ function PhotographyPage() {
                     )}
                     <div className="space-y-24">
                         {content.map((category, categoryIndex) => (
-                            <section key={category.id ?? categoryIndex} className="space-y-8">
-                                <div className="px-6">
+                            <motion.section
+                                key={category.id ?? categoryIndex}
+                                className="space-y-8"
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 0.5 }}
+                            >
+                                <motion.div
+                                    className="px-6"
+                                    initial={{ opacity: 0, y: 20 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={{ once: true }}
+                                    transition={{ duration: 0.5, delay: 0.1 }}
+                                >
                                     <div className="space-y-6">
                                         <h1 className="text-2xl md:text-4xl font-light">{category.title}</h1>
                                         <p className="text-base text-black/80 leading-relaxed max-w-4xl">{category.description}</p>
                                     </div>
-                                </div>
+                                </motion.div>
 
                                 {category.sections.length > 0 && (
                                     <div className="mt-12 w-full px-6">
@@ -124,7 +138,7 @@ function PhotographyPage() {
                                         </div>
                                     </div>
                                 )}
-                            </section>
+                            </motion.section>
                         ))}
                     </div>
                 </main>
