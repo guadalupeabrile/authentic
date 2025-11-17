@@ -423,21 +423,35 @@ app.post('/api/upload', authenticateToken, upload.single('file'), async (req, re
 })
 
 // Error handler para multer / errores inesperados
+// IMPORTANTE: Este handler debe tener exactamente 4 parámetros para que Express lo reconozca como error handler
 app.use((err: unknown, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
-    // Verificar que res tenga los métodos necesarios (para compatibilidad con serverless-http)
-    if (!res || typeof res.status !== 'function' || typeof res.json !== 'function') {
-        console.error('Error handler: res object is not a valid Express response', err)
-        return
+    try {
+        // Verificar que res tenga los métodos necesarios (para compatibilidad con serverless-http)
+        if (!res || typeof res.status !== 'function' || typeof res.json !== 'function') {
+            console.error('Error handler: res object is not a valid Express response', err)
+            // Si res no es válido, no podemos enviar respuesta, solo loguear
+            return
+        }
+        
+        // Verificar si los headers ya fueron enviados
+        if (res.headersSent) {
+            console.error('Error handler: headers already sent, cannot send error response', err)
+            return
+        }
+        
+        if (err instanceof multer.MulterError) {
+            return res.status(400).json({ message: err.message })
+        }
+        if (err instanceof Error) {
+            console.error('Error handler caught:', err.message, err.stack)
+            return res.status(500).json({ message: err.message })
+        }
+        return res.status(500).json({ message: 'Error inesperado' })
+    } catch (handlerError) {
+        // Si el error handler mismo tiene un error, solo loguear
+        console.error('FATAL: Error handler failed:', handlerError)
+        console.error('Original error:', err)
     }
-    
-    if (err instanceof multer.MulterError) {
-        return res.status(400).json({ message: err.message })
-    }
-    if (err instanceof Error) {
-        console.error('Error handler caught:', err)
-        return res.status(500).json({ message: err.message })
-    }
-    return res.status(500).json({ message: 'Error inesperado' })
 })
 
 export default app
