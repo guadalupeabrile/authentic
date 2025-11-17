@@ -2,14 +2,12 @@ import HomePage from './pages/HomePage'
 import WebsPage from './pages/WebsPage'
 import PhotographyPage from './pages/PhotographyPage'
 import AboutPage from './pages/AboutPage'
-import AdminPage from './pages/AdminPage'
 
 const routes: Record<string, JSX.Element> = {
     '/': <HomePage />,
     '/websites': <WebsPage />,
     '/photography': <PhotographyPage />,
-    '/about': <AboutPage />,
-    '/admin': <AdminPage />
+    '/about': <AboutPage />
 }
 
 function App() {
