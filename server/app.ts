@@ -302,28 +302,13 @@ app.get('/api/health', (_req, res) => {
 })
 
 app.post('/api/auth/login', (req, res) => {
-    const { username } = req.body
-    if (!username) {
-        return res.status(400).json({ message: 'Usuario requerido' })
-    }
-
-    // BYPASS TEMPORAL DE EMERGENCIA
-    // Permitir acceso directo si el usuario es admin, ignorando variables de entorno
-    if (username === 'admin') {
-        const token = createToken(username)
-        return res.json({ token })
-    }
-
-    // Comentado temporalmente debido a problema de caché con variables de entorno en Vercel
-    // if (username !== ADMIN_USERNAME) {
-    //     return res.status(401).json({ message: 'Credenciales inválidas' })
-    // }
-    // const token = createToken(username)
-    // res.json({ token })
-
-    // Si no es 'admin', rechazar acceso
-    return res.status(401).json({ message: 'Credenciales inválidas' })
-})
+    // --- CODIGO DE EMERGENCIA ---
+    console.log('Forzando entrada de admin...');
+    // Ignoramos lo que envíe el usuario y generamos un token para 'admin' directamente
+    const token = createToken('admin');
+    return res.json({ token });
+    // ----------------------------
+});
 
 app.get('/api/auth/validate', authenticateToken, (_req, res) => {
     res.json({ ok: true })
