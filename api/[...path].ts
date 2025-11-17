@@ -37,7 +37,7 @@ export default async function (req: VercelRequest, res: VercelResponse) {
         } as VercelRequest
 
         console.log('Calling serverless handler...')
-        
+
         // serverless-http devuelve una Promise, esperarla directamente
         const result = await handler(modifiedReq, res)
         console.log('Serverless handler completed, result:', result)

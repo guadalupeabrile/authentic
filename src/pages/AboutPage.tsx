@@ -293,6 +293,7 @@ function AboutPage() {
                             <h1 className="text-2xl md:text-4xl font-light tracking-[0.15em] uppercase">
                                 About Authentic
                             </h1>
+                            <p className="max-w-3xl text-sm italic text-black/80 leading-relaxed !mt-1">Still wondering whether the word "authentic" is genuinely authentic.</p>
                             <p className="max-w-3xl text-base text-black/80 leading-relaxed md:ml-auto">
                                 I am a multidisciplinary creator who brings together project management, photography, web development, and a personal path rooted in yoga and reiki. I'm passionate about water sports, meditation, and the quiet observation of the natural world we're part of.
                             </p>

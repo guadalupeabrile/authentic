@@ -1,8 +1,4 @@
 {
-  "aboutImages": [
-    "https://lqdxa0zv947obgib.public.blob.vercel-storage.com/photography/about/1763332170598-a62c655a-047f-445a-a640-4f525f11d548.JPG"
-  ],
-  "aboutBottomImage": "https://lqdxa0zv947obgib.public.blob.vercel-storage.com/photography/about-bottom/1763288405565-5e24898a-94cd-444a-8776-cb709048efa4.jpg",
   "categories": [
     {
       "id": "naturaleza",
@@ -14,22 +10,22 @@
           "columnImages": [
             {
               "images": [
-                "https://lqdxa0zv947obgib.public.blob.vercel-storage.com/photography/naturaleza/1763182583802-a7d7da0e-1826-4438-8083-3cdf7b0a96a2.jpg",
-                "https://lqdxa0zv947obgib.public.blob.vercel-storage.com/photography/naturaleza/1763182692968-c08c1454-dc6a-46c1-a8ad-2ea6b192086b.JPG"
+                "/uploads/photography/naturaleza/1763369492356-9020d048-ae59-46b7-9b5c-53c6d2dd8486.webp",
+                "/uploads/photography/naturaleza/1763369502231-231cbf39-56a8-448e-b92b-4fb4f979bb17.webp"
               ],
               "flex": 1
             },
             {
               "images": [
-                "https://lqdxa0zv947obgib.public.blob.vercel-storage.com/photography/naturaleza/1763182577798-1a50241a-f02f-4b58-bcf5-f25d4c02de09.JPG",
-                "https://lqdxa0zv947obgib.public.blob.vercel-storage.com/photography/naturaleza/1763202766406-65c710f9-91b3-44cb-938e-6e6ae58cda08.JPG"
+                "/uploads/photography/naturaleza/1763369511324-2170adce-2277-4c50-afda-b540e70a57e8.webp",
+                "/uploads/photography/naturaleza/1763369517374-a03bdb5e-9ada-4a5d-a6de-e7abf02db274.webp"
               ],
               "flex": 1
             },
             {
               "images": [
-                "https://lqdxa0zv947obgib.public.blob.vercel-storage.com/photography/naturaleza/1763182564132-9f2b70f5-e220-4cb2-90e1-e34e3ad2adda.JPG",
-                "https://lqdxa0zv947obgib.public.blob.vercel-storage.com/photography/naturaleza/1763205060368-1973534f-0b1a-4586-9c46-fccb933278ae.JPG"
+                "/uploads/photography/naturaleza/1763369525294-73978189-d128-4833-87f9-75a1d651946f.webp",
+                "/uploads/photography/naturaleza/1763369536427-7d0b7a5b-7a80-4323-8757-3840b06748c7.webp"
               ],
               "flex": 1
             }
@@ -81,14 +77,14 @@
           "columnImages": [
             {
               "images": [
-                "https://lqdxa0zv947obgib.public.blob.vercel-storage.com/photography/retratos/1763205272999-39c398e9-d09b-4a56-aa14-25b49ad5c443.JPG",
-                "https://lqdxa0zv947obgib.public.blob.vercel-storage.com/photography/retratos/1763206592442-b1b5619c-e6bd-4683-b557-8a56fdb42620.JPG",
-                "https://lqdxa0zv947obgib.public.blob.vercel-storage.com/photography/retratos/1763206482780-a234db55-8279-4c19-9013-d32a4e0c9dd7.JPG",
-                "https://lqdxa0zv947obgib.public.blob.vercel-storage.com/photography/retratos/1763206491474-13a3186b-c0ae-45ef-877f-a572aae13ebd.JPG",
-                "https://lqdxa0zv947obgib.public.blob.vercel-storage.com/photography/retratos/1763205533645-7cdca3ae-89b1-4581-854e-c003dbadc8b4.JPG",
-                "https://lqdxa0zv947obgib.public.blob.vercel-storage.com/photography/retratos/1763206358860-8fbd1bc7-a328-4cf7-a846-ed1ed3398e5d.JPG",
-                "https://lqdxa0zv947obgib.public.blob.vercel-storage.com/photography/retratos/1763206665551-fb6c0857-002f-4ca9-b7a8-15098a7c3b66.JPG",
-                "https://lqdxa0zv947obgib.public.blob.vercel-storage.com/photography/retratos/1763206787580-79678baf-dce6-43d9-acd9-75cf8f3cdba7.JPG"
+                "/uploads/photography/retratos/1763369561187-06397b20-0841-44db-a70d-e5cce7f7f855.webp",
+                "/uploads/photography/retratos/1763369568177-de92cb97-bbfe-41fa-99c3-c8dc68a717de.webp",
+                "/uploads/photography/retratos/1763369592332-413f1253-cd26-429d-a3f9-bc23abf80750.webp",
+                "/uploads/photography/retratos/1763369598309-e5013920-3f47-4f4c-9618-e4f92c41ad3d.webp",
+                "/uploads/photography/retratos/1763369635010-fbf16c3c-b501-4d8f-9878-768cacfe00f6.webp",
+                "/uploads/photography/retratos/1763369659354-b895b365-b7b5-41f6-a473-560ef22aad44.webp",
+                "/uploads/photography/retratos/1763369696126-2c7e8b65-1b26-4003-82f4-01cc5cd2cada.webp",
+                "/uploads/photography/retratos/1763369702117-3cd75cff-9895-4aa1-b658-31b18e0beb83.webp"
               ],
               "flex": 1,
               "flexPerImage": [
@@ -106,11 +102,11 @@
             },
             {
               "images": [
-                "https://lqdxa0zv947obgib.public.blob.vercel-storage.com/photography/retratos/1763206505378-92509002-ddb2-4a49-8bd1-8970846da4c1.JPG",
-                "https://lqdxa0zv947obgib.public.blob.vercel-storage.com/photography/retratos/1763205299970-1dd513c7-735e-434c-be7f-b86fb1b92e61.JPG",
-                "https://lqdxa0zv947obgib.public.blob.vercel-storage.com/photography/retratos/1763206635743-d9ff3bf9-795d-49de-9bce-2b4b02562f6e.JPG",
-                "https://lqdxa0zv947obgib.public.blob.vercel-storage.com/photography/retratos/1763206368146-e13c2bd3-7b55-49f5-9aa9-2a6e9c3743bc.jpg",
-                "https://lqdxa0zv947obgib.public.blob.vercel-storage.com/photography/retratos/1763206659269-4c08055c-16c7-4baf-896d-7d17fd3da641.JPG"
+                "/uploads/photography/retratos/1763369577542-33e8ce56-a0bf-42a3-b338-9a6bf7730912.webp",
+                "/uploads/photography/retratos/1763369605982-813e753c-0337-453e-b62c-e81841cbad9d.webp",
+                "/uploads/photography/retratos/1763369620255-fed5f899-903e-46dd-9c76-21b09d90d05d.webp",
+                "/uploads/photography/retratos/1763369642813-04cd45c4-0fc6-4598-a437-a6d2adc63f57.webp",
+                "/uploads/photography/retratos/1763369667658-dc3b4bea-b5f2-4907-830e-2935c5c07266.webp"
               ],
               "flex": 1,
               "flexPerImage": [
@@ -125,12 +121,12 @@
             },
             {
               "images": [
-                "https://lqdxa0zv947obgib.public.blob.vercel-storage.com/photography/retratos/1763205341535-71fdda1f-4851-4f79-b10f-abf6137389ee.JPG",
-                "https://lqdxa0zv947obgib.public.blob.vercel-storage.com/photography/retratos/1763205505816-d603d792-7d8f-482f-a6a3-732c598a754a.JPG",
-                "https://lqdxa0zv947obgib.public.blob.vercel-storage.com/photography/retratos/1763205382445-036a7c9d-a81f-47f0-8083-15079298ec07.JPG",
-                "https://lqdxa0zv947obgib.public.blob.vercel-storage.com/photography/retratos/1763205522830-884109be-c789-4979-a1bd-bfb1dbbe1978.JPG",
-                "https://lqdxa0zv947obgib.public.blob.vercel-storage.com/photography/retratos/1763206379988-afb95efa-e9d7-4374-a051-d6a1a9f80fbb.JPG",
-                "https://lqdxa0zv947obgib.public.blob.vercel-storage.com/photography/retratos/1763206414482-b2b9754a-b077-4d2e-b7b2-9f568eb20d65.JPG"
+                "/uploads/photography/retratos/1763369585132-533f758f-ac5c-4f47-b8ac-ee0725bf6833.webp",
+                "/uploads/photography/retratos/1763369612525-ce7cb675-f87a-47c6-a20f-e3108b149ead.webp",
+                "/uploads/photography/retratos/1763369626542-ac46122f-1b25-4c56-8b74-bbfa862dca6c.webp",
+                "/uploads/photography/retratos/1763369651035-26952477-9bd0-4c5d-96c3-360c4a39f14d.webp",
+                "/uploads/photography/retratos/1763369689148-3362809a-0b29-45a6-bc01-0bb91a314a91.webp",
+                "/uploads/photography/retratos/1763369710085-cb670533-7a6a-4cdc-8468-f9f6dd46e864.webp"
               ],
               "flex": 1,
               "flexPerImage": [
@@ -163,37 +159,37 @@
           "columnImages": [
             {
               "images": [
-                "https://lqdxa0zv947obgib.public.blob.vercel-storage.com/photography/hola/1763277486987-06e64fe3-0ee5-4103-9054-5f719d6a0eda.JPG",
-                "https://lqdxa0zv947obgib.public.blob.vercel-storage.com/photography/hola/1763277398026-afc82cfa-2ccb-4149-8033-40160d023763.JPG",
-                "https://lqdxa0zv947obgib.public.blob.vercel-storage.com/photography/hola/1763277446270-e835819d-47ca-4c31-853b-e834062f9f7b.JPG",
-                "https://lqdxa0zv947obgib.public.blob.vercel-storage.com/photography/hola/1763277548399-c1ff86af-d342-43a7-b6c7-75d1a0f78c27.JPG",
-                "https://lqdxa0zv947obgib.public.blob.vercel-storage.com/photography/hola/1763277601751-3edef45a-3876-44bf-b38e-91658ba177c0.JPG",
-                "https://lqdxa0zv947obgib.public.blob.vercel-storage.com/photography/hola/1763278018755-382e0cba-e01a-454a-bf45-5271b750bdd4.JPG",
-                "https://lqdxa0zv947obgib.public.blob.vercel-storage.com/photography/hola/1763277758010-379677f0-2774-463f-b06a-94ce2088eb02.JPG",
-                "https://lqdxa0zv947obgib.public.blob.vercel-storage.com/photography/hola/1763277897334-2c2cc3e3-ecd1-4860-8ea4-43ba803e28c2.JPG"
+                "/uploads/photography/hola/1763369732227-a2a16f02-573d-4f81-9315-7d3664a07892.webp",
+                "/uploads/photography/hola/1763369781586-c1df3087-0775-480f-8d70-13769a057630.webp",
+                "/uploads/photography/hola/1763369787747-6c920215-fc8b-45db-a9b6-b30155c46b1a.webp",
+                "/uploads/photography/hola/1763369812074-88ef4317-c6e4-4273-a5c8-890710b05623.webp",
+                "/uploads/photography/hola/1763369837265-d0c87b77-5983-4acd-a6ce-1c3e0c212d9d.webp",
+                "/uploads/photography/hola/1763369901331-3975927a-6198-4f83-9e37-ec01df367d65.webp",
+                "/uploads/photography/hola/1763369910538-6ca4419d-4dfe-4091-95d2-296ecdecfe26.webp",
+                "/uploads/photography/hola/1763369916133-90b4fb49-199b-480a-b437-a613ad04aadf.webp"
               ],
               "flex": 1
             },
             {
               "images": [
-                "https://lqdxa0zv947obgib.public.blob.vercel-storage.com/photography/hola/1763277481007-c823bf7b-513f-4b7d-b23e-0bfffb5e3add.JPG",
-                "https://lqdxa0zv947obgib.public.blob.vercel-storage.com/photography/hola/1763277404339-70d08b23-da8a-4fb9-80e4-0a95bedeca34.JPG",
-                "https://lqdxa0zv947obgib.public.blob.vercel-storage.com/photography/hola/1763277522599-3ca37f3b-8005-44df-8873-a4b61c0c23e2.JPG",
-                "https://lqdxa0zv947obgib.public.blob.vercel-storage.com/photography/hola/1763277585172-c9504362-cc21-4874-a2ef-0d6d22a65251.JPG",
-                "https://lqdxa0zv947obgib.public.blob.vercel-storage.com/photography/hola/1763277669613-a24a10e5-5847-4c3a-98a0-5a7a1c5421be.JPG",
-                "https://lqdxa0zv947obgib.public.blob.vercel-storage.com/photography/hola/1763277729334-6bb65ee3-7748-4c33-9a79-eb63bc5ca177.JPG"
+                "/uploads/photography/hola/1763369737619-7e4b8999-0d63-4986-b4a6-18715182a443.webp",
+                "/uploads/photography/hola/1763369765092-278b7edc-c027-423a-bd50-b9d3e3a9c54d.webp",
+                "/uploads/photography/hola/1763369793203-55f66983-7e1e-456b-ba89-150e4c9e3c46.webp",
+                "/uploads/photography/hola/1763369820150-cbd38049-7dcb-44a3-b847-ff4544d8dade.webp",
+                "/uploads/photography/hola/1763369852716-43304295-f2da-479d-8534-c26ea876a2d2.webp",
+                "/uploads/photography/hola/1763369893546-6f7af3c4-4941-4458-ab02-43b5f5645b3e.webp"
               ],
               "flex": 1
             },
             {
               "images": [
-                "https://lqdxa0zv947obgib.public.blob.vercel-storage.com/photography/hola/1763277497757-844db10a-3fdf-4694-8631-2d96d929b57c.JPG",
-                "https://lqdxa0zv947obgib.public.blob.vercel-storage.com/photography/hola/1763277413222-1c178f4f-83db-44cc-8c0f-7b23a46172b7.JPG",
-                "https://lqdxa0zv947obgib.public.blob.vercel-storage.com/photography/hola/1763277430499-32b81b78-6c14-4676-8033-45d034adabc1.JPG",
-                "https://lqdxa0zv947obgib.public.blob.vercel-storage.com/photography/hola/1763277837846-2e7cf5bd-831b-46e3-9de9-b1b5917d0397.JPG",
-                "https://lqdxa0zv947obgib.public.blob.vercel-storage.com/photography/hola/1763277590358-6299c08e-dbb9-42ea-b7da-c8a0c0a04508.JPG",
-                "https://lqdxa0zv947obgib.public.blob.vercel-storage.com/photography/hola/1763277850188-d8cb842e-d967-44c3-8fe7-2d6638c0ef04.JPG",
-                "https://lqdxa0zv947obgib.public.blob.vercel-storage.com/photography/hola/1763277543808-77a26c45-a368-4a55-bcd0-d8bc4c6348c9.JPG"
+                "/uploads/photography/hola/1763369743874-f4036f76-95a6-4408-8d72-d9446dca0a10.webp",
+                "/uploads/photography/hola/1763369773460-e0217faa-7214-440f-a0da-07bd2f7de56d.webp",
+                "/uploads/photography/hola/1763369807052-fb5f3e18-53aa-40aa-9d36-83479f0bcedc.webp",
+                "/uploads/photography/hola/1763369830682-ed25e2ec-0629-409b-82de-90aaab756518.webp",
+                "/uploads/photography/hola/1763369860549-6cdb8fc8-26fb-4128-aec8-b19c1bc98986.webp",
+                "/uploads/photography/hola/1763369877134-b9a5d53d-a29f-4f1d-9505-db424a03e5e2.webp",
+                "/uploads/photography/hola/1763369882736-76bb0252-9f80-4bc9-8b78-0936b7901e02.webp"
               ],
               "flex": 1
             }
@@ -235,5 +231,9 @@
         }
       ]
     }
-  ]
+  ],
+  "aboutImages": [
+    "/uploads/photography/about/1763370448500-6de90b54-32e7-44e3-b4ff-cd16147ff7f1.JPG"
+  ],
+  "aboutBottomImage": "/uploads/photography/about-bottom/1763370456668-d34a44d7-afcf-4e4c-a172-b27a8c6fb701.jpg"
 }

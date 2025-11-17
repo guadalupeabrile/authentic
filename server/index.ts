@@ -12,13 +12,6 @@ const STORAGE_DIR = path.join(ROOT_DIR, 'server', 'storage')
 const CONFIG_PATH = path.join(STORAGE_DIR, 'photography.json')
 
 const PORT = Number(process.env.PORT) || 4000
-const ADMIN_PASSWORD_HASH = process.env.ADMIN_PASSWORD_HASH
-
-if (!ADMIN_PASSWORD_HASH) {
-    console.warn('ADMIN_PASSWORD_HASH is not set. Use env.example to configure your credentials.')
-    process.exit(1)
-}
-
 async function bootstrap() {
     await fs.ensureDir(UPLOADS_ROOT)
     const exists = await fs.pathExists(CONFIG_PATH)

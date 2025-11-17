@@ -4,7 +4,7 @@ import { clearAdminToken, getAdminToken, setAdminToken } from '../lib/auth'
 
 function AdminPage() {
     const [token, setToken] = useState<string>(() => getAdminToken() || '')
-    const [loginForm, setLoginForm] = useState({ username: '', password: '' })
+    const [loginForm, setLoginForm] = useState({ username: '' })
     const [configText, setConfigText] = useState<string>('')
     const [configError, setConfigError] = useState<string | null>(null)
     const [statusMessage, setStatusMessage] = useState<string | null>(null)
@@ -75,7 +75,7 @@ function AdminPage() {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(loginForm)
+            body: JSON.stringify({ username: loginForm.username })
         })
         if (!response.ok) {
             setStatusMessage('Credenciales inválidas')
@@ -160,15 +160,6 @@ function AdminPage() {
                             type="text"
                             value={loginForm.username}
                             onChange={event => setLoginForm(prev => ({ ...prev, username: event.target.value }))}
-                            className="mt-2 w-full bg-black/40 border border-white/20 rounded px-3 py-2"
-                        />
-                    </label>
-                    <label className="block">
-                        <span className="text-sm uppercase tracking-wide">Contraseña</span>
-                        <input
-                            type="password"
-                            value={loginForm.password}
-                            onChange={event => setLoginForm(prev => ({ ...prev, password: event.target.value }))}
                             className="mt-2 w-full bg-black/40 border border-white/20 rounded px-3 py-2"
                         />
                     </label>

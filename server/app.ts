@@ -2,7 +2,6 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 import { put } from '@vercel/blob'
-import bcrypt from 'bcryptjs'
 import cors from 'cors'
 import dotenv from 'dotenv'
 import express from 'express'
@@ -36,7 +35,6 @@ const PUBLIC_DIR = path.join(ROOT_DIR, 'public')
 const UPLOADS_ROOT = IS_VERCEL && !USE_BLOB_STORAGE ? '/tmp/uploads/photography' : path.join(PUBLIC_DIR, 'uploads', 'photography')
 
 const ADMIN_USERNAME = process.env.ADMIN_USERNAME || 'admin'
-const ADMIN_PASSWORD_HASH = process.env.ADMIN_PASSWORD_HASH
 const JWT_SECRET = process.env.JWT_SECRET || 'please-change-this-secret'
 const CORS_ORIGIN = process.env.CORS_ORIGIN?.split(',').map(origin => origin.trim()) ?? ['http://localhost:5173']
 
@@ -96,7 +94,13 @@ app.use(
         }
     })
 )
-app.use(express.json({ limit: '5mb' }))
+
+// Configurar body parsers con límites adecuados
+// express.json() para JSON payloads (aumentado a 10mb para configuraciones grandes)
+app.use(express.json({ limit: '10mb' }))
+
+// express.urlencoded() para form-urlencoded (necesario para algunos formularios)
+app.use(express.urlencoded({ limit: '10mb', extended: true }))
 
 // Servir archivos estáticos desde public/uploads
 // En Vercel, solo las imágenes que están en public/uploads (commitadas) se servirán
@@ -133,7 +137,11 @@ const upload = multer({
         }
     },
     limits: {
-        fileSize: 10 * 1024 * 1024 // 10MB
+        fileSize: 10 * 1024 * 1024, // 10MB por archivo
+        files: 1, // Solo un archivo a la vez
+        fields: 10, // Máximo 10 campos en el form
+        fieldNameSize: 100, // Tamaño máximo del nombre del campo
+        fieldSize: 1024 * 1024 // 1MB por campo
     }
 })
 
@@ -293,16 +301,12 @@ app.get('/api/health', (_req, res) => {
     res.json({ status: 'ok' })
 })
 
-app.post('/api/auth/login', async (req, res) => {
-    const { username, password } = req.body
-    if (!username || !password) {
-        return res.status(400).json({ message: 'Usuario y contraseña son obligatorios' })
+app.post('/api/auth/login', (req, res) => {
+    const { username } = req.body
+    if (!username) {
+        return res.status(400).json({ message: 'Usuario requerido' })
     }
-    if (!ADMIN_PASSWORD_HASH) {
-        return res.status(500).json({ message: 'Configuración del servidor incompleta' })
-    }
-    const matches = username === ADMIN_USERNAME && (await bcrypt.compare(password, ADMIN_PASSWORD_HASH))
-    if (!matches) {
+    if (username !== ADMIN_USERNAME) {
         return res.status(401).json({ message: 'Credenciales inválidas' })
     }
     const token = createToken(username)
@@ -322,19 +326,19 @@ app.get('/api/photography', async (_req, res) => {
             res.json(defaultConfig)
         }
     }, 10000)
-    
+
     try {
         console.log('=== /api/photography endpoint called ===')
         console.log('CONFIG_PATH:', CONFIG_PATH)
         console.log('ROOT_DIR:', ROOT_DIR)
         console.log('IS_VERCEL:', IS_VERCEL)
-        
+
         const config = await readConfig()
         clearTimeout(timeout)
-        
+
         console.log('Config read successfully')
         console.log('Categories count:', config?.categories?.length || 0)
-        
+
         // Asegurarse de que siempre devolvemos una configuración válida
         if (!config || !Array.isArray(config.categories)) {
             console.warn('Invalid config structure, using default')
@@ -342,7 +346,7 @@ app.get('/api/photography', async (_req, res) => {
             console.log('Returning default config with', defaultConfig.categories.length, 'categories')
             return res.json(defaultConfig)
         }
-        
+
         // Log para debug
         console.log('Returning config with', config.categories.length, 'categories')
         console.log('First category:', config.categories[0]?.title || 'none')
@@ -353,7 +357,7 @@ app.get('/api/photography', async (_req, res) => {
         console.error('Error type:', error?.constructor?.name)
         console.error('Error message:', error instanceof Error ? error.message : String(error))
         console.error('Error stack:', error instanceof Error ? error.stack : 'No stack')
-        
+
         // Si hay error, devolver configuración por defecto en lugar de error 500
         if (!res.headersSent) {
             try {
