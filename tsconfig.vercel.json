@@ -12,8 +12,7 @@
         "outDir": ".vercel-output"
     },
     "include": [
-        "api/**/*",
-        "server/**/*"
+        "src/**/*"
     ],
     "exclude": [
         "node_modules",

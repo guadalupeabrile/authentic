@@ -2,13 +2,8 @@
     "buildCommand": "npm run build",
     "rewrites": [
         {
-            "source": "/((?!api/).*)",
+            "source": "/(.*)",
             "destination": "/index.html"
         }
-    ],
-    "functions": {
-        "api/[...path].ts": {
-            "maxDuration": 30
-        }
-    }
+    ]
 }
