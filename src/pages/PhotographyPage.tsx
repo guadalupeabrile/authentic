@@ -103,16 +103,28 @@ function PhotographyPage() {
             try {
                 const response = await fetch('/api/photography')
                 if (!response.ok) {
-                    throw new Error('No se pudo obtener la galería')
+                    throw new Error(`HTTP ${response.status}: No se pudo obtener la galería`)
                 }
-                const config = ensureThreeColumns((await response.json()) as PhotographyConfig)
-                if (isMounted && Array.isArray(config.categories)) {
-                    setConfig(config)
+                const data = await response.json()
+                console.log('Photography config loaded:', data)
+                const config = ensureThreeColumns(data as PhotographyConfig)
+                if (isMounted) {
+                    if (Array.isArray(config.categories) && config.categories.length > 0) {
+                        setConfig(config)
+                        console.log('Config set with categories:', config.categories.length)
+                    } else {
+                        console.warn('Config loaded but no categories found')
+                        setConfig(config)
+                        setError('La galería está vacía. Inicia sesión en /admin para agregar imágenes.')
+                    }
                 }
             } catch (err) {
-                console.error(err)
+                console.error('Error loading photography:', err)
                 if (isMounted) {
-                    setError('No se pudo cargar la galería desde el servidor.')
+                    setError(`No se pudo cargar la galería: ${err instanceof Error ? err.message : 'Error desconocido'}`)
+                    // Aún así, intentar usar configuración por defecto
+                    const defaultConfig = ensureThreeColumns({ categories: [] })
+                    setConfig(defaultConfig)
                 }
             } finally {
                 if (isMounted) {
@@ -373,6 +385,20 @@ function PhotographyPage() {
                 </div>
 
                 <main className="pt-32 pb-24">
+                    {loading && (
+                        <div className="px-6 text-center">
+                            <p className="text-black/60">Cargando galería...</p>
+                        </div>
+                    )}
+                    {!loading && content.length === 0 && (
+                        <div className="px-6 text-center space-y-4">
+                            <p className="text-black/60">No hay categorías disponibles.</p>
+                            {error && <p className="text-sm text-red-500">{error}</p>}
+                            <p className="text-sm text-black/40">
+                                Abre la consola del navegador (F12) para ver más detalles.
+                            </p>
+                        </div>
+                    )}
                     <div className="space-y-24">
                         {content.map((category, categoryIndex) => (
                             <section key={category.id ?? categoryIndex} className="space-y-8">

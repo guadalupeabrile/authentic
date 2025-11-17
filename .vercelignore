@@ -1,7 +1,3 @@
-# Excluir imágenes grandes de uploads (en producción se usarán desde Blob Storage)
-# Esto reduce significativamente el tamaño del deployment
-public/uploads/photography
-
 # Excluir archivos de desarrollo y cache
 node_modules/.cache
 *.log
@@ -10,4 +6,7 @@ node_modules/.cache
 .env*.local
 .vscode
 .idea
+
+# NOTA: Las imágenes en public/uploads/photography se incluyen en el deployment
+# para que las imágenes existentes funcionen. Las nuevas imágenes se subirán a Blob Storage.
 

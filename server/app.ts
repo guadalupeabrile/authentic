@@ -318,19 +318,27 @@ app.get('/api/auth/validate', authenticateToken, (_req, res) => {
 
 app.get('/api/photography', async (_req, res) => {
     try {
+        console.log('Reading photography config from:', CONFIG_PATH)
         const config = await readConfig()
+        console.log('Config read successfully, categories:', config?.categories?.length || 0)
+
         // Asegurarse de que siempre devolvemos una configuración válida
         if (!config || !Array.isArray(config.categories)) {
+            console.warn('Invalid config, using default')
             const defaultConfig = getDefaultConfig()
             res.json(defaultConfig)
             return
         }
+
+        // Log para debug
+        console.log('Returning config with', config.categories.length, 'categories')
         res.json(config)
     } catch (error) {
         console.error('Error reading photography config', error)
         // Si hay error, devolver configuración por defecto en lugar de error 500
         try {
             const defaultConfig = getDefaultConfig()
+            console.log('Returning default config due to error')
             res.json(defaultConfig)
         } catch (fallbackError) {
             console.error('Error creating default config', fallbackError)

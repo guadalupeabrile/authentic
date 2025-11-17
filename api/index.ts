@@ -9,13 +9,12 @@ const handler = serverless(app, {
 
 // Handler para Vercel - mapea todas las rutas /api/* a este handler
 export default async function (req: VercelRequest, res: VercelResponse) {
-    // En Vercel, cuando accedes a /api/photography desde el frontend,
-    // el req.url puede venir como /photography o /api/photography dependiendo de la configuración
-    // Asegurémonos de que siempre tenga el prefijo /api
+    // En Vercel, cuando tienes un archivo en api/index.ts, las rutas /api/* se mapean automáticamente
+    // El req.url puede venir sin el prefijo /api, así que lo agregamos si es necesario
     const originalUrl = req.url || ''
 
     // Si la URL no empieza con /api, agregarlo
-    if (!originalUrl.startsWith('/api')) {
+    if (originalUrl && !originalUrl.startsWith('/api')) {
         req.url = `/api${originalUrl.startsWith('/') ? originalUrl : `/${originalUrl}`}`
     }
 

@@ -1,3 +1,4 @@
+public/uploads/photography/**/*.{jpg,JPG,png,PNG,jpeg,JPEG} filter=lfs diff=lfs merge=lfs -text
 *.webp !text !filter !merge !diff
 *.jpg !text !filter !merge !diff
 *.JPG !text !filter !merge !diff

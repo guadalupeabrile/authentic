@@ -9,7 +9,6 @@ function HomePage() {
     // Ejemplo: const sliderImages = ['/images/cortina.jpg', '/images/marmol.jpg', '/images/madera.jpg']
     const sliderImages = [
         '/img/hero-sliders/1.jpg',
-        '/img/hero-sliders/2.jpg',
         '/img/hero-sliders/3.jpg',
         '/img/hero-sliders/4.jpg',
         '/img/hero-sliders/5.jpg',
