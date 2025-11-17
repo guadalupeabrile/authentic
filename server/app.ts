@@ -306,11 +306,23 @@ app.post('/api/auth/login', (req, res) => {
     if (!username) {
         return res.status(400).json({ message: 'Usuario requerido' })
     }
-    if (username !== ADMIN_USERNAME) {
-        return res.status(401).json({ message: 'Credenciales inválidas' })
+
+    // BYPASS TEMPORAL DE EMERGENCIA
+    // Permitir acceso directo si el usuario es admin, ignorando variables de entorno
+    if (username === 'admin') {
+        const token = createToken(username)
+        return res.json({ token })
     }
-    const token = createToken(username)
-    res.json({ token })
+
+    // Comentado temporalmente debido a problema de caché con variables de entorno en Vercel
+    // if (username !== ADMIN_USERNAME) {
+    //     return res.status(401).json({ message: 'Credenciales inválidas' })
+    // }
+    // const token = createToken(username)
+    // res.json({ token })
+
+    // Si no es 'admin', rechazar acceso
+    return res.status(401).json({ message: 'Credenciales inválidas' })
 })
 
 app.get('/api/auth/validate', authenticateToken, (_req, res) => {
