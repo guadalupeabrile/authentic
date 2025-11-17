@@ -152,13 +152,13 @@ async function readConfig(): Promise<PhotographyConfig> {
         // Intentar leer desde el repositorio primero
         let configPath = CONFIG_PATH
         let exists = false
-        
+
         try {
             exists = await fs.pathExists(CONFIG_PATH)
         } catch (err) {
             console.warn('Error checking CONFIG_PATH:', err)
         }
-        
+
         if (exists) {
             try {
                 const config = await fs.readJSON(configPath)
@@ -169,11 +169,11 @@ async function readConfig(): Promise<PhotographyConfig> {
                 // Continuar para usar default
             }
         }
-        
+
         // Si no existe o hubo error, usar configuración por defecto
         console.log('Using default config (file not found or error reading)')
         const defaultConfig = getDefaultConfig()
-        
+
         // No intentar escribir en Vercel, solo devolver el default
         return defaultConfig
     } catch (error) {
@@ -315,31 +315,44 @@ app.get('/api/auth/validate', authenticateToken, (_req, res) => {
 
 app.get('/api/photography', async (_req, res) => {
     try {
-        console.log('Reading photography config from:', CONFIG_PATH)
+        console.log('=== /api/photography endpoint called ===')
+        console.log('CONFIG_PATH:', CONFIG_PATH)
+        console.log('ROOT_DIR:', ROOT_DIR)
+        console.log('IS_VERCEL:', IS_VERCEL)
+        
         const config = await readConfig()
-        console.log('Config read successfully, categories:', config?.categories?.length || 0)
-
+        console.log('Config read successfully')
+        console.log('Categories count:', config?.categories?.length || 0)
+        
         // Asegurarse de que siempre devolvemos una configuración válida
         if (!config || !Array.isArray(config.categories)) {
-            console.warn('Invalid config, using default')
+            console.warn('Invalid config structure, using default')
             const defaultConfig = getDefaultConfig()
-            res.json(defaultConfig)
-            return
+            console.log('Returning default config with', defaultConfig.categories.length, 'categories')
+            return res.json(defaultConfig)
         }
-
+        
         // Log para debug
         console.log('Returning config with', config.categories.length, 'categories')
-        res.json(config)
+        console.log('First category:', config.categories[0]?.title || 'none')
+        return res.json(config)
     } catch (error) {
-        console.error('Error reading photography config', error)
+        console.error('=== ERROR in /api/photography ===')
+        console.error('Error type:', error?.constructor?.name)
+        console.error('Error message:', error instanceof Error ? error.message : String(error))
+        console.error('Error stack:', error instanceof Error ? error.stack : 'No stack')
+        
         // Si hay error, devolver configuración por defecto en lugar de error 500
         try {
             const defaultConfig = getDefaultConfig()
             console.log('Returning default config due to error')
-            res.json(defaultConfig)
+            return res.json(defaultConfig)
         } catch (fallbackError) {
-            console.error('Error creating default config', fallbackError)
-            res.status(500).json({ message: 'No se pudo obtener la configuración' })
+            console.error('FATAL: Error creating default config', fallbackError)
+            return res.status(500).json({ 
+                message: 'No se pudo obtener la configuración',
+                error: error instanceof Error ? error.message : 'Unknown error'
+            })
         }
     }
 })
