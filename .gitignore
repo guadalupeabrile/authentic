@@ -23,7 +23,7 @@ dist-ssr
 *.sln
 *.sw?
 
-# Las imágenes ahora están en Blob Storage, no necesitamos incluirlas en el repositorio
+# Las imágenes están en formato WebP localmente
 public/uploads/photography/**
 !public/uploads/photography/.gitkeep
 
