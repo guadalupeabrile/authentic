@@ -258,7 +258,7 @@ function PhotographyPage() {
                     <HeaderSecondary activeUrl="/photography" />
                 </div>
 
-                <main className="pt-32 pb-24">
+                <main className="pt-32 pb-36">
                     {loading && (
                         <div className="px-6 text-center">
                             <p className="text-black/60">Cargando galería...</p>
@@ -300,7 +300,7 @@ function PhotographyPage() {
                                     </motion.div>
 
                                     {limitedSections.length > 0 && (
-                                        <div className="mt-12 w-full px-6">
+                                        <div className="mt-6 md:mt-12 w-full px-6">
                                             <div className="">
                                                 <MasonryGrid
                                                     sections={limitedSections}
@@ -313,7 +313,7 @@ function PhotographyPage() {
 
                                     {hasMoreImages && (
                                         <motion.div
-                                            className="px-6 flex justify-center"
+                                            className="px-6 flex justify-center mb-16 -mt-8 md:mt-0 md:mb-8"
                                             initial={{ opacity: 0 }}
                                             whileInView={{ opacity: 1 }}
                                             viewport={{ once: true }}

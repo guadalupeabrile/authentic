@@ -44,7 +44,8 @@ export function Footer({ className, darkText }: FooterProps) {
         >
             <div
                 className={cn(
-                    'relative w-full bg-transparent px-[10px]',
+                    'relative w-full px-[10px]',
+                    darkText ? 'bg-white border-t border-black/10 mt-8 py-4' : 'bg-transparent',
                     'transform transition-all duration-700 ease-out',
                     isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-8'
                 )}
@@ -52,7 +53,7 @@ export function Footer({ className, darkText }: FooterProps) {
             >
                 <div
                     className={cn(
-                        'mb-2 flex flex-col md:flex-row w-[95%] items-center justify-center md:justify-between gap-3 text-[10px] sm:text-xs md:text-sm lg:text-base md:gap-4 text-center mx-auto font-light uppercase tracking-[0.15em]',
+                        'flex flex-col md:flex-row w-[95%] items-center justify-center md:justify-between gap-3 text-[10px] sm:text-xs md:text-sm lg:text-base md:gap-4 text-center mx-auto font-light uppercase tracking-[0.15em]',
                         darkText ? 'text-black' : 'mix-blend-difference text-white'
                     )}
                 >
