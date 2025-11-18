@@ -228,6 +228,20 @@ function PhotographyPage() {
             <Helmet>
                 <title>Photography | Authentic Web Design</title>
                 <meta name="description" content="Descubre nuestras colecciones de fotografía y producciones visuales." />
+
+                {/* Open Graph / Facebook */}
+                <meta property="og:type" content="website" />
+                <meta property="og:title" content="Photography | Authentic Web Studio" />
+                <meta property="og:description" content="Descubre nuestras colecciones de fotografía y producciones visuales." />
+                <meta property="og:image" content={`${typeof window !== 'undefined' ? window.location.origin : ''}/img/hero-sliders/1.webp`} />
+                <meta property="og:url" content={`${typeof window !== 'undefined' ? window.location.href : ''}`} />
+                <meta property="og:site_name" content="Authentic Web Design" />
+
+                {/* Twitter */}
+                <meta name="twitter:card" content="summary_large_image" />
+                <meta name="twitter:title" content="Photography | Authentic Web Studio" />
+                <meta name="twitter:description" content="Descubre nuestras colecciones de fotografía y producciones visuales." />
+                <meta name="twitter:image" content={`${typeof window !== 'undefined' ? window.location.origin : ''}/img/hero-sliders/1.webp`} />
             </Helmet>
             <div className="relative min-h-screen bg-white text-black">
                 <div className="fixed top-0 left-0 w-full z-30 pointer-events-auto">

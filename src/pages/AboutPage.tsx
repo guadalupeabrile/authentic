@@ -29,10 +29,24 @@ function AboutPage() {
                     name="description"
                     content="Conoce la historia, valores y el equipo detrás de Authentic Web Design."
                 />
+
+                {/* Open Graph / Facebook */}
+                <meta property="og:type" content="website" />
+                <meta property="og:title" content="About | Authentic Web Design" />
+                <meta property="og:description" content="Conoce la historia, valores y el equipo detrás de Authentic Web Design." />
+                <meta property="og:image" content={`${typeof window !== 'undefined' ? window.location.origin : ''}/img/logo.png`} />
+                <meta property="og:url" content={`${typeof window !== 'undefined' ? window.location.href : ''}`} />
+                <meta property="og:site_name" content="Authentic Web Design" />
+
+                {/* Twitter */}
+                <meta name="twitter:card" content="summary_large_image" />
+                <meta name="twitter:title" content="About | Authentic Web Design" />
+                <meta name="twitter:description" content="Conoce la historia, valores y el equipo detrás de Authentic Web Design." />
+                <meta name="twitter:image" content={`${typeof window !== 'undefined' ? window.location.origin : ''}/img/logo.png`} />
             </Helmet>
             <div className="relative min-h-screen bg-white text-black">
                 <div className="fixed top-0 left-0 w-full z-30 pointer-events-auto">
-                    <HeaderSecondary activeUrl="/about" logoSrc="/img/logo_white.png" />
+                    <HeaderSecondary activeUrl="/about" />
                 </div>
 
                 <main className="pt-16 md:pt-32 pb-24 px-6">

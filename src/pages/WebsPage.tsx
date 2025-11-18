@@ -10,6 +10,20 @@ function WebsPage() {
             <Helmet>
                 <title>Webs | Authentic Web Design</title>
                 <meta name="description" content="Explora nuestros proyectos web y soluciones digitales." />
+
+                {/* Open Graph / Facebook */}
+                <meta property="og:type" content="website" />
+                <meta property="og:title" content="Webs | Authentic Web Design" />
+                <meta property="og:description" content="Explora nuestros proyectos web y soluciones digitales." />
+                <meta property="og:image" content={`${typeof window !== 'undefined' ? window.location.origin : ''}/img/logo.png`} />
+                <meta property="og:url" content={`${typeof window !== 'undefined' ? window.location.href : ''}`} />
+                <meta property="og:site_name" content="Authentic Web Design" />
+
+                {/* Twitter */}
+                <meta name="twitter:card" content="summary_large_image" />
+                <meta name="twitter:title" content="Webs | Authentic Web Design" />
+                <meta name="twitter:description" content="Explora nuestros proyectos web y soluciones digitales." />
+                <meta name="twitter:image" content={`${typeof window !== 'undefined' ? window.location.origin : ''}/img/logo.png`} />
             </Helmet>
             <div className="relative min-h-screen bg-white text-black">
                 <div className="fixed top-0 left-0 w-full z-30 pointer-events-auto">

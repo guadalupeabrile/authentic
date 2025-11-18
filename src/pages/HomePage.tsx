@@ -16,8 +16,22 @@ function HomePage() {
     return (
         <>
             <Helmet>
-                <title>Authentic Web Design</title>
-                <meta name="description" content="Authentic Web Design - Elegant design studio" />
+                <title>Authentic Web Studio</title>
+                <meta name="description" content="Authentic Web Studio" />
+
+                {/* Open Graph / Facebook */}
+                <meta property="og:type" content="website" />
+                <meta property="og:title" content="Authentic Web Design" />
+                <meta property="og:description" content="Authentic Web Design - Elegant design studio" />
+                <meta property="og:image" content={`${typeof window !== 'undefined' ? window.location.origin : ''}/img/hero-sliders/1.webp`} />
+                <meta property="og:url" content={`${typeof window !== 'undefined' ? window.location.href : ''}`} />
+                <meta property="og:site_name" content="Authentic Web Design" />
+
+                {/* Twitter */}
+                <meta name="twitter:card" content="summary_large_image" />
+                <meta name="twitter:title" content="Authentic Web Design" />
+                <meta name="twitter:description" content="Authentic Web Design - Elegant design studio" />
+                <meta name="twitter:image" content={`${typeof window !== 'undefined' ? window.location.origin : ''}/img/hero-sliders/1.webp`} />
             </Helmet>
             <div className="relative min-h-screen overflow-x-hidden">
                 {/* Sección del slider con altura extendida */}
