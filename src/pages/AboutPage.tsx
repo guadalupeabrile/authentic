@@ -35,11 +35,11 @@ function AboutPage() {
                     <HeaderSecondary activeUrl="/about" logoSrc="/img/logo_white.png" />
                 </div>
 
-                <main className="pt-32 pb-24 px-6">
+                <main className="pt-16 md:pt-32 pb-24 px-6">
                     <section className="max-w-6xl mx-auto md:grid md:grid-cols-[minmax(0,1.2fr)_minmax(0,1.8fr)] md:gap-12 md:items-stretch">
                         {/* Columna de imágenes (izquierda) */}
                         <motion.aside
-                            className="mt-10 md:mt-0 md:border-r md:border-black/10 flex flex-col h-full"
+                            className="mt-5 md:mt-0 md:border-r md:border-black/10 flex flex-col h-full"
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
