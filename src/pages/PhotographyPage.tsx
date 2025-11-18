@@ -57,7 +57,8 @@ function ensureThreeColumns(config: PhotographyConfig): PhotographyConfig {
 function PhotographyPage() {
     const [config, setConfig] = useState<PhotographyConfig>(ensureThreeColumns({ categories: [] }))
     const [loading, setLoading] = useState(true)
-    const [expandedCategories, setExpandedCategories] = useState<Set<string>>(new Set())
+    // Track how many images to show per category (starts at 6, increases progressively)
+    const [imagesShownPerCategory, setImagesShownPerCategory] = useState<Map<string, number>>(new Map())
 
     useEffect(() => {
         try {
@@ -85,14 +86,10 @@ function PhotographyPage() {
         }, 0)
     }
 
-    // Función para limitar las secciones a 6 imágenes inicialmente (2 por columna)
-    const getLimitedSections = (category: typeof categories[0], isExpanded: boolean): MasonrySection[] => {
-        if (isExpanded) {
-            return category.sections
-        }
-
-        const imagesPerColumn = 2 // 2 imágenes por columna
-        const maxImages = 6 // 2 por columna × 3 columnas
+    // Función para obtener las secciones limitadas progresivamente
+    // En mobile: muestra primero 6 imágenes de la columna 1, luego más de columna 1, luego columna 2, luego columna 3
+    const getLimitedSections = (category: typeof categories[0], categoryId: string): MasonrySection[] => {
+        const imagesToShow = imagesShownPerCategory.get(categoryId) ?? 6 // Por defecto mostrar 6 imágenes
 
         // Buscar la primera sección con columnImages
         const firstSectionWithColumns = category.sections.find(section =>
@@ -101,40 +98,142 @@ function PhotographyPage() {
         )
 
         if (firstSectionWithColumns && firstSectionWithColumns.columnImages) {
-            // Limitar a 2 imágenes por columna
-            const limitedColumnImages = firstSectionWithColumns.columnImages.map((column) => ({
-                ...column,
-                images: column.images.slice(0, imagesPerColumn)
-            }))
+            const columns = firstSectionWithColumns.columnImages
+            const col1Count = columns[0]?.images.length ?? 0
+            const col2Count = columns[1]?.images.length ?? 0
+            const col3Count = columns[2]?.images.length ?? 0
+            const totalImages = col1Count + col2Count + col3Count
+
+            // Si todas las imágenes están mostradas, devolver solo las secciones con imágenes
+            if (imagesToShow >= totalImages) {
+                // Filtrar secciones vacías para evitar espacios extra
+                return category.sections.filter(section => {
+                    if (section.columnImages) {
+                        return section.columnImages.some(col => col.images.length > 0)
+                    }
+                    if (section.images) {
+                        return section.images.length > 0
+                    }
+                    return false
+                })
+            }
+
+            const limitedColumnImages: typeof columns = []
+
+            // Columna 1: mostrar hasta imagesToShow o todas las de col1
+            if (imagesToShow > 0 && col1Count > 0) {
+                const imagesFromCol1 = Math.min(col1Count, imagesToShow)
+                limitedColumnImages.push({
+                    ...columns[0],
+                    images: columns[0].images.slice(0, imagesFromCol1)
+                })
+            }
+
+            // Columna 2: solo si ya mostramos todas las de col1
+            if (imagesToShow > col1Count && col2Count > 0) {
+                const imagesFromCol2 = Math.min(col2Count, imagesToShow - col1Count)
+                limitedColumnImages.push({
+                    ...columns[1],
+                    images: columns[1].images.slice(0, imagesFromCol2)
+                })
+            }
+
+            // Columna 3: solo si ya mostramos todas las de col1 y col2
+            if (imagesToShow > col1Count + col2Count && col3Count > 0) {
+                const imagesFromCol3 = Math.min(col3Count, imagesToShow - col1Count - col2Count)
+                limitedColumnImages.push({
+                    ...columns[2],
+                    images: columns[2].images.slice(0, imagesFromCol3)
+                })
+            }
 
             return [{
                 ...firstSectionWithColumns,
-                columnImages: limitedColumnImages
+                columnImages: limitedColumnImages,
+                columns: {
+                    mobile: 1, // En mobile, mostrar solo 1 columna
+                    tablet: firstSectionWithColumns.columns?.tablet,
+                    desktop: firstSectionWithColumns.columns?.desktop
+                }
             }]
         }
 
         // Fallback: si no hay columnImages, usar el método antiguo
         const firstSection = category.sections[0]
         if (firstSection && firstSection.images) {
+            const totalImages = firstSection.images.length
+            if (imagesToShow >= totalImages) {
+                // Filtrar secciones vacías para evitar espacios extra
+                return category.sections.filter(section => {
+                    if (section.images) {
+                        return section.images.length > 0
+                    }
+                    return false
+                })
+            }
             return [{
                 ...firstSection,
-                images: firstSection.images.slice(0, maxImages)
+                images: firstSection.images.slice(0, imagesToShow)
             }]
         }
 
         return []
     }
 
-    const toggleCategory = (categoryId: string) => {
-        setExpandedCategories(prev => {
-            const newSet = new Set(prev)
-            if (newSet.has(categoryId)) {
-                newSet.delete(categoryId)
-            } else {
-                newSet.add(categoryId)
+    // Función para incrementar progresivamente las imágenes mostradas
+    const showMoreImages = (categoryId: string, category: typeof categories[0]) => {
+        const currentShown = imagesShownPerCategory.get(categoryId) ?? 6
+        const totalImages = countImagesInCategory(category)
+
+        // Calcular cuántas imágenes más mostrar
+        // Primero terminamos la columna 1, luego columna 2, luego columna 3
+        const firstSectionWithColumns = category.sections.find(section =>
+            section.columnImages && section.columnImages.length > 0 &&
+            section.columnImages.some(col => col.images.length > 0)
+        )
+
+        if (firstSectionWithColumns && firstSectionWithColumns.columnImages) {
+            const columns = firstSectionWithColumns.columnImages
+            const col1Count = columns[0]?.images.length ?? 0
+            const col2Count = columns[1]?.images.length ?? 0
+            const col3Count = columns[2]?.images.length ?? 0
+
+            let nextCount = currentShown
+
+            // Si estamos en la primera columna (menos de 6 o menos del total de col1)
+            if (currentShown < col1Count) {
+                // Mostrar 6 más o hasta el final de la columna 1
+                nextCount = Math.min(currentShown + 6, col1Count)
             }
-            return newSet
-        })
+            // Si terminamos columna 1, empezar con columna 2
+            else if (currentShown < col1Count + col2Count) {
+                // Mostrar 6 más o hasta el final de la columna 2
+                nextCount = Math.min(currentShown + 6, col1Count + col2Count)
+            }
+            // Si terminamos columna 2, empezar con columna 3
+            else if (currentShown < col1Count + col2Count + col3Count) {
+                // Mostrar todas las restantes
+                nextCount = totalImages
+            }
+            // Si ya mostramos todo, no hacer nada
+            else {
+                return
+            }
+
+            setImagesShownPerCategory(prev => {
+                const newMap = new Map(prev)
+                newMap.set(categoryId, nextCount)
+                return newMap
+            })
+        } else {
+            // Fallback: incrementar por 6
+            const nextCount = Math.min(currentShown + 6, totalImages)
+            setImagesShownPerCategory(prev => {
+                const newMap = new Map(prev)
+                newMap.set(categoryId, nextCount)
+                return newMap
+            })
+        }
     }
 
     const content = loading
@@ -173,10 +272,10 @@ function PhotographyPage() {
                     <div className="space-y-24">
                         {content.map((category, categoryIndex) => {
                             const categoryId = category.id ?? `category-${categoryIndex}`
-                            const isExpanded = expandedCategories.has(categoryId)
                             const totalImages = countImagesInCategory(category)
-                            const limitedSections = getLimitedSections(category, isExpanded)
-                            const hasMoreImages = totalImages > 6
+                            const imagesShown = imagesShownPerCategory.get(categoryId) ?? 6
+                            const limitedSections = getLimitedSections(category, categoryId)
+                            const hasMoreImages = imagesShown < totalImages
 
                             return (
                                 <motion.section
@@ -212,7 +311,7 @@ function PhotographyPage() {
                                         </div>
                                     )}
 
-                                    {hasMoreImages && !isExpanded && (
+                                    {hasMoreImages && (
                                         <motion.div
                                             className="px-6 flex justify-center"
                                             initial={{ opacity: 0 }}
@@ -221,7 +320,7 @@ function PhotographyPage() {
                                             transition={{ duration: 0.6, delay: categoryIndex * 0.4 + 0.6 }}
                                         >
                                             <button
-                                                onClick={() => toggleCategory(categoryId)}
+                                                onClick={() => showMoreImages(categoryId, category)}
                                                 className="text-black underline decoration-black/60 hover:decoration-black transition-colors duration-200 text-sm tracking-wide"
                                             >
                                                 show more
