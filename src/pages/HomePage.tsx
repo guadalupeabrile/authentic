@@ -8,10 +8,10 @@ function HomePage() {
     // Para producción, coloca las imágenes en public/images/ y usa rutas como '/images/nombre-imagen.jpg'
     // Ejemplo: const sliderImages = ['/images/cortina.jpg', '/images/marmol.jpg', '/images/madera.jpg']
     const sliderImages = [
-        '/img/hero-sliders/1.jpg',
-        '/img/hero-sliders/3.jpg',
-        '/img/hero-sliders/4.jpg',
-        '/img/hero-sliders/5.jpg',
+        '/img/hero-sliders/1.webp',
+        '/img/hero-sliders/3.webp',
+        '/img/hero-sliders/4.webp',
+        '/img/hero-sliders/5.webp',
     ]
 
     return (
