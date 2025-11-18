@@ -46,7 +46,7 @@ function AboutPage() {
                             transition={{ duration: 0.5 }}
                         >
                             {aboutImages.length > 0 ? (
-                                <div className="group relative w-full h-full min-h-[280px]">
+                                <div className="group relative w-full h-full min-h-[280px] mb-5 md:mb-0">
                                     <OptimizedImage
                                         src={aboutImages[0]}
                                         alt="About image"
