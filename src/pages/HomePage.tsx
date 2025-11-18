@@ -9,10 +9,9 @@ function HomePage() {
     // Ejemplo: const sliderImages = ['/images/cortina.jpg', '/images/marmol.jpg', '/images/madera.jpg']
     const sliderImages = [
         '/img/hero-sliders/1.webp',
-        '/img/hero-sliders/3.webp',
-        '/img/hero-sliders/4.webp',
         '/img/hero-sliders/5.webp',
-    ]
+        '/img/hero-sliders/3.webp',
+        '/img/hero-sliders/4.webp']
 
     return (
         <>

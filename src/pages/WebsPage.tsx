@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion'
 import { Helmet } from 'react-helmet-async'
 import { HeaderSecondary } from '../components/HeaderSecondary'
 import { Footer } from '../components/Footer'
@@ -12,13 +13,35 @@ function WebsPage() {
             </Helmet>
             <div className="relative min-h-screen bg-white text-black">
                 <div className="fixed top-0 left-0 w-full z-30 pointer-events-auto">
-                    <HeaderSecondary activeUrl="/websites" logoSrc="/img/logo.png" />
+                    <HeaderSecondary activeUrl="/websites" />
                 </div>
+                <main className="pt-32 pb-24">
+                    <motion.section
+                        className="space-y-8"
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.6 }}
+                    >
+                        <motion.div
+                            className="px-6 mb-24"
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.6, delay: 0.3 }}
+                        >
+                            <div className="space-y-6">
+                                <h1 className="text-2xl md:text-4xl font-light">Our Latest Projects</h1>
+                                <p className="text-base text-black/80 leading-relaxed max-w-6xl">
+                                    We create digital experiences that stand out. From complex web applications built from scratch with React and TypeScript to agile e-commerce solutions implemented on Shopify or Tiendanube. We blend strategic design with cutting-edge technology to help your brand grow and convert.
+                                </p>
+                            </div>
+                        </motion.div>
+                    </motion.section>
 
-                <main className="pt-32 pb-24 pr-[10px] pl-[30px] space-y-16">
-
-
-                    <WebProjectsList />
+                    <div className="pr-[10px] pl-[30px] space-y-16">
+                        <WebProjectsList />
+                    </div>
                 </main>
 
                 <Footer darkText />

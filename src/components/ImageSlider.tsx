@@ -51,7 +51,13 @@ export function ImageSlider({ images, className, interval = 5000 }: ImageSliderP
                         <img
                             src={image}
                             alt={`Slide ${index + 1}`}
-                            className="w-full h-full object-cover object-center min-h-full"
+                            className={cn(
+                                "w-full h-full object-cover min-h-full",
+                                // Para la primera imagen (slider 1), mostrar un poco más a la izquierda en mobile (75% desde la izquierda)
+                                index === 0
+                                    ? "[object-position:75%_center] md:[object-position:center]"
+                                    : "object-center"
+                            )}
                             loading={index === 0 ? 'eager' : 'lazy'}
                             decoding="async"
                             // Asegura que las imágenes se adapten al contenedor sin depender de su tamaño real
@@ -60,7 +66,6 @@ export function ImageSlider({ images, className, interval = 5000 }: ImageSliderP
                                 height: '100%',
                                 minHeight: '100%',
                                 objectFit: 'cover',
-                                objectPosition: 'center',
                             }}
                         />
                     </div>
