@@ -2,8 +2,8 @@
   "categories": [
     {
       "id": "naturaleza",
-      "title": "Naturaleza",
-      "description": "Exploración visual de paisajes naturales, flora y fauna capturados en su estado más puro.",
+      "title": "Nature",
+      "description": "I believe the perception of nature's energy begins with heightened sensitivity to beauty. Exploring the sense of no borders between us.",
       "sections": [
         {
           "gap": 40,
@@ -68,9 +68,9 @@
       ]
     },
     {
-      "id": "retratos",
-      "title": "Retratos",
-      "description": "Colección de retratos que capturan la esencia y personalidad de cada sujeto.",
+      "id": "vivero",
+      "title": "La huertita Miramar",
+      "description": "An organic garden in Uruguay, growing native plants and welcoming friends. It is a place to dig, harvest, sit together, and share whatever the day brings. Simple, grounded, and made for gathering.",
       "sections": [
         {
           "gap": 40,
@@ -150,9 +150,9 @@
       ]
     },
     {
-      "id": "hola",
-      "title": "Hola",
-      "description": "hola hola",
+      "id": "surf",
+      "title": "HolaSurf and Connection",
+      "description": "A collection of surf portraits traveling through climates and coastlines—from the bright, tropical heat of Sri Lanka and the Philippines to the raw winter swells of Uruguay. One journey, many oceans, shared stories.",
       "sections": [
         {
           "gap": 40,

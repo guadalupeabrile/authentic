@@ -156,7 +156,7 @@ function PhotographyPage() {
             </Helmet>
             <div className="relative min-h-screen bg-white text-black">
                 <div className="fixed top-0 left-0 w-full z-30 pointer-events-auto">
-                    <HeaderSecondary activeUrl="/photography" logoSrc="/img/logo.png" />
+                    <HeaderSecondary activeUrl="/photography" />
                 </div>
 
                 <main className="pt-32 pb-24">
@@ -188,7 +188,7 @@ function PhotographyPage() {
                                     transition={{ duration: 0.6, delay: categoryIndex * 0.4 }}
                                 >
                                     <motion.div
-                                        className="px-6"
+                                        className="px-6 mb-24"
                                         initial={{ opacity: 0, y: 20 }}
                                         whileInView={{ opacity: 1, y: 0 }}
                                         viewport={{ once: true }}
@@ -196,7 +196,7 @@ function PhotographyPage() {
                                     >
                                         <div className="space-y-6">
                                             <h1 className="text-2xl md:text-4xl font-light">{category.title}</h1>
-                                            <p className="text-base text-black/80 leading-relaxed max-w-4xl">{category.description}</p>
+                                            <p className="text-base text-black/80 leading-relaxed max-w-6xl">{category.description}</p>
                                         </div>
                                     </motion.div>
 
@@ -224,7 +224,7 @@ function PhotographyPage() {
                                                 onClick={() => toggleCategory(categoryId)}
                                                 className="text-black underline decoration-black/60 hover:decoration-black transition-colors duration-200 text-sm tracking-wide"
                                             >
-                                                ver más
+                                                show more
                                             </button>
                                         </motion.div>
                                     )}

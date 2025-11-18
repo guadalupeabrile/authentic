@@ -57,7 +57,7 @@ export function OptimizedImage({
                 src={src}
                 alt={alt}
                 className={cn(
-                    'w-full h-auto transition-opacity duration-300',
+                    'w-full h-auto transition-opacity duration-700 ease-in-out',
                     isLoaded ? 'opacity-100' : 'opacity-0',
                     className
                 )}
