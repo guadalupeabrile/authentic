@@ -26,7 +26,7 @@ export function Header({
                     <img
                         src={logoSrc}
                         alt="Authentic Web Design"
-                        className="w-full h-auto object-contain opacity-80 hover:opacity-100 transition-opacity duration-300"
+                        className="w-full md:w-full h-auto object-contain opacity-80 hover:opacity-100 transition-opacity duration-300 scale-110 md:scale-100"
                         loading="eager"
                         decoding="async"
                     />

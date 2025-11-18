@@ -52,7 +52,7 @@ export function Footer({ className, darkText }: FooterProps) {
             >
                 <div
                     className={cn(
-                        'mb-2 flex w-[95%] items-center justify-between gap-3 text-[10px] sm:text-xs md:text-sm lg:text-base md:gap-4 text-center mx-auto font-light uppercase tracking-[0.15em]',
+                        'mb-2 flex flex-col md:flex-row w-[95%] items-center justify-center md:justify-between gap-3 text-[10px] sm:text-xs md:text-sm lg:text-base md:gap-4 text-center mx-auto font-light uppercase tracking-[0.15em]',
                         darkText ? 'text-black' : 'mix-blend-difference text-white'
                     )}
                 >
@@ -64,7 +64,8 @@ export function Footer({ className, darkText }: FooterProps) {
                             rel={link.external ? 'noopener noreferrer' : undefined}
                             className={cn(
                                 "hover:opacity-70 transition-opacity tracking-wider",
-                                link.id === 'email' ? 'lowercase' : ''
+                                link.id === 'email' ? 'lowercase' : '',
+                                link.id === 'instagram' ? 'normal-case' : ''
                             )}
                         >
                             {link.label}
