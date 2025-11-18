@@ -86,8 +86,52 @@ function PhotographyPage() {
         }, 0)
     }
 
+    // Función para aplanar imágenes de todas las columnas en un solo array intercalado
+    // Intercala las imágenes: col1[0], col2[0], col3[0], col1[1], col2[1], col3[1], etc.
+    const flattenColumnImages = (columns: NonNullable<MasonrySection['columnImages']>): string[] => {
+        const flattened: string[] = []
+        const lengths = columns.map(col => col.images.length)
+        const maxLength = lengths.length > 0 ? Math.max(...lengths) : 0
+
+        for (let i = 0; i < maxLength; i++) {
+            for (let colIndex = 0; colIndex < columns.length; colIndex++) {
+                if (columns[colIndex]?.images[i]) {
+                    flattened.push(columns[colIndex].images[i])
+                }
+            }
+        }
+
+        return flattened
+    }
+
+    // Función para reconstruir columnas desde un array aplanado
+    const reconstructColumns = (
+        flattenedImages: string[],
+        originalColumns: NonNullable<MasonrySection['columnImages']>,
+        count: number
+    ): NonNullable<MasonrySection['columnImages']> => {
+        const limitedImages = flattenedImages.slice(0, count)
+        const reconstructed: NonNullable<MasonrySection['columnImages']> = []
+
+        // Inicializar columnas vacías
+        for (let i = 0; i < originalColumns.length; i++) {
+            reconstructed.push({
+                ...originalColumns[i],
+                images: []
+            })
+        }
+
+        // Distribuir las imágenes de vuelta a las columnas de forma intercalada
+        for (let i = 0; i < limitedImages.length; i++) {
+            const colIndex = i % originalColumns.length
+            reconstructed[colIndex].images.push(limitedImages[i])
+        }
+
+        return reconstructed
+    }
+
     // Función para obtener las secciones limitadas progresivamente
-    // En mobile: muestra primero 6 imágenes de la columna 1, luego más de columna 1, luego columna 2, luego columna 3
+    // Muestra las imágenes intercaladas entre columnas, sin importar de qué columna provengan
     const getLimitedSections = (category: typeof categories[0], categoryId: string): MasonrySection[] => {
         const imagesToShow = imagesShownPerCategory.get(categoryId) ?? 6 // Por defecto mostrar 6 imágenes
 
@@ -99,10 +143,8 @@ function PhotographyPage() {
 
         if (firstSectionWithColumns && firstSectionWithColumns.columnImages) {
             const columns = firstSectionWithColumns.columnImages
-            const col1Count = columns[0]?.images.length ?? 0
-            const col2Count = columns[1]?.images.length ?? 0
-            const col3Count = columns[2]?.images.length ?? 0
-            const totalImages = col1Count + col2Count + col3Count
+            const flattenedImages = flattenColumnImages(columns)
+            const totalImages = flattenedImages.length
 
             // Si todas las imágenes están mostradas, devolver solo las secciones con imágenes
             if (imagesToShow >= totalImages) {
@@ -118,34 +160,8 @@ function PhotographyPage() {
                 })
             }
 
-            const limitedColumnImages: typeof columns = []
-
-            // Columna 1: mostrar hasta imagesToShow o todas las de col1
-            if (imagesToShow > 0 && col1Count > 0) {
-                const imagesFromCol1 = Math.min(col1Count, imagesToShow)
-                limitedColumnImages.push({
-                    ...columns[0],
-                    images: columns[0].images.slice(0, imagesFromCol1)
-                })
-            }
-
-            // Columna 2: solo si ya mostramos todas las de col1
-            if (imagesToShow > col1Count && col2Count > 0) {
-                const imagesFromCol2 = Math.min(col2Count, imagesToShow - col1Count)
-                limitedColumnImages.push({
-                    ...columns[1],
-                    images: columns[1].images.slice(0, imagesFromCol2)
-                })
-            }
-
-            // Columna 3: solo si ya mostramos todas las de col1 y col2
-            if (imagesToShow > col1Count + col2Count && col3Count > 0) {
-                const imagesFromCol3 = Math.min(col3Count, imagesToShow - col1Count - col2Count)
-                limitedColumnImages.push({
-                    ...columns[2],
-                    images: columns[2].images.slice(0, imagesFromCol3)
-                })
-            }
+            // Reconstruir las columnas con las imágenes limitadas
+            const limitedColumnImages = reconstructColumns(flattenedImages, columns, imagesToShow)
 
             return [{
                 ...firstSectionWithColumns,
@@ -181,59 +197,19 @@ function PhotographyPage() {
     }
 
     // Función para incrementar progresivamente las imágenes mostradas
+    // Simplemente incrementa en 6 imágenes (o las que resten) sin importar de qué columna provengan
     const showMoreImages = (categoryId: string, category: typeof categories[0]) => {
         const currentShown = imagesShownPerCategory.get(categoryId) ?? 6
         const totalImages = countImagesInCategory(category)
 
-        // Calcular cuántas imágenes más mostrar
-        // Primero terminamos la columna 1, luego columna 2, luego columna 3
-        const firstSectionWithColumns = category.sections.find(section =>
-            section.columnImages && section.columnImages.length > 0 &&
-            section.columnImages.some(col => col.images.length > 0)
-        )
+        // Incrementar en 6 imágenes o mostrar todas las restantes
+        const nextCount = Math.min(currentShown + 6, totalImages)
 
-        if (firstSectionWithColumns && firstSectionWithColumns.columnImages) {
-            const columns = firstSectionWithColumns.columnImages
-            const col1Count = columns[0]?.images.length ?? 0
-            const col2Count = columns[1]?.images.length ?? 0
-            const col3Count = columns[2]?.images.length ?? 0
-
-            let nextCount = currentShown
-
-            // Si estamos en la primera columna (menos de 6 o menos del total de col1)
-            if (currentShown < col1Count) {
-                // Mostrar 6 más o hasta el final de la columna 1
-                nextCount = Math.min(currentShown + 6, col1Count)
-            }
-            // Si terminamos columna 1, empezar con columna 2
-            else if (currentShown < col1Count + col2Count) {
-                // Mostrar 6 más o hasta el final de la columna 2
-                nextCount = Math.min(currentShown + 6, col1Count + col2Count)
-            }
-            // Si terminamos columna 2, empezar con columna 3
-            else if (currentShown < col1Count + col2Count + col3Count) {
-                // Mostrar todas las restantes
-                nextCount = totalImages
-            }
-            // Si ya mostramos todo, no hacer nada
-            else {
-                return
-            }
-
-            setImagesShownPerCategory(prev => {
-                const newMap = new Map(prev)
-                newMap.set(categoryId, nextCount)
-                return newMap
-            })
-        } else {
-            // Fallback: incrementar por 6
-            const nextCount = Math.min(currentShown + 6, totalImages)
-            setImagesShownPerCategory(prev => {
-                const newMap = new Map(prev)
-                newMap.set(categoryId, nextCount)
-                return newMap
-            })
-        }
+        setImagesShownPerCategory(prev => {
+            const newMap = new Map(prev)
+            newMap.set(categoryId, nextCount)
+            return newMap
+        })
     }
 
     const content = loading
