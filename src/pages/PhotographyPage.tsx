@@ -57,6 +57,7 @@ function ensureThreeColumns(config: PhotographyConfig): PhotographyConfig {
 function PhotographyPage() {
     const [config, setConfig] = useState<PhotographyConfig>(ensureThreeColumns({ categories: [] }))
     const [loading, setLoading] = useState(true)
+    const [expandedCategories, setExpandedCategories] = useState<Set<string>>(new Set())
 
     useEffect(() => {
         try {
@@ -70,6 +71,71 @@ function PhotographyPage() {
     }, [])
 
     const categories = config.categories
+
+    // Función para contar el total de imágenes en una categoría
+    const countImagesInCategory = (category: typeof categories[0]): number => {
+        return category.sections.reduce((total, section) => {
+            if (section.columnImages) {
+                return total + section.columnImages.reduce((colTotal, col) => colTotal + col.images.length, 0)
+            }
+            if (section.images) {
+                return total + section.images.length
+            }
+            return total
+        }, 0)
+    }
+
+    // Función para limitar las secciones a 6 imágenes inicialmente (2 por columna)
+    const getLimitedSections = (category: typeof categories[0], isExpanded: boolean): MasonrySection[] => {
+        if (isExpanded) {
+            return category.sections
+        }
+
+        const imagesPerColumn = 2 // 2 imágenes por columna
+        const maxImages = 6 // 2 por columna × 3 columnas
+
+        // Buscar la primera sección con columnImages
+        const firstSectionWithColumns = category.sections.find(section =>
+            section.columnImages && section.columnImages.length > 0 &&
+            section.columnImages.some(col => col.images.length > 0)
+        )
+
+        if (firstSectionWithColumns && firstSectionWithColumns.columnImages) {
+            // Limitar a 2 imágenes por columna
+            const limitedColumnImages = firstSectionWithColumns.columnImages.map((column) => ({
+                ...column,
+                images: column.images.slice(0, imagesPerColumn)
+            }))
+
+            return [{
+                ...firstSectionWithColumns,
+                columnImages: limitedColumnImages
+            }]
+        }
+
+        // Fallback: si no hay columnImages, usar el método antiguo
+        const firstSection = category.sections[0]
+        if (firstSection && firstSection.images) {
+            return [{
+                ...firstSection,
+                images: firstSection.images.slice(0, maxImages)
+            }]
+        }
+
+        return []
+    }
+
+    const toggleCategory = (categoryId: string) => {
+        setExpandedCategories(prev => {
+            const newSet = new Set(prev)
+            if (newSet.has(categoryId)) {
+                newSet.delete(categoryId)
+            } else {
+                newSet.add(categoryId)
+            }
+            return newSet
+        })
+    }
 
     const content = loading
         ? [
@@ -105,41 +171,66 @@ function PhotographyPage() {
                         </div>
                     )}
                     <div className="space-y-24">
-                        {content.map((category, categoryIndex) => (
-                            <motion.section
-                                key={category.id ?? categoryIndex}
-                                className="space-y-8"
-                                initial={{ opacity: 0, y: 20 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ duration: 0.5 }}
-                            >
-                                <motion.div
-                                    className="px-6"
+                        {content.map((category, categoryIndex) => {
+                            const categoryId = category.id ?? `category-${categoryIndex}`
+                            const isExpanded = expandedCategories.has(categoryId)
+                            const totalImages = countImagesInCategory(category)
+                            const limitedSections = getLimitedSections(category, isExpanded)
+                            const hasMoreImages = totalImages > 6
+
+                            return (
+                                <motion.section
+                                    key={categoryId}
+                                    className="space-y-8"
                                     initial={{ opacity: 0, y: 20 }}
                                     whileInView={{ opacity: 1, y: 0 }}
                                     viewport={{ once: true }}
-                                    transition={{ duration: 0.5, delay: 0.1 }}
+                                    transition={{ duration: 0.6, delay: categoryIndex * 0.4 }}
                                 >
-                                    <div className="space-y-6">
-                                        <h1 className="text-2xl md:text-4xl font-light">{category.title}</h1>
-                                        <p className="text-base text-black/80 leading-relaxed max-w-4xl">{category.description}</p>
-                                    </div>
-                                </motion.div>
-
-                                {category.sections.length > 0 && (
-                                    <div className="mt-12 w-full px-6">
-                                        <div className="">
-                                            <MasonryGrid
-                                                sections={category.sections}
-                                                horizontalMargin={0}
-                                                editable={false}
-                                            />
+                                    <motion.div
+                                        className="px-6"
+                                        initial={{ opacity: 0, y: 20 }}
+                                        whileInView={{ opacity: 1, y: 0 }}
+                                        viewport={{ once: true }}
+                                        transition={{ duration: 0.6, delay: categoryIndex * 0.4 + 0.3 }}
+                                    >
+                                        <div className="space-y-6">
+                                            <h1 className="text-2xl md:text-4xl font-light">{category.title}</h1>
+                                            <p className="text-base text-black/80 leading-relaxed max-w-4xl">{category.description}</p>
                                         </div>
-                                    </div>
-                                )}
-                            </motion.section>
-                        ))}
+                                    </motion.div>
+
+                                    {limitedSections.length > 0 && (
+                                        <div className="mt-12 w-full px-6">
+                                            <div className="">
+                                                <MasonryGrid
+                                                    sections={limitedSections}
+                                                    horizontalMargin={0}
+                                                    editable={false}
+                                                />
+                                            </div>
+                                        </div>
+                                    )}
+
+                                    {hasMoreImages && !isExpanded && (
+                                        <motion.div
+                                            className="px-6 flex justify-center"
+                                            initial={{ opacity: 0 }}
+                                            whileInView={{ opacity: 1 }}
+                                            viewport={{ once: true }}
+                                            transition={{ duration: 0.6, delay: categoryIndex * 0.4 + 0.6 }}
+                                        >
+                                            <button
+                                                onClick={() => toggleCategory(categoryId)}
+                                                className="text-black underline decoration-black/60 hover:decoration-black transition-colors duration-200 text-sm tracking-wide"
+                                            >
+                                                ver más
+                                            </button>
+                                        </motion.div>
+                                    )}
+                                </motion.section>
+                            )
+                        })}
                     </div>
                 </main>
 

@@ -242,10 +242,10 @@ export function MasonryGrid({
                                                             justifyContent: 'flex-start',
                                                             alignItems: 'flex-start'
                                                         }}
-                                                        initial={{ opacity: 0, y: 20 }}
+                                                        initial={{ opacity: 0, y: 30 }}
                                                         whileInView={{ opacity: 1, y: 0 }}
-                                                        viewport={{ once: true }}
-                                                        transition={{ duration: 0.5 }}
+                                                        viewport={{ once: true, amount: 0.5 }}
+                                                        transition={{ duration: 0.7, delay: 0.1 }}
                                                     >
                                                         <div className="relative overflow-hidden" style={{
                                                             width: '100%',
@@ -331,10 +331,10 @@ export function MasonryGrid({
                                             paddingLeft: `${marginLeft[imageIndex]}px`,
                                             paddingRight: `${marginRight[imageIndex]}px`
                                         }}
-                                        initial={{ opacity: 0, y: 20 }}
+                                        initial={{ opacity: 0, y: 30 }}
                                         whileInView={{ opacity: 1, y: 0 }}
-                                        viewport={{ once: true }}
-                                        transition={{ duration: 0.5 }}
+                                        viewport={{ once: true, amount: 0.5 }}
+                                        transition={{ duration: 0.7, delay: 0.1 }}
                                     >
                                         <div className="relative w-full overflow-hidden">
                                             <OptimizedImage
