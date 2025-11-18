@@ -33,7 +33,7 @@ function HomePage() {
                     </div>
                 </section>
 
-                <div className="fixed top-0 left-0 w-full z-30 px-12 sm:px-16 md:px-36 lg:px-48 pointer-events-auto">
+                <div className="fixed top-[50px] md:top-0 left-0 w-full z-30 px-12 sm:px-16 md:px-36 lg:px-48 pointer-events-auto">
                     <Header activeUrl="/" logoSrc="/img/logo_white.png" />
                 </div>
 
