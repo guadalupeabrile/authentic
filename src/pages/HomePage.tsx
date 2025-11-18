@@ -21,8 +21,8 @@ function HomePage() {
             </Helmet>
             <div className="relative min-h-screen overflow-x-hidden">
                 {/* Sección del slider con altura extendida */}
-                <section className="relative w-full min-h-[calc(100vh+360px)]">
-                    <div className="relative w-full h-[calc(100vh+360px)] z-0">
+                <section className="relative w-full min-h-screen md:min-h-[calc(100vh+360px)]">
+                    <div className="relative w-full h-screen md:h-[calc(100vh+360px)] z-0">
                         <ImageSlider
                             images={sliderImages}
                             className="w-full h-full"
@@ -36,7 +36,7 @@ function HomePage() {
                     <Header activeUrl="/" logoSrc="/img/logo_white.png" />
                 </div>
 
-                <Footer />
+                <Footer className="bottom-[10px]" />
             </div>
         </>
     )

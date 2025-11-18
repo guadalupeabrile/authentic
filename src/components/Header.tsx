@@ -33,7 +33,7 @@ export function Header({
                 </div>
 
                 {/* Navigation Menu */}
-                <nav className="flex gap-6 md:gap-8 lg:gap-8 justify-center items-center">
+                <nav className="flex gap-3 md:gap-4 lg:gap-5 justify-center items-center mx-[5px]">
                     {navigationItems.map((item) => {
                         const isActive =
                             item.url === '/'

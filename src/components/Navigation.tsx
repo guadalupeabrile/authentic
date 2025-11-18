@@ -9,7 +9,7 @@ const navItems: Array<'HOME' | 'WORK' | 'STUDIO'> = ['HOME', 'WORK', 'STUDIO']
 
 export function Navigation({ className, activeItem = 'HOME' }: NavigationProps) {
     return (
-        <nav className={cn('flex gap-6 md:gap-8 lg:gap-10 justify-center items-center', className)}>
+        <nav className={cn('flex gap-6 md:gap-8 lg:gap-10 justify-center items-center mx-[10px]', className)}>
             {navItems.map((item) => (
                 <a
                     key={item}
