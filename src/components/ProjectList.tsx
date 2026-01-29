@@ -51,8 +51,64 @@ const ProjectList: React.FC<ProjectListProps> = ({
         }
     }
 
+    const renderMarqueeContent = (item: Project, showImage: boolean = true) => (
+        <>
+            {Array.from({ length: repetitions }).map((_, i) => (
+                <span
+                    key={`${item.name}-${i}`}
+                    className="flex items-center px-6 py-6 whitespace-nowrap"
+                >
+                    <span className="mr-4">{item.name}</span>
+                    {showImage && item.image && (
+                        <img
+                            src={item.image}
+                            alt={item.name}
+                            className="h-[1.5em] w-auto object-contain align-middle inline-block mr-4"
+                            style={{ height: '1.5em', verticalAlign: 'middle', maxWidth: 'none' }}
+                        />
+                    )}
+                    {item.icon && <span className="ml-4">{item.icon}</span>}
+                </span>
+            ))}
+            {Array.from({ length: repetitions }).map((_, i) => (
+                <span
+                    key={`${item.name}-dup-${i}`}
+                    className="flex items-center px-6 py-6 whitespace-nowrap"
+                >
+                    <span className="mr-4">{item.name}</span>
+                    {showImage && item.image && (
+                        <img
+                            src={item.image}
+                            alt={item.name}
+                            className="h-[1.5em] w-auto object-contain align-middle inline-block mr-4"
+                            style={{ height: '1.5em', verticalAlign: 'middle', maxWidth: 'none' }}
+                        />
+                    )}
+                    {item.icon && <span className="ml-4">{item.icon}</span>}
+                </span>
+            ))}
+            {Array.from({ length: repetitions }).map((_, i) => (
+                <span
+                    key={`${item.name}-dup2-${i}`}
+                    className="flex items-center px-6 py-6 whitespace-nowrap"
+                >
+                    <span className="mr-4">{item.name}</span>
+                    {showImage && item.image && (
+                        <img
+                            src={item.image}
+                            alt={item.name}
+                            className="h-[1.5em] w-auto object-contain align-middle inline-block mr-4"
+                            style={{ height: '1.5em', verticalAlign: 'middle', maxWidth: 'none' }}
+                        />
+                    )}
+                    {item.icon && <span className="ml-4">{item.icon}</span>}
+                </span>
+            ))}
+        </>
+    )
+
     return (
-        <section className="mt-16 flex flex-col border-y border-black/40 md:border-y md:border-black/40">
+        <section className="mt-16 flex flex-col">
             {projects.map((item, index) => {
                 const duration = generateUniqueSpeed(index, item.speed)
                 const isExternal = typeof window !== 'undefined' && isExternalLink(item.link)
@@ -65,12 +121,12 @@ const ProjectList: React.FC<ProjectListProps> = ({
                             target: '_blank',
                             rel: 'noopener noreferrer'
                         })}
-                        className="block overflow-hidden md:border-b md:border-black/10 md:last:border-b-0 bg-white transition hover:bg-black/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black"
+                        className="block overflow-hidden border-b border-black/10 last:border-b-0 bg-white transition hover:bg-black/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black"
                     >
-                        {/* Mobile: Card estilo boceto con imagen arriba y texto abajo */}
-                        <div className="md:hidden border border-black/30 p-6 mb-4 mx-4 bg-white shadow-sm">
-                            {item.image && (
-                                <div className="w-full mb-4 rounded-sm overflow-hidden">
+                        {/* Mobile: Si hay imagen, mostrar imagen fija arriba y marquee abajo. Si no hay imagen, solo marquee como antes */}
+                        {item.image ? (
+                            <div className="md:hidden">
+                                <div className="w-full mt-4 mb-6 pb-4">
                                     <OptimizedImage
                                         src={item.image}
                                         alt={item.name}
@@ -78,11 +134,25 @@ const ProjectList: React.FC<ProjectListProps> = ({
                                         sizes="100vw"
                                     />
                                 </div>
-                            )}
-                            <div className="uppercase tracking-[0.2em] text-lg font-light text-black text-center">
-                                {item.name}
+                                <div className="relative overflow-hidden uppercase tracking-[0.2em] text-lg font-light text-black border-t border-black/10">
+                                    <div
+                                        className="marquee flex w-max items-center"
+                                        style={{ animationDuration: `${duration}s` }}
+                                    >
+                                        {renderMarqueeContent(item, false)}
+                                    </div>
+                                </div>
                             </div>
-                        </div>
+                        ) : (
+                            <div className="md:hidden relative overflow-hidden uppercase tracking-[0.2em] text-lg font-light text-black">
+                                <div
+                                    className="marquee flex w-max items-center"
+                                    style={{ animationDuration: `${duration}s` }}
+                                >
+                                    {renderMarqueeContent(item, false)}
+                                </div>
+                            </div>
+                        )}
 
                         {/* Desktop: Marquee infinito con texto e imágenes alternándose */}
                         <div
@@ -93,63 +163,7 @@ const ProjectList: React.FC<ProjectListProps> = ({
                                 className="marquee flex w-max items-center"
                                 style={{ animationDuration: `${duration}s` }}
                             >
-                                {Array.from({ length: repetitions }).map((_, i) => (
-                                    <span
-                                        key={`${item.name}-${i}`}
-                                        className="flex items-center px-6 py-6 whitespace-nowrap"
-                                    >
-                                        <span className="mr-4">{item.name}</span>
-                                        {item.image && (
-                                            <>
-                                                <img
-                                                    src={item.image}
-                                                    alt={item.name}
-                                                    className="h-[1.5em] w-auto object-contain align-middle inline-block mr-4"
-                                                    style={{ height: '1.5em', verticalAlign: 'middle', maxWidth: 'none' }}
-                                                />
-                                            </>
-                                        )}
-                                        {item.icon && <span className="ml-4">{item.icon}</span>}
-                                    </span>
-                                ))}
-                                {Array.from({ length: repetitions }).map((_, i) => (
-                                    <span
-                                        key={`${item.name}-dup-${i}`}
-                                        className="flex items-center px-6 py-6 whitespace-nowrap"
-                                    >
-                                        <span className="mr-4">{item.name}</span>
-                                        {item.image && (
-                                            <>
-                                                <img
-                                                    src={item.image}
-                                                    alt={item.name}
-                                                    className="h-[1.5em] w-auto object-contain align-middle inline-block mr-4"
-                                                    style={{ height: '1.5em', verticalAlign: 'middle', maxWidth: 'none' }}
-                                                />
-                                            </>
-                                        )}
-                                        {item.icon && <span className="ml-4">{item.icon}</span>}
-                                    </span>
-                                ))}
-                                {Array.from({ length: repetitions }).map((_, i) => (
-                                    <span
-                                        key={`${item.name}-dup2-${i}`}
-                                        className="flex items-center px-6 py-6 whitespace-nowrap"
-                                    >
-                                        <span className="mr-4">{item.name}</span>
-                                        {item.image && (
-                                            <>
-                                                <img
-                                                    src={item.image}
-                                                    alt={item.name}
-                                                    className="h-[1.5em] w-auto object-contain align-middle inline-block mr-4"
-                                                    style={{ height: '1.5em', verticalAlign: 'middle', maxWidth: 'none' }}
-                                                />
-                                            </>
-                                        )}
-                                        {item.icon && <span className="ml-4">{item.icon}</span>}
-                                    </span>
-                                ))}
+                                {renderMarqueeContent(item, true)}
                             </div>
                         </div>
                     </a>
