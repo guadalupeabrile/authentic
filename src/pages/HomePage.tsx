@@ -34,9 +34,11 @@ function HomePage() {
                 <meta name="twitter:image" content={`${typeof window !== 'undefined' ? window.location.origin : ''}/img/hero-sliders/1.webp`} />
             </Helmet>
             <div className="relative min-h-screen overflow-x-hidden">
-                {/* Sección del slider con altura extendida */}
-                <section className="relative w-full min-h-screen md:min-h-[calc(100vh+360px)]">
-                    <div className="relative w-full h-screen md:h-[calc(100vh+360px)] z-0">
+                {/* Sección del slider con altura extendida para cubrir viewport + espacio para scroll del footer */}
+                {/* El footer aparece cuando scroll > 80% del viewport, así que necesitamos altura suficiente */}
+                {/* Altura del footer aproximada: ~80px en mobile, ~100px en desktop */}
+                <section className="relative w-full min-h-[calc(100vh+200px)] md:min-h-[calc(100vh+300px)]">
+                    <div className="relative w-full h-[calc(100vh+200px)] md:h-[calc(100vh+300px)] z-0">
                         <ImageSlider
                             images={sliderImages}
                             className="w-full h-full"

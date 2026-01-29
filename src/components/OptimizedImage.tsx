@@ -115,7 +115,8 @@ export function OptimizedImage({
                     src={imageSrc}
                     alt={alt}
                     className={cn(
-                        'w-full h-auto transition-opacity duration-700 ease-in-out',
+                        // Si se pasa style con height, usar h-full en lugar de h-auto
+                        style?.height ? 'w-full h-full transition-opacity duration-700 ease-in-out' : 'w-full h-auto transition-opacity duration-700 ease-in-out',
                         isLoaded ? 'opacity-100' : 'opacity-0',
                         className
                     )}
@@ -131,10 +132,14 @@ export function OptimizedImage({
         </>
     )
 
+    // Si se pasa style con height, el contenedor también debe tener height: 100%
+    const containerStyle = style?.height ? { height: '100%', width: '100%' } : undefined
+
     if (animate) {
         return (
             <motion.div
                 className="relative overflow-hidden"
+                style={containerStyle}
                 initial={initial}
                 whileInView={whileInView}
                 viewport={{ once: true }}
@@ -145,6 +150,6 @@ export function OptimizedImage({
         )
     }
 
-    return <div className="relative overflow-hidden">{imageElement}</div>
+    return <div className="relative overflow-hidden" style={containerStyle}>{imageElement}</div>
 }
 

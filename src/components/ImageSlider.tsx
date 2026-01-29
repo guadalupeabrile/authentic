@@ -73,29 +73,26 @@ export function ImageSlider({ images, className, interval = 5000 }: ImageSliderP
                             isActive ? 'opacity-100 z-10' : 'opacity-0 z-0'
                         )}
                     >
-                        {/* Contenedor con tamaño fijo para que las imágenes se adapten */}
-                        <div className="w-full h-full min-h-full">
-                            <OptimizedImage
-                                src={image}
-                                alt={`Slide ${index + 1}`}
-                                className={cn(
-                                    "w-full h-full object-cover min-h-full",
-                                    // Para la primera imagen (slider 1), mostrar un poco más a la izquierda en mobile (75% desde la izquierda)
-                                    index === 0
-                                        ? "[object-position:75%_center] md:[object-position:center]"
-                                        : "object-center"
-                                )}
-                                priority={index === 0}
-                                fetchPriority={index === 0 ? 'high' : isNext ? 'low' : 'auto'}
-                                style={{
-                                    width: '100%',
-                                    height: '100%',
-                                    minHeight: '100%',
-                                    objectFit: 'cover',
-                                }}
-                                sizes="100vw"
-                            />
-                        </div>
+                        <OptimizedImage
+                            src={image}
+                            alt={`Slide ${index + 1}`}
+                            className={cn(
+                                "w-full h-full object-cover",
+                                // Para la primera imagen (slider 1), mostrar un poco más a la izquierda en mobile (75% desde la izquierda)
+                                index === 0
+                                    ? "[object-position:75%_center] md:[object-position:center]"
+                                    : "object-center"
+                            )}
+                            priority={index === 0}
+                            fetchPriority={index === 0 ? 'high' : isNext ? 'low' : 'auto'}
+                            style={{
+                                width: '100%',
+                                height: '100%',
+                                objectFit: 'cover',
+                                display: 'block',
+                            }}
+                            sizes="100vw"
+                        />
                     </div>
                 )
             })}
