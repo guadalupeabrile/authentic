@@ -207,11 +207,8 @@ function PhotographyProjectPage({ projectId }: PhotographyProjectPageProps) {
     }
 
     // Función para obtener las secciones limitadas progresivamente
-    // Desktop: Muestra 6 imágenes inicialmente (2 por columna), luego más al hacer scroll
-    // Mobile: Muestra 6 imágenes en una sola columna, luego más al hacer click en "show more"
+    // Muestra todas las imágenes desde el inicio
     const getLimitedSections = (category: typeof config.categories[0], categoryId: string): MasonrySection[] => {
-        const imagesToShow = imagesShownPerCategory.get(categoryId) ?? 6 // Por defecto mostrar 6 imágenes
-
         // Buscar la primera sección con columnImages
         const firstSectionWithColumns = category.sections.find(section =>
             section.columnImages && section.columnImages.length > 0 &&
@@ -222,6 +219,8 @@ function PhotographyProjectPage({ projectId }: PhotographyProjectPageProps) {
             const columns = firstSectionWithColumns.columnImages
             const flattenedImages = flattenColumnImages(columns)
             const totalImages = flattenedImages.length
+            // Por defecto mostrar todas las imágenes
+            const imagesToShow = imagesShownPerCategory.get(categoryId) ?? totalImages
 
             // Si todas las imágenes están mostradas, devolver la primera sección completa
             if (imagesToShow >= totalImages) {
@@ -274,6 +273,8 @@ function PhotographyProjectPage({ projectId }: PhotographyProjectPageProps) {
         const firstSection = category.sections.find(section => section.images && section.images.length > 0)
         if (firstSection && firstSection.images) {
             const totalImages = firstSection.images.length
+            // Por defecto mostrar todas las imágenes
+            const imagesToShow = imagesShownPerCategory.get(categoryId) ?? totalImages
             if (imagesToShow >= totalImages) {
                 // Devolver la sección completa
                 return [firstSection]
@@ -366,7 +367,8 @@ function PhotographyProjectPage({ projectId }: PhotographyProjectPageProps) {
 
     const categoryId = category.id ?? projectId
     const totalImages = countImagesInCategory(category)
-    const imagesShown = imagesShownPerCategory.get(categoryId) ?? 6
+    // Mostrar todas las imágenes desde el inicio
+    const imagesShown = imagesShownPerCategory.get(categoryId) ?? totalImages
     const limitedSections = getLimitedSections(category, categoryId)
     const hasMoreImages = imagesShown < totalImages
 
