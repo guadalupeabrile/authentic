@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet-async'
 import { HeaderSecondary } from '../components/HeaderSecondary'
 import { Footer } from '../components/Footer'
 import { MasonryGrid, type MasonrySection } from '../components/MasonryGrid'
+import { ImageLightbox } from '../components/ImageLightbox'
 import type { PhotographyConfig } from '../types/photography'
 import photographyData from '../data/photography.json'
 
@@ -123,6 +124,10 @@ function PhotographyProjectPage({ projectId }: PhotographyProjectPageProps) {
     // Desktop: starts at 6 (2 per column), increases on scroll
     // Mobile: starts at 6, increases on "show more" click
     const [imagesShownPerCategory, setImagesShownPerCategory] = useState<Map<string, number>>(new Map())
+    // Lightbox state
+    const [lightboxOpen, setLightboxOpen] = useState(false)
+    const [lightboxIndex, setLightboxIndex] = useState(0)
+    const [allImages, setAllImages] = useState<string[]>([])
 
     useEffect(() => {
         try {
@@ -179,6 +184,37 @@ function PhotographyProjectPage({ projectId }: PhotographyProjectPageProps) {
 
     // Find the category/project by id
     const category = config.categories.find(cat => cat.id === projectId)
+
+    // Obtener todas las imágenes aplanadas para el lightbox
+    useEffect(() => {
+        if (category) {
+            const firstSectionWithColumns = category.sections.find(section =>
+                section.columnImages && section.columnImages.length > 0 &&
+                section.columnImages.some(col => col.images.length > 0)
+            )
+
+            if (firstSectionWithColumns && firstSectionWithColumns.columnImages) {
+                const flattened = flattenColumnImages(firstSectionWithColumns.columnImages)
+                setAllImages(flattened)
+            } else {
+                const firstSection = category.sections.find(section => section.images && section.images.length > 0)
+                if (firstSection && firstSection.images) {
+                    setAllImages(firstSection.images)
+                } else {
+                    setAllImages([])
+                }
+            }
+        }
+    }, [category])
+
+    // Handler para abrir lightbox
+    const handleImageClick = (imageUrl: string) => {
+        const index = allImages.findIndex(img => img === imageUrl)
+        if (index !== -1) {
+            setLightboxIndex(index)
+            setLightboxOpen(true)
+        }
+    }
 
     // Función para reconstruir columnas desde un array aplanado
     const reconstructColumns = (
@@ -425,6 +461,7 @@ function PhotographyProjectPage({ projectId }: PhotographyProjectPageProps) {
                                         sections={limitedSections}
                                         horizontalMargin={0}
                                         editable={false}
+                                        onImageClick={handleImageClick}
                                     />
                                 </div>
                                 {/* Sentinel element para detectar scroll en desktop */}
@@ -461,6 +498,15 @@ function PhotographyProjectPage({ projectId }: PhotographyProjectPageProps) {
 
                 <Footer darkText />
             </div>
+
+            {/* Lightbox para ver imágenes en grande */}
+            <ImageLightbox
+                images={allImages}
+                currentIndex={lightboxIndex}
+                isOpen={lightboxOpen}
+                onClose={() => setLightboxOpen(false)}
+                onNavigate={setLightboxIndex}
+            />
         </>
     )
 }

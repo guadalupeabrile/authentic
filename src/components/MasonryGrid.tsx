@@ -41,6 +41,7 @@ interface MasonryGridProps {
     onReplaceImage?: (sectionIndex: number, columnIndex: number, imageIndex: number) => void
     onRemoveImage?: (sectionIndex: number, columnIndex: number, imageIndex: number) => void
     onMoveImage?: (sectionIndex: number, columnIndex: number, imageIndex: number, direction: 'up' | 'down') => void
+    onImageClick?: (imageUrl: string) => void // Callback cuando se hace click en una imagen
 }
 
 /**
@@ -59,7 +60,8 @@ export function MasonryGrid({
     onAddImage,
     onReplaceImage,
     onRemoveImage,
-    onMoveImage
+    onMoveImage,
+    onImageClick
 }: MasonryGridProps) {
 
     // Función para generar márgenes verticales variables si no se proporcionan
@@ -205,89 +207,86 @@ export function MasonryGrid({
                                 }
                             `}</style>
                             <div className={sectionId}>
-                                {(() => {
-                                    // Calcular índice global de imagen para delays escalonados
-                                    let globalImageIndex = 0
+                                {section.columnImages.map((column, columnIndex) => {
+                                    const flexValue = column.flex !== undefined ? column.flex : 1
+                                    const marginTop = getMarginTop(column.images, column.marginTop)
+                                    const marginBottom = getMarginBottom(column.images, column.marginBottom, column.margins, gap)
+                                    const marginLeft = getMarginLeft(column.images, column.marginLeft)
+                                    const marginRight = getMarginRight(column.images, column.marginRight)
 
-                                    // Desktop: renderizar todas las columnas normalmente
-                                    return section.columnImages.map((column, columnIndex) => {
-                                        const flexValue = column.flex !== undefined ? column.flex : 1
-                                        const marginTop = getMarginTop(column.images, column.marginTop)
-                                        const marginBottom = getMarginBottom(column.images, column.marginBottom, column.margins, gap)
-                                        const marginLeft = getMarginLeft(column.images, column.marginLeft)
-                                        const marginRight = getMarginRight(column.images, column.marginRight)
+                                    return (
+                                        <div
+                                            key={columnIndex}
+                                            className="masonry-column"
+                                            style={{ flex: flexValue }}
+                                        >
+                                            {column.images.map((image, imageIndex) => {
+                                                const isPriority = sectionIndex === 0 && columnIndex === 0 && imageIndex < 2
 
-                                        return (
-                                            <div
-                                                key={columnIndex}
-                                                className="masonry-column"
-                                                style={{ flex: flexValue }}
-                                            >
-                                                {column.images.map((image, imageIndex) => {
-                                                    globalImageIndex++
-                                                    const isPriority = sectionIndex === 0 && columnIndex === 0 && imageIndex < 2
+                                                // Calculate sizes based on desktop columns (typically 3 columns)
+                                                const sizes = '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
 
-                                                    // Calculate sizes based on desktop columns (typically 3 columns)
-                                                    const sizes = '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
-
-                                                    return (
-                                                        <motion.div
-                                                            key={`${columnIndex}-${imageIndex}`}
-                                                            className="masonry-item"
+                                                return (
+                                                    <motion.div
+                                                        key={`${columnIndex}-${imageIndex}`}
+                                                        className="masonry-item"
+                                                        style={{
+                                                            marginTop: `${marginTop[imageIndex]}px`,
+                                                            marginBottom: `${marginBottom[imageIndex]}px`,
+                                                            marginLeft: `${marginLeft[imageIndex]}px`,
+                                                            marginRight: `${marginRight[imageIndex]}px`,
+                                                            width: '100%',
+                                                            justifyContent: 'flex-start',
+                                                            alignItems: 'flex-start'
+                                                        }}
+                                                        initial={{ opacity: 0, y: 20 }}
+                                                        whileInView={{ opacity: 1, y: 0 }}
+                                                        viewport={{ once: true, margin: '-100px' }}
+                                                        transition={{ duration: 0.7, ease: 'easeOut' }}
+                                                    >
+                                                        <div
+                                                            className="relative overflow-hidden w-full cursor-pointer hover:opacity-90 transition-opacity"
                                                             style={{
-                                                                marginTop: `${marginTop[imageIndex]}px`,
-                                                                marginBottom: `${marginBottom[imageIndex]}px`,
-                                                                marginLeft: `${marginLeft[imageIndex]}px`,
-                                                                marginRight: `${marginRight[imageIndex]}px`,
-                                                                width: '100%',
-                                                                justifyContent: 'flex-start',
-                                                                alignItems: 'flex-start'
-                                                            }}
-                                                            initial={{ opacity: 0, y: 20 }}
-                                                            whileInView={{ opacity: 1, y: 0 }}
-                                                            viewport={{ once: true, margin: '-100px' }}
-                                                            transition={{ duration: 0.7, ease: 'easeOut' }}
-                                                        >
-                                                            <div className="relative overflow-hidden w-full" style={{
                                                                 width: '100%',
                                                                 aspectRatio: 'auto',
                                                                 minHeight: '200px'
-                                                            }}>
-                                                                {/* Placeholder para prevenir layout shift */}
-                                                                <div className="absolute inset-0 bg-gray-100" aria-hidden="true" />
-                                                                <OptimizedImage
-                                                                    src={image}
-                                                                    alt={`Photography section ${sectionIndex + 1}, column ${columnIndex + 1}, image ${imageIndex + 1}`}
-                                                                    sizes={sizes}
-                                                                    priority={isPriority}
-                                                                    style={{
-                                                                        display: 'block',
-                                                                        width: '100%',
-                                                                        height: 'auto',
-                                                                        position: 'relative',
-                                                                        zIndex: 1
-                                                                    }}
-                                                                />
-                                                                {renderEditableOverlay(sectionIndex, columnIndex, imageIndex)}
-                                                            </div>
-                                                            {renderInlineActions(sectionIndex, columnIndex, imageIndex, column.images.length)}
-                                                        </motion.div>
-                                                    )
-                                                })}
-                                                {editable && onAddImage && (
-                                                    <button
-                                                        type="button"
-                                                        onClick={() => onAddImage(sectionIndex, columnIndex)}
-                                                        className="mt-4 flex items-center justify-center gap-2 rounded border border-dashed border-black/40 px-3 py-2 text-sm text-black/70 hover:border-black hover:text-black"
-                                                    >
-                                                        <span className="text-lg leading-none">+</span>
-                                                        Añadir imagen
-                                                    </button>
-                                                )}
-                                            </div>
-                                        )
-                                    })
-                                })()}
+                                                            }}
+                                                            onClick={() => onImageClick?.(image)}
+                                                        >
+                                                            {/* Placeholder para prevenir layout shift */}
+                                                            <div className="absolute inset-0 bg-gray-100" aria-hidden="true" />
+                                                            <OptimizedImage
+                                                                src={image}
+                                                                alt={`Photography section ${sectionIndex + 1}, column ${columnIndex + 1}, image ${imageIndex + 1}`}
+                                                                sizes={sizes}
+                                                                priority={isPriority}
+                                                                style={{
+                                                                    display: 'block',
+                                                                    width: '100%',
+                                                                    height: 'auto',
+                                                                    position: 'relative',
+                                                                    zIndex: 1
+                                                                }}
+                                                            />
+                                                            {renderEditableOverlay(sectionIndex, columnIndex, imageIndex)}
+                                                        </div>
+                                                        {renderInlineActions(sectionIndex, columnIndex, imageIndex, column.images.length)}
+                                                    </motion.div>
+                                                )
+                                            })}
+                                            {editable && onAddImage && (
+                                                <button
+                                                    type="button"
+                                                    onClick={() => onAddImage(sectionIndex, columnIndex)}
+                                                    className="mt-4 flex items-center justify-center gap-2 rounded border border-dashed border-black/40 px-3 py-2 text-sm text-black/70 hover:border-black hover:text-black"
+                                                >
+                                                    <span className="text-lg leading-none">+</span>
+                                                    Añadir imagen
+                                                </button>
+                                            )}
+                                        </div>
+                                    )
+                                })}
                             </div>
                         </div>
                     )
@@ -298,6 +297,26 @@ export function MasonryGrid({
                 const margins = getMargins(images, section.margins, gap)
                 const marginLeft = getMarginLeft(images, section.marginLeft)
                 const marginRight = getMarginRight(images, section.marginRight)
+
+                // Calcular índice global acumulado de todas las imágenes anteriores
+                let globalImageIndexFallback = 0
+                for (let i = 0; i < sectionIndex; i++) {
+                    const prevSection = sections[i]
+                    if (prevSection.columnImages && prevSection.columnImages.length > 0) {
+                        const prevColumns = prevSection.columnImages
+                        const prevLengths = prevColumns.map(col => col.images.length)
+                        const prevMaxLength = prevLengths.length > 0 ? Math.max(...prevLengths) : 0
+                        for (let j = 0; j < prevMaxLength; j++) {
+                            for (let colIdx = 0; colIdx < prevColumns.length; colIdx++) {
+                                if (prevColumns[colIdx]?.images[j]) {
+                                    globalImageIndexFallback++
+                                }
+                            }
+                        }
+                    } else if (prevSection.images) {
+                        globalImageIndexFallback += prevSection.images.length
+                    }
+                }
 
                 return (
                     <div key={sectionIndex} className={cn('w-full', section.className)}>
@@ -343,10 +362,14 @@ export function MasonryGrid({
                                         viewport={{ once: true, margin: '-100px' }}
                                         transition={{ duration: 0.7, ease: 'easeOut' }}
                                     >
-                                        <div className="relative w-full overflow-hidden" style={{
-                                            aspectRatio: 'auto',
-                                            minHeight: '200px'
-                                        }}>
+                                        <div
+                                            className="relative w-full overflow-hidden cursor-pointer hover:opacity-90 transition-opacity"
+                                            style={{
+                                                aspectRatio: 'auto',
+                                                minHeight: '200px'
+                                            }}
+                                            onClick={() => onImageClick?.(image)}
+                                        >
                                             {/* Placeholder para prevenir layout shift */}
                                             <div className="absolute inset-0 bg-gray-100" aria-hidden="true" />
                                             <OptimizedImage
