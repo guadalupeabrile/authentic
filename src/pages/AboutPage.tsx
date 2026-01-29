@@ -89,19 +89,16 @@ function AboutPage() {
                             </h1>
                             <p className="max-w-3xl text-sm italic text-black/80 leading-relaxed !mt-1">Still wondering whether the word "authentic" is genuinely authentic.</p>
                             <p className="max-w-3xl text-base text-black/80 leading-relaxed md:ml-auto">
-                                I am a multidisciplinary creator who brings together project management, photography, web development, and a personal path rooted in yoga and reiki. I'm passionate about water sports, meditation, and the quiet observation of the natural world we're part of.
+                                As a multidisciplinary creator, my work is an exploration of <strong>devenir-con (becoming-with)</strong> the constant dialogue between our inner selves and the human and non-human worlds we inhabit. I translate this flow into functional engineering and intuitive design.
                             </p>
                             <p className="max-w-3xl text-base text-black/80 leading-relaxed">
-                                I'm at a point where I'm <strong>integrating</strong> both sides of my path: the analytical mind of project management and engineering with the intuitive world of yoga, reiki and meditation. This results in <strong>projects that flow, solve problems, and still have soul</strong>.
+                                Whether building a purposeful website or documenting a visual story through my lens, I focus on the <strong>entanglement of strategy and soul</strong>. I create to help brands express their truest nature.
                             </p>
                             <p className="max-w-3xl text-base text-black/80 leading-relaxed">
                                 I focus on building functional, aesthetic, and intuitive websites for entrepreneurs, artists, therapists, and businesses that need an online presence with purpose. My approach blends strategy, visual sensitivity, and simple, honest communication.
                             </p>
                             <p className="max-w-3xl text-base text-black/80 leading-relaxed">
                                 Photography is another core part of my work: I document spaces, nature and visual stories that help brands express who they are.
-                            </p>
-                            <p className="max-w-3xl text-base text-black/80 leading-relaxed">
-                                My goal is to create digital experiences that are honest, useful, and beautiful—while making every client <strong>feel supported, guided, and empowered</strong>.
                             </p>
                             <p className="max-w-3xl text-base text-black/80 leading-relaxed"> With kindness, Guadalupe.</p>
                         </motion.div>
