@@ -227,11 +227,17 @@ export function MasonryGrid({
                                                 style={{ flex: flexValue }}
                                             >
                                                 {column.images.map((image, imageIndex) => {
+                                                    const currentGlobalIndex = globalImageIndex
                                                     globalImageIndex++ // Track global index for potential future use
                                                     const isPriority = sectionIndex === 0 && columnIndex === 0 && imageIndex < 2
+                                                    const isInitialImage = currentGlobalIndex < 6 // Primeras 6 imágenes
 
                                                     // Calculate sizes based on desktop columns (typically 3 columns)
                                                     const sizes = '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
+
+                                                    // Para las primeras 6 imágenes: fade-in inmediato (amount: 0)
+                                                    // Para las siguientes: fade-in cuando están al 50% del viewport (amount: 0.5)
+                                                    const viewportAmount = isInitialImage ? 0 : 0.5
 
                                                     return (
                                                         <motion.div
@@ -248,8 +254,8 @@ export function MasonryGrid({
                                                             }}
                                                             initial={{ opacity: 0, y: 20 }}
                                                             whileInView={{ opacity: 1, y: 0 }}
-                                                            viewport={{ once: true, amount: 0.6, margin: '-100px 0px -100px 0px' }}
-                                                            transition={{ duration: 0.7, delay: 0, ease: 'easeOut' }}
+                                                            viewport={{ once: true, amount: viewportAmount, margin: '-100px 0px -100px 0px' }}
+                                                            transition={{ duration: 0.7, delay: isInitialImage ? currentGlobalIndex * 0.1 : 0, ease: 'easeOut' }}
                                                         >
                                                             <div className="relative overflow-hidden" style={{
                                                                 width: '100%',
@@ -323,9 +329,14 @@ export function MasonryGrid({
                         <div className={sectionId}>
                             {images.map((image, imageIndex) => {
                                 const isPriority = sectionIndex === 0 && imageIndex < 3
+                                const isInitialImage = imageIndex < 6 // Primeras 6 imágenes
 
                                 // Calculate sizes based on desktop columns (typically 3 columns)
                                 const sizes = '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
+
+                                // Para las primeras 6 imágenes: fade-in inmediato (amount: 0)
+                                // Para las siguientes: fade-in cuando están al 50% del viewport (amount: 0.5)
+                                const viewportAmount = isInitialImage ? 0 : 0.5
 
                                 return (
                                     <motion.div
@@ -338,8 +349,8 @@ export function MasonryGrid({
                                         }}
                                         initial={{ opacity: 0, y: 20 }}
                                         whileInView={{ opacity: 1, y: 0 }}
-                                        viewport={{ once: true, amount: 0.6, margin: '-100px 0px -100px 0px' }}
-                                        transition={{ duration: 0.7, delay: 0, ease: 'easeOut' }}
+                                        viewport={{ once: true, amount: viewportAmount, margin: '-100px 0px -100px 0px' }}
+                                        transition={{ duration: 0.7, delay: isInitialImage ? imageIndex * 0.1 : 0, ease: 'easeOut' }}
                                     >
                                         <div className="relative w-full overflow-hidden">
                                             <OptimizedImage
