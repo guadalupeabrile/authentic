@@ -63,8 +63,8 @@ const ProjectList: React.FC<ProjectListProps> = ({
                         <img
                             src={item.image}
                             alt={item.name}
-                            className="h-[1.5em] w-auto object-contain align-middle inline-block mr-4"
-                            style={{ height: '1.5em', verticalAlign: 'middle', maxWidth: 'none' }}
+                            className="h-[1.5em] w-[2em] object-cover align-middle inline-block mr-4"
+                            style={{ height: '1.5em', width: '2em', verticalAlign: 'middle', maxWidth: 'none', objectFit: 'cover' }}
                         />
                     )}
                     {item.icon && <span className="ml-4">{item.icon}</span>}
@@ -80,8 +80,8 @@ const ProjectList: React.FC<ProjectListProps> = ({
                         <img
                             src={item.image}
                             alt={item.name}
-                            className="h-[1.5em] w-auto object-contain align-middle inline-block mr-4"
-                            style={{ height: '1.5em', verticalAlign: 'middle', maxWidth: 'none' }}
+                            className="h-[1.5em] w-[2em] object-cover align-middle inline-block mr-4"
+                            style={{ height: '1.5em', width: '2em', verticalAlign: 'middle', maxWidth: 'none', objectFit: 'cover' }}
                         />
                     )}
                     {item.icon && <span className="ml-4">{item.icon}</span>}
@@ -97,8 +97,8 @@ const ProjectList: React.FC<ProjectListProps> = ({
                         <img
                             src={item.image}
                             alt={item.name}
-                            className="h-[1.5em] w-auto object-contain align-middle inline-block mr-4"
-                            style={{ height: '1.5em', verticalAlign: 'middle', maxWidth: 'none' }}
+                            className="h-[1.5em] w-[2em] object-cover align-middle inline-block mr-4"
+                            style={{ height: '1.5em', width: '2em', verticalAlign: 'middle', maxWidth: 'none', objectFit: 'cover' }}
                         />
                     )}
                     {item.icon && <span className="ml-4">{item.icon}</span>}
@@ -126,12 +126,13 @@ const ProjectList: React.FC<ProjectListProps> = ({
                         {/* Mobile: Si hay imagen, mostrar imagen fija arriba y marquee abajo. Si no hay imagen, solo marquee como antes */}
                         {item.image ? (
                             <div className="md:hidden">
-                                <div className="w-full mt-4 mb-6 pb-4">
+                                <div className="w-full mt-4 mb-6 pb-4 aspect-[4/3] overflow-hidden">
                                     <OptimizedImage
                                         src={item.image}
                                         alt={item.name}
-                                        className="w-full h-auto object-cover"
+                                        className="w-full h-full object-cover"
                                         sizes="100vw"
+                                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                                     />
                                 </div>
                                 <div className="relative overflow-hidden uppercase tracking-[0.2em] text-lg font-light text-black border-t border-black/10">
