@@ -9,6 +9,7 @@ const WebProjectsList: React.FC = () => {
         id: item.nombre.toLowerCase().replace(/\s+/g, '-'),
         name: item.nombre,
         icon: item.icono,
+        image: item.imagen,
         speed: item.velocidad,
         link: item.link
     }))

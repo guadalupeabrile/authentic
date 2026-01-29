@@ -4,9 +4,31 @@ import { Helmet } from 'react-helmet-async'
 import { HeaderSecondary } from '../components/HeaderSecondary'
 import { Footer } from '../components/Footer'
 import ProjectList, { type Project } from '../components/ProjectList'
-import type { PhotographyConfig } from '../types/photography'
+import type { PhotographyConfig, PhotographyCategory } from '../types/photography'
 import photographyData from '../data/photography.json'
 import { slugify } from '../lib/slugify'
+
+// Función helper para obtener la primera imagen de una categoría
+function getFirstImage(category: PhotographyCategory): string | undefined {
+    // Buscar en todas las secciones
+    for (const section of category.sections) {
+        // Si tiene columnImages (estructura de columnas)
+        if (section.columnImages && section.columnImages.length > 0) {
+            // Buscar en cada columna
+            for (const column of section.columnImages) {
+                if (column.images && column.images.length > 0) {
+                    // Retornar la primera imagen encontrada
+                    return column.images[0]
+                }
+            }
+        }
+        // Si tiene images directamente (estructura simple)
+        if (section.images && section.images.length > 0) {
+            return section.images[0]
+        }
+    }
+    return undefined
+}
 
 function PhotographyPage() {
     const [projects, setProjects] = useState<Project[]>([])
@@ -15,12 +37,16 @@ function PhotographyPage() {
     useEffect(() => {
         try {
             const config = photographyData as PhotographyConfig
-            const photographyProjects: Project[] = config.categories.map(category => ({
-                id: category.id || slugify(category.title),
-                name: category.title,
-                link: `/photography/${category.id || slugify(category.title)}`,
-                speed: 36 // Velocidad por defecto para proyectos de fotografía
-            }))
+            const photographyProjects: Project[] = config.categories.map(category => {
+                const firstImage = getFirstImage(category)
+                return {
+                    id: category.id || slugify(category.title),
+                    name: category.title,
+                    image: firstImage, // Agregar la primera imagen
+                    link: `/photography/${category.id || slugify(category.title)}`,
+                    speed: 110 // Velocidad por defecto para proyectos de fotografía
+                }
+            })
             setProjects(photographyProjects)
         } catch (err) {
             console.error('Error loading photography projects:', err)
