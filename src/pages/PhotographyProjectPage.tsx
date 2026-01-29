@@ -135,8 +135,23 @@ function PhotographyProjectPage({ projectId }: PhotographyProjectPageProps) {
         }
     }, [])
 
-    // Find the category/project by id
-    const category = config.categories.find(cat => cat.id === projectId)
+    // Función para aplanar imágenes de todas las columnas en un solo array intercalado
+    // Intercala las imágenes: col1[0], col2[0], col3[0], col1[1], col2[1], col3[1], etc.
+    const flattenColumnImages = (columns: NonNullable<MasonrySection['columnImages']>): string[] => {
+        const flattened: string[] = []
+        const lengths = columns.map(col => col.images.length)
+        const maxLength = lengths.length > 0 ? Math.max(...lengths) : 0
+
+        for (let i = 0; i < maxLength; i++) {
+            for (let colIndex = 0; colIndex < columns.length; colIndex++) {
+                if (columns[colIndex]?.images[i]) {
+                    flattened.push(columns[colIndex].images[i])
+                }
+            }
+        }
+
+        return flattened
+    }
 
     // Función para contar el total de imágenes en una categoría
     // Solo cuenta las imágenes de la primera sección con imágenes (la que realmente se muestra)
@@ -162,23 +177,8 @@ function PhotographyProjectPage({ projectId }: PhotographyProjectPageProps) {
         return 0
     }
 
-    // Función para aplanar imágenes de todas las columnas en un solo array intercalado
-    // Intercala las imágenes: col1[0], col2[0], col3[0], col1[1], col2[1], col3[1], etc.
-    const flattenColumnImages = (columns: NonNullable<MasonrySection['columnImages']>): string[] => {
-        const flattened: string[] = []
-        const lengths = columns.map(col => col.images.length)
-        const maxLength = lengths.length > 0 ? Math.max(...lengths) : 0
-
-        for (let i = 0; i < maxLength; i++) {
-            for (let colIndex = 0; colIndex < columns.length; colIndex++) {
-                if (columns[colIndex]?.images[i]) {
-                    flattened.push(columns[colIndex].images[i])
-                }
-            }
-        }
-
-        return flattened
-    }
+    // Find the category/project by id
+    const category = config.categories.find(cat => cat.id === projectId)
 
     // Función para reconstruir columnas desde un array aplanado
     const reconstructColumns = (

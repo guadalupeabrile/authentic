@@ -192,12 +192,8 @@ export function MasonryGrid({
                                 .${sectionId} {
                                     display: flex;
                                     gap: ${gap}px;
-                                    flex-direction: column;
-                                }
-                                @media (min-width: 640px) {
-                                    .${sectionId} {
-                                        flex-direction: row;
-                                    }
+                                    flex-direction: row;
+                                    width: 100%;
                                 }
                                 .${sectionId} .masonry-column {
                                     display: flex;
@@ -212,6 +208,8 @@ export function MasonryGrid({
                                 {(() => {
                                     // Calcular índice global de imagen para delays escalonados
                                     let globalImageIndex = 0
+
+                                    // Desktop: renderizar todas las columnas normalmente
                                     return section.columnImages.map((column, columnIndex) => {
                                         const flexValue = column.flex !== undefined ? column.flex : 1
                                         const marginTop = getMarginTop(column.images, column.marginTop)
@@ -219,7 +217,6 @@ export function MasonryGrid({
                                         const marginLeft = getMarginLeft(column.images, column.marginLeft)
                                         const marginRight = getMarginRight(column.images, column.marginRight)
 
-                                        // Función para obtener el flex de cada imagen
                                         return (
                                             <div
                                                 key={columnIndex}
@@ -227,21 +224,15 @@ export function MasonryGrid({
                                                 style={{ flex: flexValue }}
                                             >
                                                 {column.images.map((image, imageIndex) => {
-                                                    const currentGlobalIndex = globalImageIndex
-                                                    globalImageIndex++ // Track global index for potential future use
+                                                    globalImageIndex++
                                                     const isPriority = sectionIndex === 0 && columnIndex === 0 && imageIndex < 2
-                                                    const isInitialImage = currentGlobalIndex < 6 // Primeras 6 imágenes
 
                                                     // Calculate sizes based on desktop columns (typically 3 columns)
                                                     const sizes = '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
 
-                                                    // Para las primeras 6 imágenes: fade-in inmediato (amount: 0)
-                                                    // Para las siguientes: fade-in cuando están al 50% del viewport (amount: 0.5)
-                                                    const viewportAmount = isInitialImage ? 0 : 0.5
-
                                                     return (
                                                         <motion.div
-                                                            key={imageIndex}
+                                                            key={`${columnIndex}-${imageIndex}`}
                                                             className="masonry-item"
                                                             style={{
                                                                 marginTop: `${marginTop[imageIndex]}px`,
@@ -254,13 +245,16 @@ export function MasonryGrid({
                                                             }}
                                                             initial={{ opacity: 0, y: 20 }}
                                                             whileInView={{ opacity: 1, y: 0 }}
-                                                            viewport={{ once: true, amount: viewportAmount, margin: '-100px 0px -100px 0px' }}
-                                                            transition={{ duration: 0.7, delay: isInitialImage ? currentGlobalIndex * 0.1 : 0, ease: 'easeOut' }}
+                                                            viewport={{ once: true, margin: '-100px' }}
+                                                            transition={{ duration: 0.7, ease: 'easeOut' }}
                                                         >
-                                                            <div className="relative overflow-hidden" style={{
+                                                            <div className="relative overflow-hidden w-full" style={{
                                                                 width: '100%',
-                                                                maxWidth: '100%'
+                                                                aspectRatio: 'auto',
+                                                                minHeight: '200px'
                                                             }}>
+                                                                {/* Placeholder para prevenir layout shift */}
+                                                                <div className="absolute inset-0 bg-gray-100" aria-hidden="true" />
                                                                 <OptimizedImage
                                                                     src={image}
                                                                     alt={`Photography section ${sectionIndex + 1}, column ${columnIndex + 1}, image ${imageIndex + 1}`}
@@ -269,7 +263,9 @@ export function MasonryGrid({
                                                                     style={{
                                                                         display: 'block',
                                                                         width: '100%',
-                                                                        height: 'auto'
+                                                                        height: 'auto',
+                                                                        position: 'relative',
+                                                                        zIndex: 1
                                                                     }}
                                                                 />
                                                                 {renderEditableOverlay(sectionIndex, columnIndex, imageIndex)}
@@ -329,14 +325,9 @@ export function MasonryGrid({
                         <div className={sectionId}>
                             {images.map((image, imageIndex) => {
                                 const isPriority = sectionIndex === 0 && imageIndex < 3
-                                const isInitialImage = imageIndex < 6 // Primeras 6 imágenes
 
                                 // Calculate sizes based on desktop columns (typically 3 columns)
                                 const sizes = '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
-
-                                // Para las primeras 6 imágenes: fade-in inmediato (amount: 0)
-                                // Para las siguientes: fade-in cuando están al 50% del viewport (amount: 0.5)
-                                const viewportAmount = isInitialImage ? 0 : 0.5
 
                                 return (
                                     <motion.div
@@ -349,10 +340,15 @@ export function MasonryGrid({
                                         }}
                                         initial={{ opacity: 0, y: 20 }}
                                         whileInView={{ opacity: 1, y: 0 }}
-                                        viewport={{ once: true, amount: viewportAmount, margin: '-100px 0px -100px 0px' }}
-                                        transition={{ duration: 0.7, delay: isInitialImage ? imageIndex * 0.1 : 0, ease: 'easeOut' }}
+                                        viewport={{ once: true, margin: '-100px' }}
+                                        transition={{ duration: 0.7, ease: 'easeOut' }}
                                     >
-                                        <div className="relative w-full overflow-hidden">
+                                        <div className="relative w-full overflow-hidden" style={{
+                                            aspectRatio: 'auto',
+                                            minHeight: '200px'
+                                        }}>
+                                            {/* Placeholder para prevenir layout shift */}
+                                            <div className="absolute inset-0 bg-gray-100" aria-hidden="true" />
                                             <OptimizedImage
                                                 src={image}
                                                 alt={`Photography section ${sectionIndex + 1}, image ${imageIndex + 1}`}
@@ -361,7 +357,9 @@ export function MasonryGrid({
                                                 style={{
                                                     display: 'block',
                                                     width: '100%',
-                                                    height: 'auto'
+                                                    height: 'auto',
+                                                    position: 'relative',
+                                                    zIndex: 1
                                                 }}
                                             />
                                             {renderEditableOverlay(sectionIndex, 0, imageIndex)}
