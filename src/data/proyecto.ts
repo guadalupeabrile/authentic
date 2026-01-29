@@ -14,6 +14,12 @@ export const proyecto: ProyectoItem[] = [
         link: "https://thenergybooster.com"
     },
     {
+        nombre: "Unamuno Arquitectura",
+        icono: "-",
+        velocidad: 100,
+        link: "https://www.unamunoarq.com/"
+    },
+    {
         nombre: "STRADBROKE ISLAND COASTAL HOMES",
         icono: "-",
         velocidad: 120,
