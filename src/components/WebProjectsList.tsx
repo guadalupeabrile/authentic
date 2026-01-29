@@ -2,63 +2,18 @@
 
 import React from "react"
 import { proyecto } from "../data/proyecto"
-
-const REPETICIONES = 6
+import ProjectList, { type Project } from "./ProjectList"
 
 const WebProjectsList: React.FC = () => {
-    return (
-        <section className="mt-16 flex flex-col border-y border-black/40">
-            {proyecto.map((item, index) => {
-                const duracion = item.velocidad ?? 36
+    const projects: Project[] = proyecto.map(item => ({
+        id: item.nombre.toLowerCase().replace(/\s+/g, '-'),
+        name: item.nombre,
+        icon: item.icono,
+        speed: item.velocidad,
+        link: item.link
+    }))
 
-                return (
-                    <a
-                        key={item.nombre + index}
-                        href={item.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="block overflow-hidden border-b border-black/10 last:border-b-0 bg-white transition hover:bg-black/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black"
-                    >
-                        <div
-                            className="relative flex uppercase tracking-[0.2em] text-xl sm:text-2xl md:text-4xl font-light text-black"
-                            aria-hidden="true"
-                        >
-                            <div
-                                className="marquee flex min-w-max items-center"
-                                style={{ animationDuration: `${duracion}s` }}
-                            >
-                                {Array.from({ length: REPETICIONES }).map((_, i) => (
-                                    <span
-                                        key={`${item.nombre}-${i}`}
-                                        className="flex items-center gap-4 px-6 py-6"
-                                    >
-                                        <span>{item.nombre}</span>
-                                        {item.icono && <span>{item.icono}</span>}
-                                    </span>
-                                ))}
-                            </div>
-
-                            <div
-                                className="marquee flex min-w-max items-center"
-                                style={{ animationDuration: `${duracion}s` }}
-                            >
-                                {Array.from({ length: REPETICIONES }).map((_, i) => (
-                                    <span
-                                        key={`${item.nombre}-dup-${i}`}
-                                        className="flex items-center gap-4 px-6 py-6"
-                                    >
-                                        <span>{item.nombre}</span>
-                                        {item.icono && <span>{item.icono}</span>}
-                                    </span>
-                                ))}
-                            </div>
-                        </div>
-                    </a>
-                )
-            })}
-
-        </section>
-    )
+    return <ProjectList projects={projects} />
 }
 
 export default WebProjectsList
