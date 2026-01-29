@@ -9,7 +9,11 @@
         "type-check": "tsc --noEmit",
         "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
         "preview": "vite preview",
-        "convert-to-webp": "node scripts/convert-to-webp.mjs"
+        "convert-to-webp": "node scripts/convert-to-webp.mjs",
+        "convert-to-webp:delete": "node scripts/convert-to-webp.mjs --delete-original",
+        "optimize-webp": "node scripts/convert-to-webp.mjs --optimize-only",
+        "optimize-images": "node scripts/convert-to-webp.mjs --optimize-existing",
+        "generate-responsive": "node scripts/generate-responsive-images.mjs"
     },
     "dependencies": {
         "framer-motion": "^12.23.24",
