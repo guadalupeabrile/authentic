@@ -35,7 +35,7 @@ export function Footer({ className, darkText }: FooterProps) {
     return (
         <footer
             className={cn(
-                'fixed bottom-0 left-0 w-full z-40 bg-transparent',
+                'fixed bottom-6 left-0 w-full z-40 bg-transparent',
                 'transition-all duration-700 ease-in-out',
                 isVisible ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 translate-y-4 pointer-events-none',
                 className
@@ -53,7 +53,7 @@ export function Footer({ className, darkText }: FooterProps) {
             >
                 <div
                     className={cn(
-                        'flex flex-col md:flex-row w-[95%] items-center justify-center md:justify-between gap-3 text-[10px] sm:text-xs md:text-sm lg:text-base md:gap-4 text-center mx-auto font-light uppercase tracking-[0.15em]',
+                        'flex flex-col md:flex-row w-[95%] items-center justify-center md:justify-between gap-3 text-xs sm:text-sm md:text-base lg:text-lg md:gap-4 text-center mx-auto font-bold uppercase tracking-[0.15em]',
                         darkText ? 'text-black' : 'mix-blend-difference text-white'
                     )}
                 >
