@@ -16,22 +16,29 @@ function HomePage() {
     return (
         <>
             <Helmet>
-                <title>Authentic Web Studio</title>
-                <meta name="description" content="Authentic Web Studio" />
+                <title>Authentic Web Studio | Professional Web Design & Photography</title>
+                <meta name="description" content="Professional web design and photography studio. We create modern websites and capture authentic moments. Responsive web design, frontend development, and artistic photography in Australia." />
 
                 {/* Open Graph / Facebook */}
                 <meta property="og:type" content="website" />
-                <meta property="og:title" content="Authentic Web Design" />
-                <meta property="og:description" content="Authentic Web Design - Elegant design studio" />
-                <meta property="og:image" content={`${typeof window !== 'undefined' ? window.location.origin : ''}/img/hero-sliders/1.webp`} />
+                <meta property="og:title" content="Authentic Web Studio | Professional Web Design & Photography" />
+                <meta property="og:description" content="Professional web design and photography studio. We create modern websites and capture authentic moments. Responsive web design, frontend development, and artistic photography." />
+                <meta property="og:image" content={`${typeof window !== 'undefined' ? window.location.origin : ''}/img/og-image.jpg`} />
+                <meta property="og:image:width" content="1200" />
+                <meta property="og:image:height" content="630" />
+                <meta property="og:image:alt" content="Authentic Web Studio - Professional Web Design & Photography" />
                 <meta property="og:url" content={`${typeof window !== 'undefined' ? window.location.href : ''}`} />
-                <meta property="og:site_name" content="Authentic Web Design" />
+                <meta property="og:site_name" content="Authentic Web Studio" />
+                <meta property="og:locale" content="en_AU" />
 
                 {/* Twitter */}
                 <meta name="twitter:card" content="summary_large_image" />
-                <meta name="twitter:title" content="Authentic Web Design" />
-                <meta name="twitter:description" content="Authentic Web Design - Elegant design studio" />
-                <meta name="twitter:image" content={`${typeof window !== 'undefined' ? window.location.origin : ''}/img/hero-sliders/1.webp`} />
+                <meta name="twitter:title" content="Authentic Web Studio | Professional Web Design & Photography" />
+                <meta name="twitter:description" content="Professional web design and photography studio. We create modern websites and capture authentic moments." />
+                <meta name="twitter:image" content={`${typeof window !== 'undefined' ? window.location.origin : ''}/img/og-image.jpg`} />
+                <meta name="twitter:image:alt" content="Authentic Web Studio - Professional Web Design & Photography" />
+                <meta name="twitter:site" content="@authenticwebstudio" />
+                <meta name="twitter:creator" content="@authenticwebstudio" />
             </Helmet>
             <div className="relative min-h-screen overflow-x-hidden">
                 {/* Sección del slider con altura extendida para cubrir viewport + espacio para scroll del footer */}
