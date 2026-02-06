@@ -24,6 +24,8 @@ function HomePage() {
                 <meta property="og:title" content="Authentic Web Studio | Professional Web Design & Photography" />
                 <meta property="og:description" content="Professional web design and photography studio. We create modern websites and capture authentic moments. Responsive web design, frontend development, and artistic photography." />
                 <meta property="og:image" content={`${typeof window !== 'undefined' ? window.location.origin : ''}/img/og-image.jpg`} />
+                <meta property="og:image:secure_url" content={`${typeof window !== 'undefined' ? window.location.origin : ''}/img/og-image.jpg`} />
+                <meta property="og:image:type" content="image/jpeg" />
                 <meta property="og:image:width" content="1200" />
                 <meta property="og:image:height" content="630" />
                 <meta property="og:image:alt" content="Authentic Web Studio - Professional Web Design & Photography" />
