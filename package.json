@@ -13,7 +13,8 @@
         "convert-to-webp:delete": "node scripts/convert-to-webp.mjs --delete-original",
         "optimize-webp": "node scripts/convert-to-webp.mjs --optimize-only",
         "optimize-images": "node scripts/convert-to-webp.mjs --optimize-existing",
-        "generate-responsive": "node scripts/generate-responsive-images.mjs"
+        "generate-responsive": "node scripts/generate-responsive-images.mjs",
+        "optimize-og-image": "node scripts/optimize-og-image.mjs"
     },
     "dependencies": {
         "framer-motion": "^12.23.24",
