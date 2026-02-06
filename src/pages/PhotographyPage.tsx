@@ -75,11 +75,11 @@ function PhotographyPage() {
                 <meta name="twitter:description" content="Descubre nuestras colecciones de fotografía y producciones visuales." />
                 <meta name="twitter:image" content={`${typeof window !== 'undefined' ? window.location.origin : ''}/img/hero-sliders/1.webp`} />
             </Helmet>
-            <div className="relative min-h-screen bg-white text-black">
+            <div className="relative flex flex-col min-h-screen bg-white text-black">
                 <div className="fixed top-0 left-0 w-full z-30 pointer-events-auto">
                     <HeaderSecondary activeUrl="/photography" />
                 </div>
-                <main className="pt-32 pb-24">
+                <main className="flex-1 pt-32 pb-24">
                     <motion.section
                         className="space-y-8"
                         initial={{ opacity: 0, y: 20 }}

@@ -42,12 +42,14 @@ function HomePage() {
                 <meta name="twitter:site" content="@authenticwebstudio" />
                 <meta name="twitter:creator" content="@authenticwebstudio" />
             </Helmet>
-            <div className="relative min-h-screen overflow-x-hidden">
+            <div className="relative flex flex-col min-h-screen overflow-x-hidden">
+                <div className="fixed top-[50px] md:top-0 left-0 w-full z-30 px-12 sm:px-16 md:px-36 lg:px-48 pointer-events-auto">
+                    <Header activeUrl="/" logoSrc="/img/logo_white.png" />
+                </div>
+
                 {/* Sección del slider con altura extendida para cubrir viewport + espacio para scroll del footer */}
-                {/* El footer aparece cuando scroll > 80% del viewport, así que necesitamos altura suficiente */}
-                {/* Altura del footer aproximada: ~80px en mobile, ~100px en desktop */}
-                <section className="relative w-full min-h-[calc(100vh+200px)] md:min-h-[calc(100vh+300px)]">
-                    <div className="relative w-full h-[calc(100vh+200px)] md:h-[calc(100vh+300px)] z-0">
+                <section className="relative w-full flex-1 min-h-[calc(100vh-120px)] md:min-h-[calc(100vh-140px)]">
+                    <div className="relative w-full h-full min-h-[calc(100vh-120px)] md:min-h-[calc(100vh-140px)] z-0">
                         <ImageSlider
                             images={sliderImages}
                             className="w-full h-full"
@@ -57,11 +59,7 @@ function HomePage() {
                     </div>
                 </section>
 
-                <div className="fixed top-[50px] md:top-0 left-0 w-full z-30 px-12 sm:px-16 md:px-36 lg:px-48 pointer-events-auto">
-                    <Header activeUrl="/" logoSrc="/img/logo_white.png" />
-                </div>
-
-                <Footer className="bottom-[10px]" />
+                <Footer />
             </div>
         </>
     )

@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react'
 import { contactLinks } from '../data/contactInfo'
 import { cn } from '../lib/cn'
 
@@ -8,48 +7,18 @@ interface FooterProps {
 }
 
 export function Footer({ className, darkText }: FooterProps) {
-    const [isVisible, setIsVisible] = useState(false)
-
-    useEffect(() => {
-        const handleVisibility = () => {
-            const viewportHeight = window.innerHeight
-            const documentHeight = document.documentElement.scrollHeight
-            const currentScroll = window.scrollY || window.pageYOffset
-
-            // Mostrar footer cuando el scroll supera el 80% del viewport o cuando está cerca del final
-            const shouldShow = currentScroll > viewportHeight * 0.8 ||
-                (currentScroll + viewportHeight) >= (documentHeight - 100)
-
-            setIsVisible(shouldShow)
-        }
-
-        // Verificar al montar el componente
-        handleVisibility()
-
-        // Verificar en cada scroll
-        window.addEventListener('scroll', handleVisibility, { passive: true })
-
-        return () => window.removeEventListener('scroll', handleVisibility)
-    }, [])
-
     return (
         <footer
             className={cn(
-                'fixed bottom-6 left-0 w-full z-40 bg-transparent',
-                'transition-all duration-700 ease-in-out',
-                isVisible ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 translate-y-4 pointer-events-none',
+                'w-full z-40 bg-transparent mt-auto',
                 className
             )}
-            style={{ visibility: isVisible ? 'visible' : 'hidden' }}
         >
             <div
                 className={cn(
-                    'relative w-full px-[10px]',
-                    darkText ? 'bg-white border-t border-black/10 mt-8 py-4' : 'bg-transparent',
-                    'transform transition-all duration-700 ease-out',
-                    isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-8'
+                    'relative w-full px-[10px] py-4 md:py-6',
+                    darkText ? 'bg-white border-t border-black/10' : 'bg-transparent'
                 )}
-                style={{ transitionDelay: '160ms' }}
             >
                 <div
                     className={cn(

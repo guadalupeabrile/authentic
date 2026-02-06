@@ -364,11 +364,11 @@ function PhotographyProjectPage({ projectId }: PhotographyProjectPageProps) {
                 <Helmet>
                     <title>Loading... | Authentic Web Design</title>
                 </Helmet>
-                <div className="relative min-h-screen bg-white text-black">
+                <div className="relative flex flex-col min-h-screen bg-white text-black">
                     <div className="fixed top-0 left-0 w-full z-30 pointer-events-auto">
                         <HeaderSecondary activeUrl="/photography" />
                     </div>
-                    <main className="pt-32 pb-36">
+                    <main className="flex-1 pt-32 pb-36">
                         <div className="px-6 text-center">
                             <p className="text-black/60">Cargando galería...</p>
                         </div>
@@ -385,11 +385,11 @@ function PhotographyProjectPage({ projectId }: PhotographyProjectPageProps) {
                 <Helmet>
                     <title>Project Not Found | Authentic Web Design</title>
                 </Helmet>
-                <div className="relative min-h-screen bg-white text-black">
+                <div className="relative flex flex-col min-h-screen bg-white text-black">
                     <div className="fixed top-0 left-0 w-full z-30 pointer-events-auto">
                         <HeaderSecondary activeUrl="/photography" />
                     </div>
-                    <main className="pt-32 pb-36">
+                    <main className="flex-1 pt-32 pb-36">
                         <div className="px-6 text-center space-y-4">
                             <p className="text-black/60">Proyecto no encontrado.</p>
                             <a href="/photography" className="text-black underline">Volver a Photography</a>
@@ -428,12 +428,12 @@ function PhotographyProjectPage({ projectId }: PhotographyProjectPageProps) {
                 <meta name="twitter:description" content={category.description} />
                 <meta name="twitter:image" content={`${typeof window !== 'undefined' ? window.location.origin : ''}/img/hero-sliders/1.webp`} />
             </Helmet>
-            <div className="relative min-h-screen bg-white text-black">
+            <div className="relative flex flex-col min-h-screen bg-white text-black">
                 <div className="fixed top-0 left-0 w-full z-30 pointer-events-auto">
                     <HeaderSecondary activeUrl="/photography" />
                 </div>
 
-                <main className="pt-32 pb-36">
+                <main className="flex-1 pt-32 pb-36">
                     <motion.section
                         className="space-y-8"
                         initial={{ opacity: 0, y: 20 }}

@@ -44,12 +44,12 @@ function AboutPage() {
                 <meta name="twitter:description" content="Conoce la historia, valores y el equipo detrás de Authentic Web Design." />
                 <meta name="twitter:image" content={`${typeof window !== 'undefined' ? window.location.origin : ''}/img/logo.png`} />
             </Helmet>
-            <div className="relative min-h-screen bg-white text-black">
+            <div className="relative flex flex-col min-h-screen bg-white text-black">
                 <div className="fixed top-0 left-0 w-full z-30 pointer-events-auto">
                     <HeaderSecondary activeUrl="/about" />
                 </div>
 
-                <main className="pt-16 md:pt-32 pb-24 px-6">
+                <main className="flex-1 pt-16 md:pt-32 pb-24 px-6">
                     <section className="max-w-6xl mx-auto md:grid md:grid-cols-[minmax(0,1.2fr)_minmax(0,1.8fr)] md:gap-12 md:items-stretch">
                         {/* Columna de imágenes (izquierda) */}
                         <motion.aside
