@@ -8,7 +8,7 @@ export interface ContactLink {
 export const contactLinks: ContactLink[] = [
     {
         id: 'phone',
-        label: '(+614) 93 557 397',
+        label: '(+61) 493 557 397',
         href: 'tel:+61493557397'
     },
     {
