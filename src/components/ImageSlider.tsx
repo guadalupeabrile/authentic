@@ -1,21 +1,12 @@
 import { useState, useEffect } from 'react'
 import { cn } from '../lib/cn'
-import { OptimizedImage } from './OptimizedImage'
 
 interface ImageSliderProps {
     images: string[]
     className?: string
-    interval?: number // tiempo en ms entre transiciones
+    interval?: number
 }
 
-/**
- * Componente de slider de imágenes con transición automática y optimizaciones
- * - Las imágenes se adaptan al tamaño del contenedor (object-cover)
- * - Preload de la siguiente imagen para transiciones suaves
- * - WebP con fallback automático
- * - Priority loading para la primera imagen
- * - Transiciones suaves entre imágenes
- */
 export function ImageSlider({ images, className, interval = 5000 }: ImageSliderProps) {
     const [currentIndex, setCurrentIndex] = useState(0)
 
@@ -29,26 +20,6 @@ export function ImageSlider({ images, className, interval = 5000 }: ImageSliderP
         return () => clearInterval(timer)
     }, [images.length, interval])
 
-    // Preload next image for smooth transitions
-    useEffect(() => {
-        if (images.length <= 1) return
-
-        const nextIndex = (currentIndex + 1) % images.length
-        const nextImage = images[nextIndex]
-
-        if (nextImage) {
-            const link = document.createElement('link')
-            link.rel = 'preload'
-            link.as = 'image'
-            link.href = nextImage
-            document.head.appendChild(link)
-
-            return () => {
-                document.head.removeChild(link)
-            }
-        }
-    }, [currentIndex, images])
-
     if (!images || images.length === 0) {
         return (
             <div className={cn('relative w-full h-full bg-gray-200', className)}>
@@ -60,38 +31,56 @@ export function ImageSlider({ images, className, interval = 5000 }: ImageSliderP
     }
 
     return (
-        <div className={cn('relative w-full h-full overflow-hidden', className)}>
+        <div 
+            className={cn('relative w-full h-full overflow-hidden', className)} 
+            style={{ 
+                width: '100%', 
+                height: '100%',
+                position: 'relative',
+                minHeight: '100%'
+            }}
+        >
             {images.map((image, index) => {
                 const isActive = index === currentIndex
-                const isNext = index === (currentIndex + 1) % images.length
 
                 return (
                     <div
-                        key={index}
+                        key={`${image}-${index}`}
                         className={cn(
                             'absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out',
                             isActive ? 'opacity-100 z-10' : 'opacity-0 z-0'
                         )}
+                        style={{
+                            position: 'absolute',
+                            top: 0,
+                            left: 0,
+                            width: '100%',
+                            height: '100%'
+                        }}
                     >
-                        <OptimizedImage
+                        <img
                             src={image}
                             alt={`Slide ${index + 1}`}
                             className={cn(
-                                "w-full h-full object-cover",
-                                // Para la primera imagen (slider 1), mostrar un poco más a la izquierda en mobile (75% desde la izquierda)
+                                "w-full h-full object-cover block",
                                 index === 0
-                                    ? "[object-position:75%_center] md:[object-position:center]"
+                                    ? "object-[75%_center] md:object-center"
                                     : "object-center"
                             )}
-                            priority={index === 0}
-                            fetchPriority={index === 0 ? 'high' : isNext ? 'low' : 'auto'}
                             style={{
                                 width: '100%',
                                 height: '100%',
                                 objectFit: 'cover',
                                 display: 'block',
+                                position: 'relative'
                             }}
-                            sizes="100vw"
+                            loading={index === 0 ? 'eager' : 'lazy'}
+                            onError={(e) => {
+                                console.error('Error loading image:', image, e)
+                            }}
+                            onLoad={() => {
+                                console.log('Image loaded:', image)
+                            }}
                         />
                     </div>
                 )
@@ -99,4 +88,3 @@ export function ImageSlider({ images, className, interval = 5000 }: ImageSliderP
         </div>
     )
 }
-

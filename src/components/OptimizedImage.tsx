@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
 import { cn } from '../lib/cn'
 
@@ -32,19 +32,6 @@ function getWebPSrc(src: string): string {
     return webpSrc
 }
 
-/**
- * Helper function to get the original format as fallback
- */
-function getOriginalSrc(src: string): string {
-    // If it's already a WebP path, try to get original
-    if (src.endsWith('.webp')) {
-        // Try common formats
-        const jpgSrc = src.replace(/\.webp$/i, '.jpg')
-        const pngSrc = src.replace(/\.webp$/i, '.png')
-        return src // Return WebP if it's already WebP, browser will handle fallback
-    }
-    return src
-}
 
 /**
  * Optimized Image component with advanced performance optimizations
@@ -73,9 +60,14 @@ export function OptimizedImage({
     const [isLoaded, setIsLoaded] = useState(false)
     const [hasError, setHasError] = useState(false)
     const [useWebP, setUseWebP] = useState(true)
+    const imgRef = useRef<HTMLImageElement>(null)
 
     // Determine fetch priority
     const effectiveFetchPriority = fetchPriority || (priority ? 'high' : 'auto')
+
+    // Get the appropriate image source
+    // Always provide original as fallback in img tag, picture element handles WebP
+    const imageSrc = useWebP && !src.endsWith('.webp') ? getWebPSrc(src) : src
 
     const handleLoad = () => {
         setIsLoaded(true)
@@ -93,42 +85,85 @@ export function OptimizedImage({
         setHasError(true)
     }
 
-    // Get the appropriate image source
-    // Always provide original as fallback in img tag, picture element handles WebP
-    const imageSrc = useWebP && !src.endsWith('.webp') ? getWebPSrc(src) : src
+    // Callback ref to check if image is already loaded when it's attached to DOM
+    const setImgRef = (img: HTMLImageElement | null) => {
+        // Store ref
+        ; (imgRef as React.MutableRefObject<HTMLImageElement | null>).current = img
+
+        if (img) {
+            // Check immediately if image is already loaded (from cache)
+            if (img.complete) {
+                if (img.naturalHeight !== 0) {
+                    // Image is loaded
+                    setIsLoaded(true)
+                    onLoad?.()
+                } else {
+                    // Image failed to load
+                    setHasError(true)
+                }
+            }
+        }
+    }
+
+    // Reset states when src changes
+    useEffect(() => {
+        setIsLoaded(false)
+        setHasError(false)
+    }, [imageSrc])
+
+    // Additional check as backup - verify image load status periodically
+    useEffect(() => {
+        if (isLoaded) return // Already loaded, no need to check
+
+        const checkInterval = setInterval(() => {
+            const img = imgRef.current
+            if (img && img.complete) {
+                if (img.naturalHeight !== 0) {
+                    setIsLoaded(true)
+                    onLoad?.()
+                    clearInterval(checkInterval)
+                } else if (img.naturalHeight === 0) {
+                    setHasError(true)
+                    clearInterval(checkInterval)
+                }
+            }
+        }, 100)
+
+        // Clean up after 5 seconds to avoid infinite checking
+        const timeout = setTimeout(() => {
+            clearInterval(checkInterval)
+        }, 5000)
+
+        return () => {
+            clearInterval(checkInterval)
+            clearTimeout(timeout)
+        }
+    }, [imageSrc, isLoaded, onLoad])
 
     const imageElement = (
         <>
             {!isLoaded && !hasError && (
-                <div className="absolute inset-0 bg-gray-200 animate-pulse rounded-sm" />
+                <div className="absolute inset-0 bg-gray-200 animate-pulse rounded-sm z-0" />
             )}
-            <picture>
-                {/* WebP source with fallback */}
-                {useWebP && !src.endsWith('.webp') && (
-                    <source
-                        srcSet={getWebPSrc(src)}
-                        type="image/webp"
-                        sizes={sizes}
-                    />
+            <img
+                ref={setImgRef}
+                src={imageSrc}
+                alt={alt}
+                className={cn(
+                    // Si se pasa style con height, usar h-full en lugar de h-auto
+                    style?.height ? 'w-full h-full transition-opacity duration-700 ease-in-out' : 'w-full h-auto transition-opacity duration-700 ease-in-out',
+                    // Always show images - let parent handle opacity
+                    'opacity-100 relative z-10',
+                    className
                 )}
-                <img
-                    src={imageSrc}
-                    alt={alt}
-                    className={cn(
-                        // Si se pasa style con height, usar h-full en lugar de h-auto
-                        style?.height ? 'w-full h-full transition-opacity duration-700 ease-in-out' : 'w-full h-auto transition-opacity duration-700 ease-in-out',
-                        isLoaded ? 'opacity-100' : 'opacity-0',
-                        className
-                    )}
-                    loading={priority ? 'eager' : 'lazy'}
-                    decoding="async"
-                    sizes={sizes}
-                    fetchPriority={effectiveFetchPriority}
-                    onLoad={handleLoad}
-                    onError={handleError}
-                    style={style}
-                />
-            </picture>
+                loading={priority ? 'eager' : 'lazy'}
+                decoding="async"
+                sizes={sizes}
+                fetchPriority={effectiveFetchPriority}
+                onLoad={handleLoad}
+                onError={handleError}
+                style={style}
+            />
         </>
     )
 

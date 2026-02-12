@@ -47,16 +47,24 @@ function HomePage() {
                     <Header activeUrl="/" logoSrc="/img/logo_white.png" />
                 </div>
 
-                {/* Sección del slider con altura extendida para cubrir viewport + espacio para scroll del footer */}
-                <section className="relative w-full flex-1 min-h-[calc(100vh-120px)] md:min-h-[calc(100vh-140px)]">
-                    <div className="relative w-full h-full min-h-[calc(100vh-120px)] md:min-h-[calc(100vh-140px)] z-0">
+                {/* Sección del slider */}
+                <section
+                    className="relative w-full flex-1"
+                    style={{
+                        minHeight: 'calc(100vh - 120px)',
+                        height: 'calc(100vh - 120px)',
+                        position: 'relative',
+                        overflow: 'hidden'
+                    }}
+                >
+                    <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}>
                         <ImageSlider
                             images={sliderImages}
                             className="w-full h-full"
                             interval={5000}
                         />
-                        <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/30 pointer-events-none z-10" />
                     </div>
+                    <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/30 pointer-events-none z-10" />
                 </section>
 
                 <Footer />

@@ -10,7 +10,7 @@ export function Footer({ className, darkText }: FooterProps) {
     return (
         <footer
             className={cn(
-                'w-full z-40 bg-transparent mt-auto',
+                'w-full relative bg-transparent mt-auto',
                 className
             )}
         >
