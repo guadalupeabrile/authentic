@@ -42,32 +42,36 @@ function HomePage() {
                 <meta name="twitter:site" content="@authenticwebstudio" />
                 <meta name="twitter:creator" content="@authenticwebstudio" />
             </Helmet>
-            <div className="relative flex flex-col min-h-screen overflow-x-hidden">
+            <div className="relative overflow-x-hidden" style={{ backgroundColor: 'transparent', minHeight: '100vh' }}>
                 <div className="fixed top-[50px] md:top-0 left-0 w-full z-30 px-12 sm:px-16 md:px-36 lg:px-48 pointer-events-auto">
                     <Header activeUrl="/" logoSrc="/img/logo_white.png" />
                 </div>
 
-                {/* Sección del slider */}
-                <section
-                    className="relative w-full flex-1"
+                {/* Slider que se extiende más allá del viewport */}
+                <div
+                    className="absolute inset-0 w-full"
                     style={{
-                        minHeight: 'calc(100vh - 120px)',
-                        height: 'calc(100vh - 120px)',
-                        position: 'relative',
-                        overflow: 'hidden'
+                        top: 0,
+                        left: 0,
+                        width: '100%',
+                        height: '100vh',
+                        minHeight: '100vh',
+                        zIndex: 0
                     }}
                 >
-                    <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}>
-                        <ImageSlider
-                            images={sliderImages}
-                            className="w-full h-full"
-                            interval={5000}
-                        />
-                    </div>
+                    <ImageSlider
+                        images={sliderImages}
+                        className="w-full h-full"
+                        interval={5000}
+                    />
                     <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/30 pointer-events-none z-10" />
-                </section>
+                </div>
 
-                <Footer />
+                {/* Contenedor con altura completa para que el footer esté al final */}
+                <div className="relative z-20 flex flex-col" style={{ minHeight: '100vh' }}>
+                    <div className="flex-1" style={{ minHeight: 'calc(100vh - 120px)' }}></div>
+                    <Footer className="homepage-footer" />
+                </div>
             </div>
         </>
     )

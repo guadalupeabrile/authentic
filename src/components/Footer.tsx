@@ -10,15 +10,21 @@ export function Footer({ className, darkText }: FooterProps) {
     return (
         <footer
             className={cn(
-                'w-full relative bg-transparent mt-auto',
+                'w-full relative mt-auto',
                 className
             )}
+            style={{ backgroundColor: 'transparent', background: 'transparent' }}
         >
             <div
                 className={cn(
                     'relative w-full px-[10px] py-4 md:py-6',
                     darkText ? 'bg-white border-t border-black/10' : 'bg-transparent'
                 )}
+                style={darkText ? {} : {
+                    backgroundColor: 'transparent',
+                    background: 'transparent',
+                    backgroundImage: 'none'
+                }}
             >
                 <div
                     className={cn(
