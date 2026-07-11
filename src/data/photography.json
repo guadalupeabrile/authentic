@@ -230,6 +230,50 @@
           ]
         }
       ]
+    },
+    {
+      "id": "surf-ii",
+      "title": "Surf II",
+      "description": "Lennox Head is imposing—one long right-hand point that keeps changing its face. Shot from the same spot on different days, the mood shifts entirely with the weather: misty, silver mornings that turn the water moody and cinematic, and blazing blue afternoons where the same lineup glows electric and alive. One place, many skies.",
+      "sections": [
+        {
+          "gap": 40,
+          "columnImages": [
+            {
+              "images": [
+                "/uploads/photography/surf-ii/img_7461.webp",
+                "/uploads/photography/surf-ii/img_7485.webp",
+                "/uploads/photography/surf-ii/img_7527.webp",
+                "/uploads/photography/surf-ii/dsc06980.webp",
+                "/uploads/photography/surf-ii/dsc07014.webp",
+                "/uploads/photography/surf-ii/dsc07171.webp"
+              ],
+              "flex": 1
+            },
+            {
+              "images": [
+                "/uploads/photography/surf-ii/img_7463.webp",
+                "/uploads/photography/surf-ii/img_7518.webp",
+                "/uploads/photography/surf-ii/img_7538.webp",
+                "/uploads/photography/surf-ii/dsc06987.webp",
+                "/uploads/photography/surf-ii/dsc07051.webp",
+                "/uploads/photography/surf-ii/dsc07199.webp"
+              ],
+              "flex": 1
+            },
+            {
+              "images": [
+                "/uploads/photography/surf-ii/img_7479.webp",
+                "/uploads/photography/surf-ii/img_7525.webp",
+                "/uploads/photography/surf-ii/img_7584.webp",
+                "/uploads/photography/surf-ii/dsc06989.webp",
+                "/uploads/photography/surf-ii/dsc07114.webp"
+              ],
+              "flex": 1
+            }
+          ]
+        }
+      ]
     }
   ],
   "aboutImages": [

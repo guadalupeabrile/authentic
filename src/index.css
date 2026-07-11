@@ -12,6 +12,11 @@
     body {
         font-family: 'Space Mono', monospace;
         @apply overflow-x-hidden;
+        background-color: transparent;
+    }
+
+    #root {
+        background-color: transparent;
     }
 }
 
@@ -37,4 +42,20 @@
         animation-timing-function: linear;
         animation-iteration-count: infinite;
     }
+}
+
+/* Force footer transparency on homepage - override all backgrounds */
+footer.homepage-footer,
+footer.homepage-footer>div,
+footer.homepage-footer>div>div {
+    background-color: transparent !important;
+    background: transparent !important;
+    background-image: none !important;
+}
+
+/* Override any Tailwind bg classes on homepage footer */
+footer.homepage-footer>div.bg-transparent,
+footer.homepage-footer>div.bg-white:not(.bg-white) {
+    background-color: transparent !important;
+    background: transparent !important;
 }
