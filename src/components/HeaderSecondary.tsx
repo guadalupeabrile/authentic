@@ -1,5 +1,7 @@
 import { navigationItems as defaultNavigationItems, type NavigationItem } from '../data/navigation'
+import { useScrolled } from '../hooks/useScrolled'
 import { cn } from '../lib/cn'
+import { NavLink } from './NavLink'
 
 interface HeaderSecondaryProps {
     className?: string
@@ -14,10 +16,17 @@ export function HeaderSecondary({
 }: HeaderSecondaryProps) {
     const currentPath = typeof window !== 'undefined' ? window.location.pathname : ''
     const activePath = activeUrl || currentPath
+    const scrolled = useScrolled(8)
 
     return (
         <header
-            className={cn('w-full border-b border-black/10 bg-white', className)}
+            className={cn(
+                'w-full border-b transition-[background-color,box-shadow,border-color,backdrop-filter] duration-300 ease-out',
+                scrolled
+                    ? 'border-black/10 bg-white/80 shadow-[0_8px_30px_-12px_rgba(0,0,0,0.15)] backdrop-blur-md'
+                    : 'border-black/10 bg-white',
+                className
+            )}
         >
             <div className="relative flex w-full flex-col items-center gap-3 px-4 py-6 sm:flex-row sm:gap-6 sm:px-6">
                 <nav className="flex w-full justify-center gap-4 sm:gap-6 md:gap-8">
@@ -27,18 +36,13 @@ export function HeaderSecondary({
                                 ? activePath === '/'
                                 : activePath.startsWith(item.url)
                         return (
-                            <a
+                            <NavLink
                                 key={item.url}
                                 href={item.url}
-                                className={cn(
-                                    'text-black/80 hover:text-black transition-colors duration-200',
-                                    'text-[10px] sm:text-xs md:text-sm lg:text-sm',
-                                    'uppercase tracking-[0.1em]',
-                                    isActive && 'border-b border-black/80 pb-1'
-                                )}
-                            >
-                                {item.label}
-                            </a>
+                                label={item.label}
+                                isActive={isActive}
+                                variant="dark"
+                            />
                         )
                     })}
                 </nav>
@@ -46,5 +50,3 @@ export function HeaderSecondary({
         </header>
     )
 }
-
-

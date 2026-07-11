@@ -1,10 +1,10 @@
 import { useState, useEffect, useRef } from 'react'
-import { motion } from 'framer-motion'
 import { Helmet } from 'react-helmet-async'
 import { HeaderSecondary } from '../components/HeaderSecondary'
 import { Footer } from '../components/Footer'
 import { MasonryGrid, type MasonrySection } from '../components/MasonryGrid'
 import { ImageLightbox } from '../components/ImageLightbox'
+import { AnimatedButton, FadeIn, StaggerContainer, StaggerItem } from '../animation'
 import type { PhotographyConfig } from '../types/photography'
 import photographyData from '../data/photography.json'
 
@@ -434,25 +434,15 @@ function PhotographyProjectPage({ projectId }: PhotographyProjectPageProps) {
                 </div>
 
                 <main className="flex-1 pt-32 pb-36">
-                    <motion.section
-                        className="space-y-8"
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.6 }}
-                    >
-                        <motion.div
-                            className="px-6 mb-24"
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.6, delay: 0.3 }}
-                        >
-                            <div className="space-y-6">
-                                <h1 className="text-2xl md:text-4xl font-light">{category.title}</h1>
-                                <p className="text-base text-black/80 leading-relaxed max-w-6xl">{category.description}</p>
-                            </div>
-                        </motion.div>
+                    <section className="space-y-8">
+                        <StaggerContainer className="px-6 mb-24 space-y-6" trigger="mount">
+                            <StaggerItem as="h1" className="text-2xl md:text-4xl font-light">
+                                {category.title}
+                            </StaggerItem>
+                            <StaggerItem as="p" className="text-base text-black/80 leading-relaxed max-w-6xl">
+                                {category.description}
+                            </StaggerItem>
+                        </StaggerContainer>
 
                         {limitedSections.length > 0 && (
                             <div className="mt-6 md:mt-12 w-full px-6">
@@ -478,22 +468,17 @@ function PhotographyProjectPage({ projectId }: PhotographyProjectPageProps) {
 
                         {/* Show more button solo en mobile */}
                         {isMobile && hasMoreImages && (
-                            <motion.div
-                                className="px-6 flex justify-center mb-16 -mt-8 md:mt-0 md:mb-8"
-                                initial={{ opacity: 0 }}
-                                whileInView={{ opacity: 1 }}
-                                viewport={{ once: true }}
-                                transition={{ duration: 0.6, delay: 0.6 }}
-                            >
-                                <button
+                            <FadeIn className="px-6 flex justify-center mb-16 -mt-8 md:mt-0 md:mb-8" delay={0.15}>
+                                <AnimatedButton
                                     onClick={() => showMoreImages(categoryId, category)}
-                                    className="text-black underline decoration-black/60 hover:decoration-black transition-colors duration-200 text-sm tracking-wide"
+                                    className="text-black underline decoration-black/60 transition-colors duration-200 hover:decoration-black text-sm tracking-wide outline-none focus-visible:decoration-black"
+                                    aria-label="Show more images"
                                 >
                                     show more
-                                </button>
-                            </motion.div>
+                                </AnimatedButton>
+                            </FadeIn>
                         )}
-                    </motion.section>
+                    </section>
                 </main>
 
                 <Footer darkText />

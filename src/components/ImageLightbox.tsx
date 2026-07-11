@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { OptimizedImage } from './OptimizedImage'
 
@@ -52,6 +52,22 @@ export function ImageLightbox({ images, currentIndex, isOpen, onClose, onNavigat
         }
     }, [currentIndex, isOpen, images])
 
+    const handlePrevious = useCallback(() => {
+        if (currentIndex > 0) {
+            onNavigate(currentIndex - 1)
+        } else {
+            onNavigate(images.length - 1) // Loop al final
+        }
+    }, [currentIndex, images.length, onNavigate])
+
+    const handleNext = useCallback(() => {
+        if (currentIndex < images.length - 1) {
+            onNavigate(currentIndex + 1)
+        } else {
+            onNavigate(0) // Loop al inicio
+        }
+    }, [currentIndex, images.length, onNavigate])
+
     // Navegación con teclado
     useEffect(() => {
         if (!isOpen) return
@@ -68,23 +84,7 @@ export function ImageLightbox({ images, currentIndex, isOpen, onClose, onNavigat
 
         window.addEventListener('keydown', handleKeyDown)
         return () => window.removeEventListener('keydown', handleKeyDown)
-    }, [isOpen, currentIndex])
-
-    const handlePrevious = () => {
-        if (currentIndex > 0) {
-            onNavigate(currentIndex - 1)
-        } else {
-            onNavigate(images.length - 1) // Loop al final
-        }
-    }
-
-    const handleNext = () => {
-        if (currentIndex < images.length - 1) {
-            onNavigate(currentIndex + 1)
-        } else {
-            onNavigate(0) // Loop al inicio
-        }
-    }
+    }, [isOpen, onClose, handlePrevious, handleNext])
 
     // Manejo de swipe en mobile
     const minSwipeDistance = 50

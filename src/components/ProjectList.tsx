@@ -1,7 +1,14 @@
 "use client"
 
 import React from "react"
+import { motion, useReducedMotion, type Variants } from "framer-motion"
+import { DURATION, EASE_OUT } from "../animation/motion"
 import { OptimizedImage } from "./OptimizedImage"
+
+const listVariants: Variants = {
+    hidden: {},
+    visible: { transition: { staggerChildren: 0.08, delayChildren: 0.05 } },
+}
 
 export interface Project {
     id: string
@@ -24,7 +31,7 @@ const DEFAULT_REPETITIONS = 12
 const MIN_SPEED = 90
 const MAX_SPEED = 120
 
-const generateUniqueSpeed = (index: number, baseSpeed?: number): number => {
+const clampSpeed = (baseSpeed?: number): number => {
     let speed = baseSpeed || 90
     // Limitar la velocidad mínima para evitar que sean demasiado rápidos
     if (speed < MIN_SPEED) {
@@ -41,6 +48,12 @@ const ProjectList: React.FC<ProjectListProps> = ({
     projects,
     repetitions = DEFAULT_REPETITIONS
 }) => {
+    const reduce = useReducedMotion()
+    const itemVariants: Variants = {
+        hidden: { opacity: 0, y: reduce ? 0 : 20 },
+        visible: { opacity: 1, y: 0, transition: { duration: reduce ? DURATION.fast : DURATION.base, ease: EASE_OUT } },
+    }
+
     const isExternalLink = (link: string): boolean => {
         try {
             const url = new URL(link, window.location.origin)
@@ -108,20 +121,27 @@ const ProjectList: React.FC<ProjectListProps> = ({
     )
 
     return (
-        <section className="mt-16 flex flex-col">
+        <motion.section
+            className="mt-16 flex flex-col"
+            variants={listVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.1 }}
+        >
             {projects.map((item, index) => {
-                const duration = generateUniqueSpeed(index, item.speed)
+                const duration = clampSpeed(item.speed)
                 const isExternal = typeof window !== 'undefined' && isExternalLink(item.link)
 
                 return (
-                    <a
+                    <motion.a
                         key={item.id || item.name + index}
                         href={item.link}
                         {...(isExternal && {
                             target: '_blank',
                             rel: 'noopener noreferrer'
                         })}
-                        className="block overflow-hidden border-b border-black/10 last:border-b-0 bg-white transition hover:bg-black/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black"
+                        variants={itemVariants}
+                        className="block overflow-hidden border-b border-black/10 last:border-b-0 bg-white transition-[background-color,box-shadow] duration-300 hover:bg-black/[0.03] hover:shadow-[0_14px_36px_-24px_rgba(0,0,0,0.35)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black"
                     >
                         {/* Mobile: Si hay imagen, mostrar imagen fija arriba y marquee abajo. Si no hay imagen, solo marquee como antes */}
                         {item.image ? (
@@ -132,6 +152,7 @@ const ProjectList: React.FC<ProjectListProps> = ({
                                         alt={item.name}
                                         className="w-full h-full object-cover"
                                         sizes="100vw"
+                                        zoomOnHover
                                         style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                                     />
                                 </div>
@@ -167,10 +188,10 @@ const ProjectList: React.FC<ProjectListProps> = ({
                                 {renderMarqueeContent(item, true)}
                             </div>
                         </div>
-                    </a>
+                    </motion.a>
                 )
             })}
-        </section>
+        </motion.section>
     )
 }
 

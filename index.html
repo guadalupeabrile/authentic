@@ -61,9 +61,54 @@
     <!-- Preconnect para optimización -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- Fonts loaded in parallel (non render-blocking) with swap fallback -->
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" />
+
+    <!-- Preload the loader mark so it paints instantly -->
+    <link rel="preload" as="image" href="/img/favicon1.png" />
+
+    <!-- Critical loader styles: paints before the JS bundle loads (no FOUC) -->
+    <style>
+        #initial-loader {
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #15181a;
+        }
+
+        #initial-loader img {
+            height: 3rem;
+            width: auto;
+            filter: brightness(0) invert(1);
+            animation: initial-loader-pulse 2.6s ease-in-out infinite;
+        }
+
+        @keyframes initial-loader-pulse {
+            0% { opacity: 0; transform: scale(0.95); }
+            25% { opacity: 1; transform: translateY(-3px) scale(1); }
+            60% { opacity: 0.82; transform: translateY(0) scale(1); }
+            100% { opacity: 1; transform: translateY(-3px) scale(1); }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            #initial-loader img {
+                animation: none;
+                opacity: 1;
+            }
+        }
+    </style>
 </head>
 
 <body>
+    <!-- Static loader shown until React mounts <AppLoader />, which removes it -->
+    <div id="initial-loader" aria-hidden="true">
+        <img src="/img/favicon1.png" alt="" />
+    </div>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
 </body>

@@ -1,5 +1,6 @@
 import { navigationItems as defaultNavigationItems, type NavigationItem } from '../data/navigation'
 import { cn } from '../lib/cn'
+import { NavLink } from './NavLink'
 
 interface HeaderProps {
     className?: string
@@ -26,7 +27,7 @@ export function Header({
                     <img
                         src={logoSrc}
                         alt="Authentic Web Design"
-                        className="w-full md:w-full h-auto object-contain opacity-80 hover:opacity-100 transition-opacity duration-300 scale-110 md:scale-100"
+                        className="w-full md:w-full h-auto object-contain opacity-80 transition-opacity duration-300 hover:opacity-100 scale-110 md:scale-100"
                         loading="eager"
                         decoding="async"
                     />
@@ -40,19 +41,14 @@ export function Header({
                                 ? activePath === '/'
                                 : activePath.startsWith(item.url)
                         return (
-                            <a
+                            <NavLink
                                 key={item.url}
                                 href={item.url}
-                                className={cn(
-                                    'text-white/95 hover:text-white transition-colors duration-200',
-                                    'text-[10px] sm:text-xs md:text-sm lg:text-sm',
-                                    'font-light tracking-[0.1em] uppercase',
-                                    'drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]',
-                                    isActive && 'underline underline-offset-4 decoration-white/90'
-                                )}
-                            >
-                                {item.label}
-                            </a>
+                                label={item.label}
+                                isActive={isActive}
+                                variant="light"
+                                className="font-light"
+                            />
                         )
                     })}
                 </nav>

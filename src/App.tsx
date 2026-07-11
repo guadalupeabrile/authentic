@@ -1,60 +1,53 @@
-import { useEffect, useState } from 'react'
-import HomePage from './pages/HomePage'
-import WebsPage from './pages/WebsPage'
-import PhotographyPage from './pages/PhotographyPage'
-import PhotographyProjectPage from './pages/PhotographyProjectPage'
-import AboutPage from './pages/AboutPage'
+import { lazy, Suspense } from 'react'
+import { AnimatePresence } from 'framer-motion'
+import { PageTransition } from './animation'
+import { AppLoader } from './components/AppLoader'
+import { useRoute } from './hooks/useRoute'
 
-const routes: Record<string, JSX.Element> = {
-    '/': <HomePage />,
-    '/websites': <WebsPage />,
-    '/photography': <PhotographyPage />,
-    '/about': <AboutPage />
+// Code splitting: every page is its own lazily-loaded chunk.
+const HomePage = lazy(() => import('./pages/HomePage'))
+const WebsPage = lazy(() => import('./pages/WebsPage'))
+const PhotographyPage = lazy(() => import('./pages/PhotographyPage'))
+const PhotographyProjectPage = lazy(() => import('./pages/PhotographyProjectPage'))
+const AboutPage = lazy(() => import('./pages/AboutPage'))
+
+/** Reserves viewport height while a route chunk loads, preventing layout shift. */
+function RouteFallback() {
+    return <div className="min-h-screen" aria-hidden="true" />
+}
+
+function resolveRoute(path: string) {
+    const projectMatch = path.match(/^\/photography\/(.+)$/)
+    if (projectMatch) {
+        return <PhotographyProjectPage projectId={projectMatch[1]} />
+    }
+
+    switch (path) {
+        case '/websites':
+            return <WebsPage />
+        case '/photography':
+            return <PhotographyPage />
+        case '/about':
+            return <AboutPage />
+        case '/':
+        default:
+            return <HomePage />
+    }
 }
 
 function App() {
-    const [currentPath, setCurrentPath] = useState<string>(
-        typeof window !== 'undefined' ? window.location.pathname : '/'
+    const path = useRoute()
+
+    return (
+        <>
+            <AnimatePresence mode="wait" onExitComplete={() => window.scrollTo(0, 0)}>
+                <PageTransition key={path}>
+                    <Suspense fallback={<RouteFallback />}>{resolveRoute(path)}</Suspense>
+                </PageTransition>
+            </AnimatePresence>
+            <AppLoader routeKey={path} />
+        </>
     )
-
-    useEffect(() => {
-        const handleLocationChange = () => {
-            setCurrentPath(window.location.pathname)
-        }
-
-        // Listen for popstate events (back/forward navigation)
-        window.addEventListener('popstate', handleLocationChange)
-
-        // Intercept link clicks
-        const handleClick = (e: MouseEvent) => {
-            const target = e.target as HTMLElement
-            const link = target.closest('a')
-            if (link && link.href.startsWith(window.location.origin)) {
-                e.preventDefault()
-                const url = new URL(link.href)
-                window.history.pushState({}, '', url.pathname)
-                setCurrentPath(url.pathname)
-            }
-        }
-
-        document.addEventListener('click', handleClick)
-
-        return () => {
-            window.removeEventListener('popstate', handleLocationChange)
-            document.removeEventListener('click', handleClick)
-        }
-    }, [])
-
-    // Check for dynamic routes
-    const photographyProjectMatch = currentPath.match(/^\/photography\/(.+)$/)
-    if (photographyProjectMatch) {
-        const projectId = photographyProjectMatch[1]
-        return <PhotographyProjectPage projectId={projectId} />
-    }
-
-    // Check static routes
-    return routes[currentPath] ?? <HomePage />
 }
 
 export default App
-

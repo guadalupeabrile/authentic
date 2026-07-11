@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
 import { Helmet } from 'react-helmet-async'
 import { HeaderSecondary } from '../components/HeaderSecondary'
 import { Footer } from '../components/Footer'
+import { StaggerContainer, StaggerItem } from '../animation'
 import ProjectList, { type Project } from '../components/ProjectList'
 import type { PhotographyConfig, PhotographyCategory } from '../types/photography'
 import photographyData from '../data/photography.json'
@@ -80,28 +80,19 @@ function PhotographyPage() {
                     <HeaderSecondary activeUrl="/photography" />
                 </div>
                 <main className="flex-1 pt-32 pb-24">
-                    <motion.section
-                        className="space-y-8"
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.6 }}
-                    >
-                        <motion.div
-                            className="px-6 mb-24"
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.6, delay: 0.3 }}
-                        >
-                            <div className="space-y-6">
-                                <h1 className="text-2xl md:text-4xl font-light">Photography</h1>
-                                <p className="text-base text-black/80 leading-relaxed max-w-6xl">
-                                    A collection of visual stories captured through the lens. Each project represents a unique journey, exploring different themes, emotions, and perspectives.
-                                </p>
-                            </div>
-                        </motion.div>
-                    </motion.section>
+                    <section className="space-y-8">
+                        <StaggerContainer className="px-6 mb-24 space-y-6" trigger="mount">
+                            <StaggerItem as="h1" className="text-2xl md:text-4xl font-light">
+                                Photography
+                            </StaggerItem>
+                            <StaggerItem
+                                as="p"
+                                className="text-base text-black/80 leading-relaxed max-w-6xl"
+                            >
+                                A collection of visual stories captured through the lens. Each project represents a unique journey, exploring different themes, emotions, and perspectives.
+                            </StaggerItem>
+                        </StaggerContainer>
+                    </section>
 
                     {loading && (
                         <div className="px-6 text-center">

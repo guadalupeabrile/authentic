@@ -31,14 +31,9 @@ export function ImageSlider({ images, className, interval = 5000 }: ImageSliderP
     }
 
     return (
-        <div 
-            className={cn('relative w-full h-full overflow-hidden', className)} 
-            style={{ 
-                width: '100%', 
-                height: '100%',
-                position: 'relative',
-                minHeight: '100%'
-            }}
+        <div
+            className={cn('relative w-full h-full overflow-hidden', className)}
+            style={{ width: '100%', height: '100%', position: 'relative', minHeight: '100%' }}
         >
             {images.map((image, index) => {
                 const isActive = index === currentIndex
@@ -50,37 +45,28 @@ export function ImageSlider({ images, className, interval = 5000 }: ImageSliderP
                             'absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out',
                             isActive ? 'opacity-100 z-10' : 'opacity-0 z-0'
                         )}
-                        style={{
-                            position: 'absolute',
-                            top: 0,
-                            left: 0,
-                            width: '100%',
-                            height: '100%'
-                        }}
+                        style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
+                        aria-hidden={!isActive}
                     >
                         <img
                             src={image}
-                            alt={`Slide ${index + 1}`}
+                            alt=""
                             className={cn(
-                                "w-full h-full object-cover block",
-                                index === 0
-                                    ? "object-[75%_center] md:object-center"
-                                    : "object-center"
+                                'w-full h-full object-cover block hero-kenburns',
+                                index === 0 ? 'object-[75%_center] md:object-center' : 'object-center',
+                                isActive && 'is-active'
                             )}
                             style={{
                                 width: '100%',
                                 height: '100%',
                                 objectFit: 'cover',
                                 display: 'block',
-                                position: 'relative'
+                                position: 'relative',
                             }}
                             loading={index === 0 ? 'eager' : 'lazy'}
-                            onError={(e) => {
-                                console.error('Error loading image:', image, e)
-                            }}
-                            onLoad={() => {
-                                console.log('Image loaded:', image)
-                            }}
+                            fetchPriority={index === 0 ? 'high' : 'auto'}
+                            decoding="async"
+                            draggable={false}
                         />
                     </div>
                 )

@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -9,14 +7,36 @@
         @apply antialiased;
     }
 
+    html {
+        /* Reserve scrollbar space so page-to-page navigation never shifts layout. */
+        scrollbar-gutter: stable;
+    }
+
+    /* Smooth in-page scrolling, but only when the user hasn't opted out. */
+    @media (prefers-reduced-motion: no-preference) {
+        html {
+            scroll-behavior: smooth;
+        }
+    }
+
     body {
         font-family: 'Space Mono', monospace;
         @apply overflow-x-hidden;
         background-color: transparent;
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
     }
 
     #root {
         background-color: transparent;
+    }
+
+    /* Consistent, accessible focus ring that adapts to light/dark contexts. */
+    a:focus-visible,
+    button:focus-visible {
+        outline: 2px solid currentColor;
+        outline-offset: 3px;
+        border-radius: 2px;
     }
 }
 
@@ -41,6 +61,34 @@
         animation-name: desplazamiento-marquee;
         animation-timing-function: linear;
         animation-iteration-count: infinite;
+        will-change: transform;
+    }
+
+    /* Pause the infinite marquee on hover/focus for a calmer, premium feel. */
+    .marquee:hover,
+    a:hover .marquee,
+    a:focus-visible .marquee {
+        animation-play-state: paused;
+    }
+
+    /* Very slow, subtle "Ken Burns" drift on the active hero slide. */
+    .hero-kenburns {
+        transform: scale(1);
+        will-change: transform;
+    }
+
+    @keyframes hero-kenburns {
+        from {
+            transform: scale(1);
+        }
+
+        to {
+            transform: scale(1.06);
+        }
+    }
+
+    .hero-kenburns.is-active {
+        animation: hero-kenburns 8s ease-out forwards;
     }
 }
 
@@ -58,4 +106,22 @@ footer.homepage-footer>div.bg-transparent,
 footer.homepage-footer>div.bg-white:not(.bg-white) {
     background-color: transparent !important;
     background: transparent !important;
+}
+
+/* Respect users who prefer reduced motion: neutralise CSS motion globally.
+   (Framer Motion is handled separately via useReducedMotion.) */
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+        scroll-behavior: auto !important;
+    }
+
+    .marquee {
+        animation: none !important;
+    }
 }

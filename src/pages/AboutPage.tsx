@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
 import { Helmet } from 'react-helmet-async'
 import { HeaderSecondary } from '../components/HeaderSecondary'
 import { Footer } from '../components/Footer'
 import { OptimizedImage } from '../components/OptimizedImage'
+import { RevealOnScroll, StaggerContainer, StaggerItem } from '../animation'
 import type { PhotographyConfig } from '../types/photography'
 import photographyData from '../data/photography.json'
 
@@ -52,21 +52,20 @@ function AboutPage() {
                 <main className="flex-1 pt-16 md:pt-32 pb-24 px-6">
                     <section className="max-w-6xl mx-auto md:grid md:grid-cols-[minmax(0,1.2fr)_minmax(0,1.8fr)] md:gap-12 md:items-stretch">
                         {/* Columna de imágenes (izquierda) */}
-                        <motion.aside
+                        <RevealOnScroll
+                            as="aside"
                             className="mt-5 md:mt-0 md:border-r md:border-black/10 flex flex-col h-full"
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.5 }}
+                            duration={0.5}
                         >
                             {aboutImages.length > 0 ? (
-                                <div className="group relative w-full h-full min-h-[280px] mb-5 md:mb-0">
+                                <div className="relative w-full h-full min-h-[280px] mb-5 md:mb-0">
                                     <OptimizedImage
                                         src={aboutImages[0]}
                                         alt="About image"
                                         className="w-full h-full object-cover"
                                         sizes="(max-width: 768px) 100vw, 40vw"
                                         priority={true}
+                                        zoomOnHover
                                     />
                                 </div>
                             ) : (
@@ -74,45 +73,37 @@ function AboutPage() {
                                     No hay imágenes configuradas para mostrar aquí.
                                 </p>
                             )}
-                        </motion.aside>
+                        </RevealOnScroll>
 
                         {/* Texto principal (derecha) */}
-                        <motion.div
-                            className="space-y-6 md:pl-4"
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.5, delay: 0.1 }}
-                        >
-                            <h1 className="text-2xl md:text-4xl font-light tracking-[0.15em] uppercase">
+                        <StaggerContainer className="space-y-6 md:pl-4" trigger="mount">
+                            <StaggerItem as="h1" className="text-2xl md:text-4xl font-light tracking-[0.15em] uppercase">
                                 About Authentic
-                            </h1>
-                            <p className="max-w-3xl text-sm italic text-black/80 leading-relaxed !mt-1">Still wondering whether the word "authentic" is genuinely authentic.</p>
-                            <p className="max-w-3xl text-base text-black/80 leading-relaxed md:ml-auto">
+                            </StaggerItem>
+                            <StaggerItem as="p" className="max-w-3xl text-sm italic text-black/80 leading-relaxed !mt-1">
+                                Still wondering whether the word "authentic" is genuinely authentic.
+                            </StaggerItem>
+                            <StaggerItem as="p" className="max-w-3xl text-base text-black/80 leading-relaxed md:ml-auto">
                                 As a multidisciplinary creator, my work is an exploration of <strong>devenir-con (becoming-with)</strong> the constant dialogue between our inner selves and the human and non-human worlds we inhabit. I translate this flow into functional engineering and intuitive design.
-                            </p>
-                            <p className="max-w-3xl text-base text-black/80 leading-relaxed">
+                            </StaggerItem>
+                            <StaggerItem as="p" className="max-w-3xl text-base text-black/80 leading-relaxed">
                                 Whether building a purposeful website or documenting a visual story through my lens, I focus on the <strong>entanglement of strategy and soul</strong>. I create to help brands express their truest nature.
-                            </p>
-                            <p className="max-w-3xl text-base text-black/80 leading-relaxed">
+                            </StaggerItem>
+                            <StaggerItem as="p" className="max-w-3xl text-base text-black/80 leading-relaxed">
                                 I focus on building functional, aesthetic, and intuitive websites for entrepreneurs, artists, therapists, and businesses that need an online presence with purpose. My approach blends strategy, visual sensitivity, and simple, honest communication.
-                            </p>
-                            <p className="max-w-3xl text-base text-black/80 leading-relaxed">
+                            </StaggerItem>
+                            <StaggerItem as="p" className="max-w-3xl text-base text-black/80 leading-relaxed">
                                 Photography is another core part of my work: I document spaces, nature and visual stories that help brands express who they are.
-                            </p>
-                            <p className="max-w-3xl text-base text-black/80 leading-relaxed"> With kindness, Guadalupe.</p>
-                        </motion.div>
+                            </StaggerItem>
+                            <StaggerItem as="p" className="max-w-3xl text-base text-black/80 leading-relaxed">
+                                With kindness, Guadalupe.
+                            </StaggerItem>
+                        </StaggerContainer>
                     </section>
 
                     {/* Imagen inferior con mismos márgenes que la sección superior */}
                     {bottomImage && (
-                        <motion.section
-                            className="mt-16"
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.5 }}
-                        >
+                        <RevealOnScroll as="section" className="mt-16" duration={0.5}>
                             <div className="max-w-6xl mx-auto">
                                 <OptimizedImage
                                     src={bottomImage}
@@ -121,7 +112,7 @@ function AboutPage() {
                                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1152px"
                                 />
                             </div>
-                        </motion.section>
+                        </RevealOnScroll>
                     )}
                 </main>
 

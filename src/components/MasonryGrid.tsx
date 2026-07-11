@@ -1,5 +1,6 @@
-import { motion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 import { cn } from '../lib/cn'
+import { EASE_OUT } from '../animation/motion'
 import { OptimizedImage } from './OptimizedImage'
 
 export interface MasonryColumn {
@@ -63,6 +64,7 @@ export function MasonryGrid({
     onMoveImage,
     onImageClick
 }: MasonryGridProps) {
+    const reduce = useReducedMotion()
 
     // Función para generar márgenes verticales variables si no se proporcionan
     const getMargins = (images: string[], margins?: number[], gap: number = 16): number[] => {
@@ -239,13 +241,13 @@ export function MasonryGrid({
                                                             justifyContent: 'flex-start',
                                                             alignItems: 'flex-start'
                                                         }}
-                                                        initial={{ opacity: 0, y: 20 }}
+                                                        initial={{ opacity: 0, y: reduce ? 0 : 20 }}
                                                         whileInView={{ opacity: 1, y: 0 }}
                                                         viewport={{ once: true, margin: '-100px' }}
-                                                        transition={{ duration: 0.7, ease: 'easeOut' }}
+                                                        transition={{ duration: reduce ? 0.3 : 0.7, ease: EASE_OUT }}
                                                     >
                                                         <div
-                                                            className="relative overflow-hidden w-full cursor-pointer hover:opacity-90 transition-opacity"
+                                                            className="group relative overflow-hidden w-full cursor-pointer"
                                                             style={{
                                                                 width: '100%',
                                                                 aspectRatio: 'auto',
@@ -260,6 +262,7 @@ export function MasonryGrid({
                                                                 alt={`Photography section ${sectionIndex + 1}, column ${columnIndex + 1}, image ${imageIndex + 1}`}
                                                                 sizes={sizes}
                                                                 priority={isPriority}
+                                                                zoomOnHover
                                                                 style={{
                                                                     display: 'block',
                                                                     width: '100%',
@@ -297,26 +300,6 @@ export function MasonryGrid({
                 const margins = getMargins(images, section.margins, gap)
                 const marginLeft = getMarginLeft(images, section.marginLeft)
                 const marginRight = getMarginRight(images, section.marginRight)
-
-                // Calcular índice global acumulado de todas las imágenes anteriores
-                let globalImageIndexFallback = 0
-                for (let i = 0; i < sectionIndex; i++) {
-                    const prevSection = sections[i]
-                    if (prevSection.columnImages && prevSection.columnImages.length > 0) {
-                        const prevColumns = prevSection.columnImages
-                        const prevLengths = prevColumns.map(col => col.images.length)
-                        const prevMaxLength = prevLengths.length > 0 ? Math.max(...prevLengths) : 0
-                        for (let j = 0; j < prevMaxLength; j++) {
-                            for (let colIdx = 0; colIdx < prevColumns.length; colIdx++) {
-                                if (prevColumns[colIdx]?.images[j]) {
-                                    globalImageIndexFallback++
-                                }
-                            }
-                        }
-                    } else if (prevSection.images) {
-                        globalImageIndexFallback += prevSection.images.length
-                    }
-                }
 
                 return (
                     <div key={sectionIndex} className={cn('w-full', section.className)}>
@@ -357,13 +340,13 @@ export function MasonryGrid({
                                             paddingLeft: `${marginLeft[imageIndex]}px`,
                                             paddingRight: `${marginRight[imageIndex]}px`
                                         }}
-                                        initial={{ opacity: 0, y: 20 }}
+                                        initial={{ opacity: 0, y: reduce ? 0 : 20 }}
                                         whileInView={{ opacity: 1, y: 0 }}
                                         viewport={{ once: true, margin: '-100px' }}
-                                        transition={{ duration: 0.7, ease: 'easeOut' }}
+                                        transition={{ duration: reduce ? 0.3 : 0.7, ease: EASE_OUT }}
                                     >
                                         <div
-                                            className="relative w-full overflow-hidden cursor-pointer hover:opacity-90 transition-opacity"
+                                            className="group relative w-full overflow-hidden cursor-pointer"
                                             style={{
                                                 aspectRatio: 'auto',
                                                 minHeight: '200px'
@@ -377,6 +360,7 @@ export function MasonryGrid({
                                                 alt={`Photography section ${sectionIndex + 1}, image ${imageIndex + 1}`}
                                                 sizes={sizes}
                                                 priority={isPriority}
+                                                zoomOnHover
                                                 style={{
                                                     display: 'block',
                                                     width: '100%',
